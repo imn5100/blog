@@ -48,12 +48,13 @@ public class IndexController {
 		map.put("typeId", typeId);
 		map.put("releaseDateStr", releaseDateStr);
 		List<Blog> blogList=blogService.list(map);
-		//设置预览图片,最多为两张
+		//设置预览图片,最多为3张
 		for(Blog blog:blogList){
 			List<String> imagesList=blog.getImagesList();
 			String blogInfo=blog.getContent();
 			Document doc=Jsoup.parse(blogInfo);
-			Elements jpgs=doc.select("img[src$=.jpg]"); //　查找扩展名是jpg的图片
+			//查找图片元素
+			Elements jpgs=doc.select("img"); 
 			for(int i=0;i<jpgs.size();i++){
 				Element jpg=jpgs.get(i);
 				imagesList.add(jpg.toString());

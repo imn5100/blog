@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.shaw.constants.Constants;
 import com.shaw.entity.Blog;
+import com.shaw.entity.Comment;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.CommentService;
@@ -60,7 +61,9 @@ public class BlogController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("blogId", blog.getId());
 		map.put("state", 1); // 查询审核通过的评论
-		mav.addObject("commentList", commentService.list(map));
+		List<Comment> list = commentService.list(map);
+		blog.setReplyHit(list.size());
+		mav.addObject("commentList", list);
 		mav.addObject("pageCode", this.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
 				request.getServletContext().getContextPath()));
 		mav.addObject("mainPage", "foreground/blog/view.jsp");

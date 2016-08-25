@@ -10,18 +10,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="summary" column="summary"/>
 		<result property="releaseDate" column="releaseDate"/>
 		<result property="clickHit" column="clickHit"/>
-		<result property="replyHit" column="replyHit"/>
 		<result property="content" column="content"/>
 		<result property="keyWord" column="keyWord"/>
 		<association property="blogType" column="typeId" select="com.shaw.mapper.BlogTypeMapper.findById"></association>
 	</resultMap>
 	
+	<sql id="Base_Column_List">
+		id,title, summary, releaseDate, clickHit, content, typeId,
+		keyWord
+	</sql>
+	
 	<select id="countList"  resultMap="BlogResult">
-		SELECT DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(*) AS blogCount  FROM t_blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
+		SELECT DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(1) AS blogCount  FROM t_blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
 	</select>
 	
 	<select id="list" parameterType="Map" resultMap="BlogResult">
-		select * from t_blog
+		select 	<include refid="Base_Column_List" />  from t_blog
 		<where>
 		    <if test="title!=null and title!='' ">
 				and title like #{title}
@@ -40,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getTotal" parameterType="Map" resultType="Long">
-		select count(*) from t_blog
+		select count(1) from t_blog
 		<where>
 		    <if test="title!=null and title!='' ">
 				and title like #{title}
@@ -55,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findById" parameterType="Integer" resultMap="BlogResult">
-		select * from t_blog where id=#{id}
+		select 	<include refid="Base_Column_List" /> from t_blog where id=#{id}
 	</select>
 	
 	<update id="update" parameterType="Blog">
@@ -87,11 +91,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="getLastBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT * FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
+		SELECT 	<include refid="Base_Column_List" />  FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
 	</select>
 	
 	<select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT * FROM t_blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
+		SELECT 	<include refid="Base_Column_List" />  FROM t_blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
 	</select>
 	
 	
@@ -104,6 +108,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="getBlogByTypeId" parameterType="Integer" resultType="Integer">
-		select count(*) from t_blog where typeId=#{typeId}
+		select count(1) from t_blog where typeId=#{typeId}
 	</select>
 </mapper> 

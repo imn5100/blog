@@ -1,17 +1,15 @@
 package com.shaw.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.shaw.entity.Blog;
 import com.shaw.entity.Comment;
-import com.shaw.service.BlogService;
 import com.shaw.service.CommentService;
 import com.shaw.util.ResponseUtil;
 
@@ -21,11 +19,8 @@ import net.sf.json.JSONObject;
 @RequestMapping("/comment")
 public class CommentController {
 
-	@Resource
+	@Autowired
 	private CommentService commentService;
-
-	@Resource
-	private BlogService blogService;
 
 	/**
 	 * 添加或者修改评论
@@ -49,10 +44,6 @@ public class CommentController {
 			comment.setUserIp(userIp);
 			if (comment.getId() == null) {
 				resultTotal = commentService.add(comment);
-				// 该博客的回复次数加1
-				Blog blog = blogService.findById(comment.getBlog().getId());
-				blog.setReplyHit(blog.getReplyHit() + 1);
-				blogService.update(blog);
 			} else {
 
 			}

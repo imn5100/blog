@@ -20,4 +20,4 @@
 .classpath
 .checkstyle
 
-
+/src/main/webapp/static/userImages/

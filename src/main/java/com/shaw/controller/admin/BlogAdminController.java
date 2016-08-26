@@ -62,7 +62,6 @@ public class BlogAdminController {
 	 * 分页查询博客信息
 	 * @param page
 	 * @param rows
-	 * @param s_customer
 	 * @param response
 	 * @return
 	 * @throws Exception

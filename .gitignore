@@ -12,7 +12,6 @@
 *.torrent
 *.iml
 /resource
-/pythonScript/resource
 /.idea
 #eclipse ignore
 .settings/

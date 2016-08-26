@@ -1,9 +1,9 @@
 package com.shaw.mapper;
 
+import com.shaw.entity.Blog;
+
 import java.util.List;
 import java.util.Map;
-
-import com.shaw.entity.Blog;
 
 public interface BlogMapper {
 

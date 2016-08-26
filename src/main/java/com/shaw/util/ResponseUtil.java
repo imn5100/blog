@@ -1,8 +1,7 @@
 package com.shaw.util;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 
 public class ResponseUtil {

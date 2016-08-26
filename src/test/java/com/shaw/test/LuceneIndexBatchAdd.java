@@ -1,7 +1,9 @@
 package com.shaw.test;
 
-import java.util.List;
-
+import com.shaw.entity.Blog;
+import com.shaw.lucene.BlogIndex;
+import com.shaw.service.BlogService;
+import com.shaw.util.DateUtil;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -11,10 +13,7 @@ import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.shaw.entity.Blog;
-import com.shaw.lucene.BlogIndex;
-import com.shaw.service.BlogService;
-import com.shaw.util.DateUtil;
+import java.util.List;
 
 /**
  * 进行服务器迁移时

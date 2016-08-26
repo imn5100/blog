@@ -1,9 +1,9 @@
 package com.shaw.service;
 
+import com.shaw.entity.Link;
+
 import java.util.List;
 import java.util.Map;
-
-import com.shaw.entity.Link;
 
 /**
  * 友情链接Service接口

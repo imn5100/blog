@@ -1,9 +1,9 @@
 package com.shaw.mapper;
 
+import com.shaw.entity.Comment;
+
 import java.util.List;
 import java.util.Map;
-
-import com.shaw.entity.Comment;
 
 public interface CommentMapper {
 

@@ -1,8 +1,8 @@
 package com.shaw.util;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import java.io.Serializable;
 
 public class Page implements Serializable {
 	private static final long serialVersionUID = -5684108796910091767L;

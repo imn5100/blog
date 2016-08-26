@@ -1,9 +1,9 @@
 package com.shaw.service;
 
+import com.shaw.entity.BlogType;
+
 import java.util.List;
 import java.util.Map;
-
-import com.shaw.entity.BlogType;
 
 /**
  * 博客类型Service接口

@@ -1,7 +1,7 @@
 package com.shaw.realm;
 
-import javax.annotation.Resource;
-
+import com.shaw.entity.Blogger;
+import com.shaw.service.BloggerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -11,8 +11,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.shaw.entity.Blogger;
-import com.shaw.service.BloggerService;
+import javax.annotation.Resource;
 
 /**
  * 自定义Realm

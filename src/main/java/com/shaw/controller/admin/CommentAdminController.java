@@ -72,7 +72,7 @@ public class CommentAdminController {
 	
 	/**
 	 * 评论审核
-	 * @param comment
+	 * @param ids
 	 * @param response
 	 * @return
 	 * @throws Exception

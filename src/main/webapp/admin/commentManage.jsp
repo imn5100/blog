@@ -40,10 +40,10 @@
 	}
 	
 	function formatBlogTitle(val,row){
-		if(val==null){
+		if(val.title==null||val.title==""){
 			return "<font color='red'>该博客已被删除！</font>";
 		}else{
-			return "<a target='_blank' href='${pageContext.request.contextPath}/blog/articles/"+val.id+".html'>"+val.title+"</a>";			
+			return "<a target='_blank' href='${pageContext.request.contextPath}/blog/articles/"+val.id+".html'>"+val.title+"</a>";
 		}
 	}
 	

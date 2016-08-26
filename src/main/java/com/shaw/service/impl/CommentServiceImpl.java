@@ -11,33 +11,33 @@ import java.util.Map;
 
 /**
  * 评论Service实现类
- * @author Administrator
  *
+ * @author Administrator
  */
 @Service("commentService")
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
-	@Resource
-	private CommentMapper commentMapper;
-	
-	public int add(Comment comment) {
-		return commentMapper.add(comment);
-	}
+    @Resource
+    private CommentMapper commentMapper;
 
-	public List<Comment> list(Map<String, Object> map) {
-		return commentMapper.list(map);
-	}
+    public int add(Comment comment) {
+        return commentMapper.add(comment);
+    }
 
-	public Long getTotal(Map<String, Object> map) {
-		return commentMapper.getTotal(map);
-	}
+    public List<Comment> list(Map<String, Object> map) {
+        return commentMapper.listComments(map);
+    }
 
-	public Integer delete(Integer id) {
-		return commentMapper.delete(id);
-	}
+    public Long getTotal(Map<String, Object> map) {
+        return commentMapper.getTotal(map);
+    }
 
-	public int update(Comment comment) {
-		return commentMapper.update(comment);
-	}
+    public Integer delete(Integer id) {
+        return commentMapper.delete(id);
+    }
+
+    public int update(Comment comment) {
+        return commentMapper.update(comment);
+    }
 
 }

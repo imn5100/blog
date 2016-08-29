@@ -1,11 +1,6 @@
 package com.shaw.listener;
 
-import com.shaw.constants.CacheKey;
-import com.shaw.entity.Blog;
-import com.shaw.entity.BlogType;
-import com.shaw.entity.Blogger;
-import com.shaw.entity.Link;
-import com.shaw.service.*;
+import com.shaw.service.SystemService;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -14,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
 
 /**
  * 初始化组件 把博主信息 根据博客类别分类信息 根据日期归档分类信息 存放到application中，用以提供页面请求性能

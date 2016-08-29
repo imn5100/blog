@@ -37,7 +37,7 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <listener>
-    <listener-class>com.shaw.service.impl.InitComponent</listener-class>
+    <listener-class>com.shaw.listener.InitComponent</listener-class>
   </listener>
   <servlet>
     <servlet-name>springMVC</servlet-name>

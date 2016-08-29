@@ -30,7 +30,6 @@ public class InitComponent implements ServletContextListener, ApplicationContext
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext application = servletContextEvent.getServletContext();
-        BloggerService bloggerService = (BloggerService) applicationContext.getBean("bloggerService");
         SystemService systemService = (SystemService) applicationContext.getBean("systemService");
         systemService.initBlogData(application);
     }

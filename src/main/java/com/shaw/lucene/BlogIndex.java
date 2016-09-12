@@ -32,7 +32,7 @@ import java.util.List;
 public class BlogIndex {
 
     private Directory dir = null;
-    public static final String DEAFULT_PATH = "/lucene";
+    public static final String DEAFULT_PATH = "/lucene/blog";
 
     /**
      * 获取IndexWriter实例

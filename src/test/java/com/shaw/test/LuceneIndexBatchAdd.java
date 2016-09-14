@@ -4,10 +4,7 @@ import com.shaw.entity.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.util.DateUtil;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
 import org.junit.Test;
@@ -22,26 +19,26 @@ import java.util.List;
  * 不要重复运行，会添加两次搜索索引，导致问题。
  * 重新导入索引：删除项目盘符根目录下 lucene 文件夹 中所有文件，运行测试用例。
  * 如果手动修改了数据库的t_blog表也需要重新导入搜索索引，或者手动删除|更新修改的blog 否则会出现搜索查询能查到数据，却拿不到数据的问题。
- * */
+ */
 public class LuceneIndexBatchAdd extends SpringTestCase {
-	private BlogIndex blogIndex = new BlogIndex();
+    @Autowired
+    private BlogService blogService;
 
-	@Autowired
-	private BlogService blogService;
+    @Test
+    public void setAllIndex() throws Exception {
+        BlogIndex blogIndex = new BlogIndex();
+        List<Blog> blogs = blogService.list(null);
+        IndexWriter writer = blogIndex.getWriter();
 
-	@Test
-	public void setAllIndex() throws Exception {
-		List<Blog> blogs = blogService.list(null);
-		IndexWriter writer = blogIndex.getWriter();
-		for (Blog blog : blogs) {
-			Document doc = new Document();
-			doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
-			doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
-			doc.add(new StringField("releaseDate", DateUtil.formatDate(blog.getReleaseDate(), "yyyy-MM-dd"), Field.Store.YES));
-			doc.add(new TextField("content", Jsoup.parse(blog.getContent()).text(), Field.Store.YES));
-			writer.addDocument(doc);
-		}
-		writer.close();
-	}
+        for (Blog blog : blogs) {
+            Document doc = new Document();
+            doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
+            doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
+            doc.add(new TextField("content", Jsoup.parse(blog.getContent()).text(), Field.Store.YES));
+            doc.add(new LongField("time", blog.getReleaseDate().getTime(), BlogIndex.TIME_TYPE));
+            writer.addDocument(doc);
+        }
+        writer.close();
+    }
 
 }

@@ -3,13 +3,13 @@ package com.shaw.lucene;
 import com.shaw.entity.Blog;
 import com.shaw.util.DateUtil;
 import com.shaw.util.StringUtil;
+import com.shaw.util.TimeUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
@@ -31,21 +31,34 @@ import java.util.List;
  */
 public class BlogIndex {
 
-    private Directory dir = null;
+    private Directory dir;
+    private Analyzer analyzer;
     public static final String DEAFULT_PATH = "/lucene/blog";
 
-    /**
-     * 获取IndexWriter实例
-     *
-     * @return
-     * @throws Exception
-     */
+    public BlogIndex() throws Exception {
+        this.analyzer = new SmartChineseAnalyzer();
+        this.dir = FSDirectory.open(Paths.get(DEAFULT_PATH));
+    }
+
     public IndexWriter getWriter() throws Exception {
-        dir = FSDirectory.open(Paths.get(DEAFULT_PATH));
-        SmartChineseAnalyzer analyzer = new SmartChineseAnalyzer();
-        IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
-        IndexWriter writer = new IndexWriter(dir, iwc);
-        return writer;
+        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        return new IndexWriter(dir, config);
+    }
+
+    public IndexReader getReader() throws Exception {
+        return DirectoryReader.open(dir);
+    }
+
+    public static final FieldType TIME_TYPE = new FieldType();
+
+    static {
+        TIME_TYPE.setTokenized(true);
+        TIME_TYPE.setOmitNorms(true);
+        TIME_TYPE.setStored(true);
+        TIME_TYPE.setIndexOptions(IndexOptions.DOCS);
+        TIME_TYPE.setNumericType(FieldType.NumericType.LONG);
+        TIME_TYPE.setDocValuesType(DocValuesType.NUMERIC);
+        TIME_TYPE.freeze();
     }
 
     /**
@@ -56,10 +69,11 @@ public class BlogIndex {
     public void addIndex(Blog blog) throws Exception {
         IndexWriter writer = getWriter();
         Document doc = new Document();
+        //存储且索引  id 用于维护索引数据
         doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
         doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
-        doc.add(new StringField("releaseDate", DateUtil.formatDate(new Date(), "yyyy-MM-dd"), Field.Store.YES));
         doc.add(new TextField("content", blog.getContentNoTag(), Field.Store.YES));
+        doc.add(new LongField("time", blog.getReleaseDate().getTime(), TIME_TYPE));
         writer.addDocument(doc);
         writer.close();
     }
@@ -73,10 +87,11 @@ public class BlogIndex {
     public void updateIndex(Blog blog) throws Exception {
         IndexWriter writer = getWriter();
         Document doc = new Document();
+        //存储且索引  id 用于维护索引数据
         doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
         doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
-        doc.add(new StringField("releaseDate", DateUtil.formatDate(new Date(), "yyyy-MM-dd"), Field.Store.YES));
         doc.add(new TextField("content", blog.getContentNoTag(), Field.Store.YES));
+        doc.add(new LongField("time", blog.getReleaseDate().getTime(), TIME_TYPE));
         writer.updateDocument(new Term("id", String.valueOf(blog.getId())), doc);
         writer.close();
     }
@@ -103,10 +118,7 @@ public class BlogIndex {
      * @throws Exception
      */
     public List<Blog> searchBlog(String q) throws Exception {
-        // 获得索引目录
-        dir = FSDirectory.open(Paths.get(DEAFULT_PATH));
-        // 创建索引reader
-        IndexReader reader = DirectoryReader.open(dir);
+        IndexReader reader = getReader();
         // 创建索引Searcher
         IndexSearcher is = new IndexSearcher(reader);
         // 构建搜索条件
@@ -121,8 +133,11 @@ public class BlogIndex {
         booleanQuery.add(query, BooleanClause.Occur.SHOULD);
         booleanQuery.add(query2, BooleanClause.Occur.SHOULD);
 
+        //(title,content)关联度+时间 排序
+        Sort sort = new Sort(new SortField("title", SortField.Type.SCORE), new SortField("content", SortField.Type.SCORE), new SortField("time", SortField.Type.LONG, true));
+
         // 查询100条记录
-        TopDocs hits = is.search(booleanQuery.build(), 100/*, sort*/);
+        TopDocs hits = is.search(booleanQuery.build(), 100, sort);
 
         QueryScorer scorer = new QueryScorer(query);
         Fragmenter fragmenter = new SimpleSpanFragmenter(scorer);
@@ -136,8 +151,16 @@ public class BlogIndex {
             Document doc = is.doc(scoreDoc.doc);
             Blog blog = new Blog();
             blog.setId(Integer.parseInt(doc.get(("id"))));
-            String time = doc.get(("releaseDate"));
-            blog.setReleaseDateStr(time);
+            String time = doc.get(("time"));
+            if (StringUtils.isNotBlank(time)) {
+                try {
+                    Long timeStamp = Long.valueOf(time);
+                    blog.setReleaseDate(new Date(timeStamp));
+                    blog.setReleaseDateStr(TimeUtils.getFormatDay(timeStamp));
+                } catch (Exception e) {
+                    blog.setReleaseDateStr("");
+                }
+            }
             String title = doc.get("title");
             String content = StringEscapeUtils.escapeHtml(doc.get("content"));
             if (title != null) {
@@ -164,7 +187,6 @@ public class BlogIndex {
             }
             blogList.add(blog);
         }
-        Collections.sort(blogList);
         return blogList;
     }
 }

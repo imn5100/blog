@@ -1,7 +1,6 @@
 package com.shaw.lucene;
 
 import com.shaw.entity.Blog;
-import com.shaw.util.DateUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -20,14 +19,13 @@ import org.apache.lucene.store.FSDirectory;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 博客索引类
  *
- * @author Administrator
+ * @author shaw
  */
 public class BlogIndex {
 

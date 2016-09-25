@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +46,11 @@ public class BlogAdminController {
     public String save(Blog blog, HttpServletResponse response) throws Exception {
         int resultTotal = 0; // 操作的记录条数
         if (blog.getId() == null) {
+            blog.setReleaseDate(new Date());
             resultTotal = blogService.add(blog);
             blogIndex.addIndex(blog); // 添加博客索引
         } else {
+            blog.setReleaseDate(blogService.findById(blog.getId()).getReleaseDate());
             resultTotal = blogService.update(blog);
             blogIndex.updateIndex(blog); // 更新博客索引
         }

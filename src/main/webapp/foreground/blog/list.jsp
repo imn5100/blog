@@ -21,8 +21,7 @@
                             &nbsp;&nbsp;
                         </c:forEach>
 				  	</span>
-                    <span class="info">发表于 <fmt:formatDate value="${blog.releaseDate }" type="date"
-                                                           pattern="yyyy-MM-dd HH:mm"/> 阅读(${blog.clickHit}) </span>
+                    <span class="info">发表于 ${blog.releaseDateStr}&nbsp阅读(${blog.clickHit}) </span>
                 </li>
                 <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;"/>
             </c:forEach>

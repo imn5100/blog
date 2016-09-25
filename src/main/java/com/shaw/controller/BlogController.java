@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +92,11 @@ public class BlogController {
 		List<Blog> blogList = blogIndex.searchBlog(q.trim());
 		Integer toIndex = blogList.size() >= page * Constants.PAGE_SIZE ? (page) * Constants.PAGE_SIZE
 				: blogList.size();
-		mav.addObject("blogList", blogList.subList(((page) - 1) * Constants.PAGE_SIZE, toIndex));
+		List<Blog> blogList2 = new ArrayList<Blog>();
+		// ArrayList subList 返回的类型为 SubList
+		// 。jsp页面访问SubList集合时可能报错。这里直接使用Arraylist 返回集合
+		blogList2.addAll(blogList.subList(((page) - 1) * Constants.PAGE_SIZE, toIndex));
+		mav.addObject("blogList", blogList2);
 		mav.addObject("pageCode", this.genUpAndDownPageCode((page), blogList.size(), q, Constants.PAGE_SIZE,
 				request.getServletContext().getContextPath()));
 		mav.addObject("q", q);

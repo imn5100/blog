@@ -126,7 +126,7 @@ public class BlogController {
         ResponseUtil.addCookie(response, CacheKey.CODES_COOKIE_KEY, codesId, CacheKey.CODES_EXPIRE);
 
         //获取验证码，并response回写验证码图片
-        String codes = CodesImgUtil.getCodesImg(response, request);
+        String codes = CodesImgUtil.getCodesImg(response, request, Constants.VCODE_VERSION_2);
 
         //验证码存入 redis并设置1 min过期。
         String key = String.format(CacheKey.CODES_KEY, codesId);
@@ -141,8 +141,7 @@ public class BlogController {
      */
     @RequestMapping("/codesImg")
     public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String codes = CodesImgUtil.getCodesImg(response, request);
-        request.getSession().setAttribute("sRand", codes);
+        CodesImgUtil.getCodesImg(response, request, Constants.VCODE_VERSION_1);
         return;
     }
 

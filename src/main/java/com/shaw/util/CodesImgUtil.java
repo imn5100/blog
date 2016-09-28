@@ -1,5 +1,7 @@
 package com.shaw.util;
 
+import com.shaw.constants.Constants;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +24,7 @@ public class CodesImgUtil {
 
     public static final char[] CODES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 
-    public static String getCodesImg(HttpServletResponse response, HttpServletRequest request) throws Exception {
+    public static String getCodesImg(HttpServletResponse response, HttpServletRequest request, int version) throws Exception {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
@@ -47,6 +49,9 @@ public class CodesImgUtil {
             sRand.append(rand);
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
             g.drawString(rand.toString(), 13 * i + 6, 16);
+        }
+        if (version == Constants.VCODE_VERSION_1) {
+            request.getSession().setAttribute("sRand", sRand.toString());
         }
         g.dispose();
         ImageIO.write(image, "JPEG", response.getOutputStream());

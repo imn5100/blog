@@ -1,5 +1,7 @@
 package com.shaw.constants;
 
 public class Constants {
-	public static Integer PAGE_SIZE = 10;
+    public static final Integer PAGE_SIZE = 10;
+    public static final Integer VCODE_VERSION_1 = 1;
+    public static final Integer VCODE_VERSION_2 = 2;
 }

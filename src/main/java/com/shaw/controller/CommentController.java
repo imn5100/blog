@@ -8,6 +8,7 @@ import com.shaw.util.ResponseUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.web.http.HttpSessionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +62,7 @@ public class CommentController {
 
     /***
      * 这种模式一直刷新，容易导致redis 溢出
-     * */
+     */
     private boolean validCode(HttpServletRequest request, HttpServletResponse response, String vcode) throws Exception {
         String codesId = ResponseUtil.getCookieByName(request, CacheKey.CODES_COOKIE_KEY);
         if (codesId == null) {

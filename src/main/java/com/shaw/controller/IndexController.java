@@ -74,7 +74,7 @@ public class IndexController {
         }
         mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), 10, param.toString()));
         mav.addObject("mainPage", "foreground/blog/list.jsp");
-        mav.addObject("pageTitle", "JavaBlog");
+        mav.addObject("pageTitle", "Home");
         mav.setViewName("mainTemp");
         return mav;
     }
@@ -89,7 +89,7 @@ public class IndexController {
     public ModelAndView download() throws Exception {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "foreground/system/aboutSite.jsp");
-        mav.addObject("pageTitle", "JavaBlog");
+        mav.addObject("pageTitle", "About");
         mav.setViewName("mainTemp");
         return mav;
     }

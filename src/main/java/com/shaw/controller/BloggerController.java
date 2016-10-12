@@ -50,7 +50,7 @@ public class BloggerController {
 		//保证属于一致性。不刷新 否则会出现 博主页面和其他页面右侧博主信息不一致情况。统一到 System全局刷新 显示。
 //		mav.addObject("blogger",bloggerService.find());
 		mav.addObject("mainPage", "foreground/blogger/info.jsp");
-		mav.addObject("pageTitle","Blog");
+		mav.addObject("pageTitle","Bloger");
 		mav.setViewName("mainTemp");
 		return mav;
 	}

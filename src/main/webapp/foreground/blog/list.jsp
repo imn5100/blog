@@ -30,8 +30,8 @@
 </div>
 
 <div>
-    <nav>
-        <ul class="pagination pagination-sm">
+    <nav align="center">
+        <ul class="pagination pagination-sm" >
             ${pageCode }
         </ul>
     </nav>

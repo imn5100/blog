@@ -1,7 +1,7 @@
 package com.shaw.controller;
 
-import com.shaw.entity.Blogger;
-import com.shaw.service.BloggerService;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -9,16 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.shaw.entity.Blogger;
 
 @Controller
 @RequestMapping("/blogger")
 public class BloggerController {
 
-	@Resource
-	private BloggerService bloggerService;
-	
 	/**
 	 * 用户登录
 	 * @param blogger
@@ -44,7 +40,7 @@ public class BloggerController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/aboutMe")
+	@RequestMapping("/aboutBlogger")
 	public ModelAndView aboutMe()throws Exception{
 		ModelAndView mav=new ModelAndView();
 		//保证属于一致性。不刷新 否则会出现 博主页面和其他页面右侧博主信息不一致情况。统一到 System全局刷新 显示。

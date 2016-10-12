@@ -85,7 +85,7 @@ public class IndexController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/aboutSite")
+    @RequestMapping("/about")
     public ModelAndView download() throws Exception {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "foreground/system/aboutSite.jsp");

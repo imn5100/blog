@@ -5,7 +5,7 @@
 		<div align="center" style="padding-top: 90px" >
 			<span style="">Powered by <a  href="https://github.com/imn5100" target="_blank">
 				<img alt="Brand" src="${pageContext.request.contextPath}/static/images/git.png">
-				imn5100</a></span>
+				Imn5100</a></span>
 		</div>
 	</div>
 </div>

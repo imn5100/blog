@@ -34,8 +34,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/aboutSite.html"><strong>关于本站</strong></a></li>
-                        <li><a href="${pageContext.request.contextPath}/blogger/aboutMe.html"><strong>关于博主</strong></a>
+                        <li><a href="${pageContext.request.contextPath}/about.html"><strong>关于本站</strong></a></li>
+                        <li><a href="${pageContext.request.contextPath}/blogger/aboutBlogger.html"><strong>博主介绍</strong></a>
                         </li>
                     </ul>
                     <form action="${pageContext.request.contextPath}/blog/q.html" class="navbar-form navbar-right"

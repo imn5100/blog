@@ -41,23 +41,18 @@
 	<jsp:include page="/foreground/common/menu.jsp"/>
 	
 	<div class="row">
-		<div class="col-md-9">
-			<jsp:include page="${mainPage }"></jsp:include>
-		</div>
-		
 		<div class="col-md-3">
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/user_icon.png"/>
-					博主信息
+					${blogger.nickName }
 				</div>
 				<div class="user_image">
 					<img src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
 				</div>
-				<div class="nickName">${blogger.nickName }</div>
-				<div class="userSign">(${blogger.sign })</div>
+				<div class="userSign">${blogger.sign }</div>
 			</div>
-			
+
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>
@@ -71,7 +66,7 @@
 					</ul>
 				</div>
 			</div>
-			
+
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
@@ -85,11 +80,11 @@
 					</ul>
 				</div>
 			</div>
-			
+
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>
-					友情链接
+					友链
 				</div>
 				<div class="datas">
 					<ul>
@@ -99,8 +94,13 @@
 					</ul>
 				</div>
 			</div>
-			
 		</div>
+
+		<div class="col-md-9">
+			<jsp:include page="${mainPage }"></jsp:include>
+		</div>
+		
+
 		
 		
 	</div>

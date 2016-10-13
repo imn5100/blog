@@ -1,23 +1,29 @@
 package com.shaw.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.shaw.constants.CacheKey;
+import com.shaw.constants.ResponseCode;
+import com.shaw.service.impl.RedisClient;
+import com.shaw.util.ResponseUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shaw.util.ResponseUtil;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/blogger")
 public class BloggerController {
+
+    @Autowired
+    private RedisClient redisClient;
 
     /**
      * 用户登录
@@ -28,23 +34,31 @@ public class BloggerController {
      */
     @RequestMapping("/login")
     @ResponseBody
-    public String login(HttpServletResponse response, String username, String password) throws Exception {
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
-            ResponseUtil.write(response, "400");
+    public String login(HttpSession session, HttpServletResponse response, String username, String password, String vcode) throws Exception {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(vcode)) {
+            ResponseUtil.write(response, ResponseCode.PARAM_NULL.getCode());
         }
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        String key = String.format(CacheKey.CODES_KEY, session.getId());
+        String code = (String) redisClient.get(key);
+        if (!vcode.equalsIgnoreCase(code)) {
+            ResponseUtil.write(response, ResponseCode.CODES_WRONG.getCode());
+            return null;
+        } else {
+            redisClient.del(key);
+        }
         try {
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token); // 登录验证
-            ResponseUtil.write(response, "200");
+            ResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
         } catch (AuthenticationException e) {
-            ResponseUtil.write(response, "999");
+            ResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
         }
         return null;
     }
 
     /**
-     * 查找博主信息
+     * 博主信息
      *
      * @return
      * @throws Exception
@@ -52,8 +66,6 @@ public class BloggerController {
     @RequestMapping("/aboutBlogger")
     public ModelAndView aboutMe() throws Exception {
         ModelAndView mav = new ModelAndView();
-        //保证属于一致性。不刷新 否则会出现 博主页面和其他页面右侧博主信息不一致情况。统一到 System全局刷新 显示。
-//		mav.addObject("blogger",bloggerService.find());
         mav.addObject("mainPage", "foreground/blogger/info.jsp");
         mav.addObject("pageTitle", "Bloger");
         mav.setViewName("mainTemp");

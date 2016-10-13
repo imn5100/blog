@@ -1,11 +1,13 @@
 package com.shaw.controller;
 
+import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
 import com.shaw.entity.Blog;
 import com.shaw.entity.Comment;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.CommentService;
+import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
 import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +34,9 @@ public class BlogController {
 
     @Autowired
     private BlogIndex blogIndex;
+
+    @Autowired
+    private RedisClient redisClient;
 
     /**
      * 请求博客详细信息
@@ -103,7 +108,11 @@ public class BlogController {
 
     @RequestMapping("/codesImg")
     public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        CodesImgUtil.getCodesImg(response, request, Constants.VCODE_VERSION_1);
+        String codes = CodesImgUtil.getCodesImg(response, request);
+        String sessionId = request.getSession().getId();
+        String key = String.format(CacheKey.CODES_KEY, sessionId);
+        redisClient.set(key, codes);
+        redisClient.expire(key, CacheKey.CODES_EXPIRE);
         return;
     }
 

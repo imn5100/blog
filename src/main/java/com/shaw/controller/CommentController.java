@@ -1,7 +1,9 @@
 package com.shaw.controller;
 
+import com.shaw.constants.CacheKey;
 import com.shaw.entity.Comment;
 import com.shaw.service.CommentService;
+import com.shaw.service.impl.RedisClient;
 import com.shaw.util.ResponseUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private RedisClient redisClient;
 
     /**
      * 添加或者修改评论
@@ -31,13 +35,15 @@ public class CommentController {
     @RequestMapping("/save")
     public void save(Comment comment, @RequestParam("imageCode") String imageCode, HttpServletRequest request,
                      HttpServletResponse response, HttpSession session) throws Exception {
-        String sRand = (String) session.getAttribute("sRand"); // 获取系统生成的验证码
+        String key = String.format(CacheKey.CODES_KEY, session.getId());
+        String vcode = (String) redisClient.get(key);
         JSONObject result = new JSONObject();
-        int resultTotal = 0; // 操作的记录条数
-        if (/*!validCode(request, response, imageCode)*/!imageCode.equalsIgnoreCase(sRand)) {
+        int resultTotal = 0;
+        if (!imageCode.equalsIgnoreCase(vcode)) {
             result.put("success", false);
             result.put("errorInfo", "验证码填写错误！");
         } else {
+            redisClient.del(key);
             String userIp = request.getRemoteAddr(); // 获取用户IP
             comment.setUserIp(userIp);
             if (comment.getId() == null) {

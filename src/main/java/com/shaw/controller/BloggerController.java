@@ -1,17 +1,19 @@
 package com.shaw.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.shaw.util.ResponseUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.shaw.util.ResponseUtil;
 
 @Controller
 @RequestMapping("/blogger")
@@ -20,12 +22,16 @@ public class BloggerController {
     /**
      * 用户登录
      *
-     * @param request
+     * @param username
+     * @param password
      * @return
      */
     @RequestMapping("/login")
     @ResponseBody
-    public String login(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
+    public String login(HttpServletResponse response, String username, String password) throws Exception {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            ResponseUtil.write(response, "400");
+        }
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {

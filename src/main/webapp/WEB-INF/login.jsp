@@ -148,7 +148,7 @@ $(function(){
 		$.ajax({
 			type: "POST",
 			async: false,
-			url: "/blogger/login.do",
+			url: "${pageContext.request.contextPath}/blogger/login.do",
 			data: "username=" + userName + "&password=" + $.md5(password) /*+ "&vcode=" + vcode*/,
 			success: function (data) {
 				$("#error").text("");
@@ -200,10 +200,6 @@ $(function(){
 	    </DIV>
 	</DIV>
 </form>
-<div style="text-align:center;padding-top: 30px">
-			<span style="">Powered By <a  href="https://github.com/imn5100" target="_blank">
-				<img alt="Brand" src="${pageContext.request.contextPath}/static/images/git.png">
-				Imn5100</a></span>
-</div>
+<jsp:include page="${pageContext.request.contextPath}/foreground/common/foot.jsp"/>
 </body>
 </html>

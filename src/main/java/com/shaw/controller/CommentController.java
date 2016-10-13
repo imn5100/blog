@@ -1,14 +1,10 @@
 package com.shaw.controller;
 
-import com.shaw.constants.CacheKey;
 import com.shaw.entity.Comment;
 import com.shaw.service.CommentService;
-import com.shaw.service.impl.RedisClient;
 import com.shaw.util.ResponseUtil;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.web.http.HttpSessionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +19,6 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private RedisClient redisClient;
 
     /**
      * 添加或者修改评论
@@ -58,25 +52,6 @@ public class CommentController {
             }
         }
         ResponseUtil.write(response, result);
-    }
-
-    /***
-     * 这种模式一直刷新，容易导致redis 溢出
-     */
-    private boolean validCode(HttpServletRequest request, HttpServletResponse response, String vcode) throws Exception {
-        String codesId = ResponseUtil.getCookieByName(request, CacheKey.CODES_COOKIE_KEY);
-        if (codesId == null) {
-            return false;
-        }
-        String key = String.format(CacheKey.CODES_KEY, codesId);
-        String code = (String) redisClient.get(key);
-        if (StringUtils.isBlank(code) || !vcode.equalsIgnoreCase(code)) {
-            return false;
-        }
-        //验证通过，删除 redis 和 cookie 缓存
-        ResponseUtil.addCookie(response, CacheKey.CODES_COOKIE_KEY, codesId, 0);
-        redisClient.del(key);
-        return true;
     }
 
 }

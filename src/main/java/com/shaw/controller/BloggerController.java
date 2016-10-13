@@ -1,7 +1,6 @@
 package com.shaw.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.shaw.entity.Blogger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shaw.entity.Blogger;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/blogger")

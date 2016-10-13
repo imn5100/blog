@@ -1,29 +1,23 @@
 package com.shaw.controller;
 
-import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
 import com.shaw.entity.Blog;
 import com.shaw.entity.Comment;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.CommentService;
-import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
-import com.shaw.util.ResponseUtil;
 import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.*;
 
 @Controller
@@ -107,38 +101,6 @@ public class BlogController {
         return mav;
     }
 
-
-    @Autowired
-    private RedisClient redisClient;
-
-    /**
-     * 集群环境
-     * 评论验证码
-     * 这种模式一直刷新，容易导致redis 溢出
-     *
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/codesImgV2")
-    public void getCodesV2(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //设置codesId用于获取验证码,过期时间和redis相同
-        String codesId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-        ResponseUtil.addCookie(response, CacheKey.CODES_COOKIE_KEY, codesId, CacheKey.CODES_EXPIRE);
-
-        //获取验证码，并response回写验证码图片
-        String codes = CodesImgUtil.getCodesImg(response, request, Constants.VCODE_VERSION_2);
-
-        //验证码存入 redis并设置1 min过期。
-        String key = String.format(CacheKey.CODES_KEY, codesId);
-        redisClient.set(key, codes);
-        redisClient.expire(key, CacheKey.CODES_EXPIRE * 1L);
-        return;
-    }
-
-    /**
-     * 非集群环境验证码
-     * 或配置nginx 完成session共享 可使用此验证码功能
-     */
     @RequestMapping("/codesImg")
     public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         CodesImgUtil.getCodesImg(response, request, Constants.VCODE_VERSION_1);

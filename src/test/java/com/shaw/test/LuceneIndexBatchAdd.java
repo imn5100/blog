@@ -1,16 +1,20 @@
 package com.shaw.test;
 
-import com.shaw.entity.Blog;
-import com.shaw.lucene.BlogIndex;
-import com.shaw.service.BlogService;
-import com.shaw.util.DateUtil;
-import org.apache.lucene.document.*;
+import java.util.List;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.LongField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import com.shaw.entity.Blog;
+import com.shaw.lucene.BlogIndex;
+import com.shaw.service.BlogService;
 
 /**
  * 进行服务器迁移时

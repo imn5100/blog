@@ -102,7 +102,7 @@
 	<table style="padding: 5px" width="100%">
 		<tr>
 			<td width="50%">
-				<img alt="logo" src="${pageContext.request.contextPath}/static/images/innerLogo.png">
+				<%--<img alt="logo" src="${pageContext.request.contextPath}/static/images/innerLogo.png">--%>
 			</td>
 			<td valign="bottom" align="right" width="50%">
 				<font size="3">&nbsp;&nbsp;<strong>欢迎：</strong>${currentUser.userName }</font>
@@ -146,7 +146,7 @@
 	</div>
 </div>
 <div region="south" style="height: 25px;padding: 5px" align="center">
-	Copyright © 2012-2016
+	Rua~~~~~!
 </div>
 
 <div id="dlg" class="easyui-dialog" style="width:400px;height:200px;padding: 10px 20px"

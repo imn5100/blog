@@ -95,6 +95,6 @@ public class BloggerAdminController {
 	@RequestMapping("/logout")
 	public String  logout()throws Exception{
 		SecurityUtils.getSubject().logout();
-		return "redirect:/login.jsp";
+		return "redirect:/login.html";
 	}
 }

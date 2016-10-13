@@ -80,7 +80,7 @@ public class IndexController {
     }
 
     /**
-     * 源码下载
+     * 关于本站
      *
      * @return
      * @throws Exception
@@ -93,4 +93,13 @@ public class IndexController {
         mav.setViewName("mainTemp");
         return mav;
     }
+
+    @RequestMapping("/login")
+    public ModelAndView loginPage() throws Exception {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("WEB-INF/login");
+        return mav;
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.shaw.service.CommentService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.ResponseUtil;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class CommentController {
         String vcode = (String) redisClient.get(key);
         JSONObject result = new JSONObject();
         int resultTotal = 0;
-        if (!imageCode.equalsIgnoreCase(vcode)) {
+        if (StringUtils.isBlank(imageCode) || !imageCode.equalsIgnoreCase(vcode)) {
             result.put("success", false);
             result.put("errorInfo", "验证码填写错误！");
         } else {

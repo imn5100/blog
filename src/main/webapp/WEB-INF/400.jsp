@@ -8,7 +8,7 @@
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery.md5.js"></script>
     <STYLE>
         body {
-            background: #ebebeb;
+            background: #F8F8FF;
             font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "\9ED1\4F53", Arial, sans-serif;
             color: #222;
             font-size: 12px;
@@ -20,7 +20,7 @@
         }
 
         .top_div {
-            background: #0eaaad;
+            background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
             width: 100%;
             height: 400px;
         }

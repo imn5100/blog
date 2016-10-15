@@ -1,9 +1,8 @@
 package com.shaw.controller;
 
-import com.shaw.constants.CacheKey;
-import com.shaw.constants.ResponseCode;
-import com.shaw.service.impl.RedisClient;
-import com.shaw.util.ResponseUtil;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.shaw.constants.CacheKey;
+import com.shaw.constants.ResponseCode;
+import com.shaw.entity.Blogger;
+import com.shaw.service.BloggerService;
+import com.shaw.service.impl.RedisClient;
+import com.shaw.util.ResponseUtil;
 
 @Controller
 @RequestMapping("/blogger")
@@ -24,6 +27,8 @@ public class BloggerController {
 
     @Autowired
     private RedisClient redisClient;
+    @Autowired
+    private BloggerService bloggerService;
 
     /**
      * 用户登录
@@ -48,10 +53,15 @@ public class BloggerController {
             redisClient.del(key);
         }
         try {
-            Subject subject = SecurityUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            subject.login(token); // 登录验证
-            ResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+            Blogger blogger = bloggerService.getByUserName(username);
+            if (blogger != null && blogger.getPassword().equals(password)) {
+                Subject subject = SecurityUtils.getSubject();
+                UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+                subject.login(token); // 登录验证
+                ResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+            } else {
+                ResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+            }
         } catch (AuthenticationException e) {
             ResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
         }

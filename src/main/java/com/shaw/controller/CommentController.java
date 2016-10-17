@@ -45,7 +45,9 @@ public class CommentController {
             result.put("errorInfo", "验证码填写错误！");
         } else {
             redisClient.del(key);
-            String userIp = request.getRemoteAddr(); // 获取用户IP
+            //nginx 代理下 将用户ID 设置在  x-real-ip中 否者获取的ip都是本地ip
+            String userIp = request.getHeader("X-Real-IP");
+//            String userIp = request.getRemoteAddr(); // 获取用户IP
             comment.setUserIp(userIp);
             if (comment.getId() == null) {
                 resultTotal = commentService.add(comment);

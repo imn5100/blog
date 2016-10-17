@@ -7,7 +7,7 @@ public class Test {
 //		System.out.println(StringEscapeUtils.escapeHtml(str));
 		Short  drawStatus = 111;
 		System.out.println((drawStatus & 0x01) == 0x01);
-		
-		
+
+
 	}
 }

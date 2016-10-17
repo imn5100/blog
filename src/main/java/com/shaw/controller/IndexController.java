@@ -1,5 +1,6 @@
 package com.shaw.controller;
 
+import com.shaw.constants.Constants;
 import com.shaw.entity.Blog;
 import com.shaw.service.BlogService;
 import com.shaw.util.PageBean;
@@ -74,7 +75,7 @@ public class IndexController {
         }
         mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), 10, param.toString()));
         mav.addObject("mainPage", "foreground/blog/list.jsp");
-        mav.addObject("pageTitle", "Home");
+        mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
         return mav;
     }
@@ -89,7 +90,7 @@ public class IndexController {
     public ModelAndView download() throws Exception {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "foreground/system/aboutSite.jsp");
-        mav.addObject("pageTitle", "About");
+        mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
         return mav;
     }

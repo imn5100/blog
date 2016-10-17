@@ -94,6 +94,15 @@
 			}
 		},"json");
 	}
+	function refreshIndex(){
+		$.post("${pageContext.request.contextPath}/admin/system/refreshIndex.do",{},function(result){
+			if(result.success){
+				$.messager.alert("系统提示","重建索引成功！");
+			}else{
+				$.messager.alert("系统提示","重建索引失败");
+			}
+		},"json");
+	}
 
 </script>
 </head>
@@ -141,6 +150,7 @@
 		    <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
 			<a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
 			<a href="javascript:refreshSystem()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
+			<a href="javascript:refreshIndex()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">重建索引</a>
 			<a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'" style="width: 150px;">安全退出</a>
 		</div>
 	</div>

@@ -6,6 +6,8 @@ import com.shaw.util.DateUtil;
 import com.shaw.util.ResponseUtil;
 import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,7 @@ public class BloggerAdminController {
 
 	@Resource
 	private BloggerService bloggerService;
+	Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	
 	/**
 	 * 修改博主信息
@@ -47,6 +50,7 @@ public class BloggerAdminController {
 		}else{
 			result.append("<script language='javascript'>alert('修改失败！');</script>");
 		}
+		logger.info("update blogger success");
 		ResponseUtil.write(response, result);
 		return null;
 	}
@@ -83,6 +87,7 @@ public class BloggerAdminController {
 		}else{
 			result.put("success", false);
 		}
+		logger.info("modify password success,md5 newPassword:"+newPassword);
 		ResponseUtil.write(response, result);
 		return null;
 	}
@@ -95,6 +100,7 @@ public class BloggerAdminController {
 	@RequestMapping("/logout")
 	public String  logout()throws Exception{
 		SecurityUtils.getSubject().logout();
+		logger.info("blogger logout");
 		return "redirect:/login.html";
 	}
 }

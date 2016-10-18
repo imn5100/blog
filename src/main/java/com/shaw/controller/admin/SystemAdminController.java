@@ -9,6 +9,8 @@ import net.sf.json.JSONObject;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ public class SystemAdminController {
 	private BlogService blogService;
 	@Autowired
 	private BlogIndex blogIndex;
+	Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	/**
 	 * 刷新系统缓存
@@ -43,6 +46,7 @@ public class SystemAdminController {
 		systemService.initBlogData(application);
 		JSONObject result = new JSONObject();
 		result.put("success", true);
+		logger.info("refresh System success");
 		ResponseUtil.write(response, result);
 		return null;
 	}
@@ -54,6 +58,7 @@ public class SystemAdminController {
 	public String refreshLuceneIndex(HttpServletResponse response) throws Exception {
 		IndexWriter writer = blogIndex.getWriter();
 		writer.deleteAll();
+		logger.info("deleteAll lucene index success");
 		List<Blog> blogs = blogService.list(null);
 		for (Blog blog : blogs) {
 			Document doc = new Document();
@@ -66,6 +71,7 @@ public class SystemAdminController {
 		writer.close();
 		JSONObject result = new JSONObject();
 		result.put("success", true);
+		logger.info("refresh lucene index success");
 		ResponseUtil.write(response, result);
 		return null;
 	}

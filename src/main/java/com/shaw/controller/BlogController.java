@@ -101,7 +101,7 @@ public class BlogController {
                 request.getServletContext().getContextPath()));
         mav.addObject("q", q);
         mav.addObject("resultTotal", blogList.size());
-        mav.addObject("pageTitle", "搜索关键字'" + q + "'JavaBlog Result Page");
+        mav.addObject("pageTitle", Constants.PAGE_TITLE+" 搜索'" + q + "'");
         mav.setViewName("mainTemp");
         return mav;
     }

@@ -14,6 +14,6 @@
     <context:component-scan base-package="com.shaw.service"/>
     <!-- 为了保持applicationContext，将Listener 作为bean保存-->
     <bean id="initComponent" class="com.shaw.listener.InitComponent"></bean>
-
+    <bean class="com.shaw.handler.ExceptionHandler"></bean>
 
 </beans>

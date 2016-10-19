@@ -11,59 +11,69 @@ import java.util.Map;
 
 /**
  * 博客Service实现类
- * @author Administrator
  *
+ * @author Administrator
  */
 @Service("blogService")
-public class BlogServiceImpl implements BlogService{
+public class BlogServiceImpl implements BlogService {
 
-	@Resource
-	private BlogMapper blogMapper;
-	
-	public List<Blog> countList() {
-		return blogMapper.countList();
-	}
+    @Resource
+    private BlogMapper blogMapper;
 
-	public List<Blog> list(Map<String, Object> map) {
-		return blogMapper.list(map);
-	}
+    @Override
+    public List<Blog> countList() {
+        return blogMapper.countList();
+    }
 
-	public Long getTotal(Map<String, Object> map) {
-		return blogMapper.getTotal(map);
-	}
+    @Override
+    public List<Blog> list(Map<String, Object> map) {
+        return blogMapper.list(map);
+    }
 
-	public Blog findById(Integer id) {
-		return blogMapper.findById(id);
-	}
+    @Override
+    public Long getTotal(Map<String, Object> map) {
+        return blogMapper.getTotal(map);
+    }
 
-	public Integer update(Blog blog) {
-		return blogMapper.update(blog);
-	}
+    @Override
+    public Blog findById(Integer id) {
+        return blogMapper.findById(id);
+    }
 
-	public Blog getLastBlog(Integer id) {
-		return blogMapper.getLastBlog(id);
-	}
+    @Override
+    public Integer update(Blog blog) {
+        return blogMapper.update(blog);
+    }
 
-	public Blog getNextBlog(Integer id) {
-		return blogMapper.getNextBlog(id);
-	}
+    @Override
+    public Blog getLastBlog(Integer id) {
+        return blogMapper.getLastBlog(id);
+    }
 
-	public Integer add(Blog blog) {
-		return blogMapper.add(blog);
-	}
+    @Override
+    public Blog getNextBlog(Integer id) {
+        return blogMapper.getNextBlog(id);
+    }
 
-	public Integer delete(Integer id) {
-		return blogMapper.delete(id);
-	}
+    @Override
+    public Integer add(Blog blog) {
+        return blogMapper.add(blog);
+    }
 
-	public Integer getBlogByTypeId(Integer typeId) {
-		return blogMapper.getBlogByTypeId(typeId);
-	}
+    @Override
+    public Integer delete(Integer id) {
+        return blogMapper.delete(id);
+    }
 
-	@Override
-	public List<Blog> listSimple(Map<String, Object> map) {
-		return blogMapper.listSimple(map);
-	}
+    @Override
+    public Integer getBlogByTypeId(Integer typeId) {
+        return blogMapper.getBlogByTypeId(typeId);
+    }
+
+    @Override
+    public List<Blog> listSimple(Map<String, Object> map) {
+        return blogMapper.listSimple(map);
+    }
 
 
 }

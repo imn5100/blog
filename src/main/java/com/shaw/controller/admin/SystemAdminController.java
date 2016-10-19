@@ -1,11 +1,11 @@
 package com.shaw.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.SystemService;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONObject;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;

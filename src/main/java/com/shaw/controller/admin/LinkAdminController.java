@@ -1,11 +1,10 @@
 package com.shaw.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.Link;
 import com.shaw.service.LinkService;
 import com.shaw.util.PageBean;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,8 +39,7 @@ public class LinkAdminController {
 		List<Link> linkList=linkService.list(map);
 		Long total=linkService.getTotal(map);
 		JSONObject result=new JSONObject();
-		JSONArray jsonArray=JSONArray.fromObject(linkList);
-		result.put("rows", jsonArray);
+		result.put("rows", linkList);
 		result.put("total", total);
 		ResponseUtil.write(response, result);
 		return null;

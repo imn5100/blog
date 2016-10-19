@@ -1,12 +1,11 @@
 package com.shaw.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.BlogType;
 import com.shaw.service.BlogService;
 import com.shaw.service.BlogTypeService;
 import com.shaw.util.PageBean;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,8 +43,7 @@ public class BlogTypeAdminController {
 		List<BlogType> blogTypeList=blogTypeService.list(map);
 		Long total=blogTypeService.getTotal(map);
 		JSONObject result=new JSONObject();
-		JSONArray jsonArray=JSONArray.fromObject(blogTypeList);
-		result.put("rows", jsonArray);
+		result.put("rows", blogTypeList);
 		result.put("total", total);
 		ResponseUtil.write(response, result);
 		return null;

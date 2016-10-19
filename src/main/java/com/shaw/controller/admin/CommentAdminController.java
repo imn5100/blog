@@ -1,12 +1,10 @@
 package com.shaw.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.Comment;
 import com.shaw.service.CommentService;
 import com.shaw.util.PageBean;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,10 +40,7 @@ public class CommentAdminController {
 		List<Comment> commentList=commentService.list(map);
 		Long total=commentService.getTotal(map);
 		JSONObject result=new JSONObject();
-		JsonConfig jsonConfig=new JsonConfig();
-		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd"));
-		JSONArray jsonArray=JSONArray.fromObject(commentList,jsonConfig);
-		result.put("rows", jsonArray);
+		result.put("rows", commentList);
 		result.put("total", total);
 		ResponseUtil.write(response, result);
 		return null;

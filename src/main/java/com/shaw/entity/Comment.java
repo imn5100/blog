@@ -20,7 +20,7 @@ public class Comment implements Serializable {
     private String userIp; // 用户IP
     private String content; // 评论内容
     private Blog blog; // 被评论的博客
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm")
     private Date commentDate; // 评论日期
     private Integer state; // 审核状态 0 待审核 1 审核通过 2 审核未通过
 

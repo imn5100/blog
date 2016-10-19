@@ -64,7 +64,6 @@ public class BloggerAdminController {
 	@RequestMapping("/find")
 	public String find(HttpServletResponse response)throws Exception{
 		Blogger blogger=bloggerService.find();
-//		JSONObject jsonObject=JSONObject.fromObject(blogger);
 		ResponseUtil.write(response, JSONObject.toJSONString(blogger));
 		return null;
 	}

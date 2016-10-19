@@ -1,11 +1,11 @@
 package com.shaw.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.constants.CacheKey;
 import com.shaw.entity.Comment;
 import com.shaw.service.CommentService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

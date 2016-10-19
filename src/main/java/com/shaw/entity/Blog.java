@@ -23,7 +23,7 @@ public class Blog implements Serializable, Comparable<Blog> {
 	private Integer id; // 编号
 	private String title; // 博客标题
 	private String summary; // 摘要
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JSONField(format = "yyyy-MM-dd HH:mm")
 	private Date releaseDate; // 发布日期
 	private Integer clickHit; // 查看次数
 	private Integer replyHit; // 回复次数
@@ -142,20 +142,21 @@ public class Blog implements Serializable, Comparable<Blog> {
 		this.imagesList = imagesList;
 	}
 
-	public String getBlogTypeName(){
-		return blogType.getTypeName();
+	public String getBlogTypeName() {
+		return blogType == null ? null : blogType.getTypeName();
 	}
+
 	/*
 	 * Id 是递增的，按id倒序排列 就是时间由近到远。
-	 * */
+	 */
 	@Override
 	public int compareTo(Blog o) {
 		if (o == null || o.getId() == null) {
 			return -1;
 		} else {
-			   return  -(getId()-o.getId());
+			return -(getId() - o.getId());
 		}
-	
+
 	}
 
 }

@@ -74,6 +74,7 @@ public interface BlogMapper {
 	 * @return
 	 */
 	public Integer getBlogByTypeId(Integer typeId);
-	
-	
+
+
+	List<Blog> listSimple(Map<String, Object> map);
 }

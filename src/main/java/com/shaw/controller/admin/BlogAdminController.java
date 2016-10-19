@@ -1,15 +1,13 @@
 package com.shaw.controller.admin;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.util.PageBean;
 import com.shaw.util.ResponseUtil;
 import com.shaw.util.StringUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,15 +78,12 @@ public class BlogAdminController {
         map.put("title", StringUtil.formatLike(s_blog.getTitle()));
         map.put("start", pageBean.getStart());
         map.put("size", pageBean.getPageSize());
-        List<Blog> blogList = blogService.list(map);
+        List<Blog> blogList = blogService.listSimple(map);
         Long total = blogService.getTotal(map);
         JSONObject result = new JSONObject();
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd"));
-        JSONArray jsonArray = JSONArray.fromObject(blogList, jsonConfig);
-        result.put("rows", jsonArray);
+        result.put("rows", blogList);
         result.put("total", total);
-        ResponseUtil.write(response, result);
+        ResponseUtil.write(response, result.toJSONString());
         return null;
     }
 
@@ -124,8 +119,8 @@ public class BlogAdminController {
     @RequestMapping("/findById")
     public String findById(@RequestParam(value = "id") String id, HttpServletResponse response) throws Exception {
         Blog blog = blogService.findById(Integer.parseInt(id));
-        JSONObject jsonObject = JSONObject.fromObject(blog);
-        ResponseUtil.write(response, jsonObject);
+//        JSONObject jsonObject = JSONObject.fromObject(blog);
+        ResponseUtil.write(response, JSONObject.toJSONString(blog));
         return null;
     }
 

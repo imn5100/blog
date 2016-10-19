@@ -60,6 +60,10 @@ public class BlogServiceImpl implements BlogService{
 		return blogMapper.getBlogByTypeId(typeId);
 	}
 
-	
+	@Override
+	public List<Blog> listSimple(Map<String, Object> map) {
+		return blogMapper.listSimple(map);
+	}
+
 
 }

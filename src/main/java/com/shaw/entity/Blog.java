@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 博客实体
  * 
@@ -21,6 +23,7 @@ public class Blog implements Serializable, Comparable<Blog> {
 	private Integer id; // 编号
 	private String title; // 博客标题
 	private String summary; // 摘要
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date releaseDate; // 发布日期
 	private Integer clickHit; // 查看次数
 	private Integer replyHit; // 回复次数
@@ -139,7 +142,9 @@ public class Blog implements Serializable, Comparable<Blog> {
 		this.imagesList = imagesList;
 	}
 
-	
+	public String getBlogTypeName(){
+		return blogType.getTypeName();
+	}
 	/*
 	 * Id 是递增的，按id倒序排列 就是时间由近到远。
 	 * */

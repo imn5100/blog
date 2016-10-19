@@ -1,10 +1,10 @@
 package com.shaw.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shaw.entity.Blogger;
 import com.shaw.service.BloggerService;
 import com.shaw.util.DateUtil;
 import com.shaw.util.ResponseUtil;
-import net.sf.json.JSONObject;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,8 +64,8 @@ public class BloggerAdminController {
 	@RequestMapping("/find")
 	public String find(HttpServletResponse response)throws Exception{
 		Blogger blogger=bloggerService.find();
-		JSONObject jsonObject=JSONObject.fromObject(blogger);
-		ResponseUtil.write(response, jsonObject);
+//		JSONObject jsonObject=JSONObject.fromObject(blogger);
+		ResponseUtil.write(response, JSONObject.toJSONString(blogger));
 		return null;
 	}
 	

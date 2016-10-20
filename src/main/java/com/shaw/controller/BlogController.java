@@ -3,10 +3,8 @@ package com.shaw.controller;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
 import com.shaw.entity.Blog;
-import com.shaw.entity.Comment;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
-import com.shaw.service.CommentService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
 import com.shaw.util.StringUtil;
@@ -28,9 +26,6 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
-
-    @Autowired
-    private CommentService commentService;
 
     @Autowired
     private BlogIndex blogIndex;
@@ -61,9 +56,6 @@ public class BlogController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("blogId", blog.getId());
         map.put("state", 1); // 查询审核通过的评论
-        List<Comment> list = commentService.list(map);
-        blog.setReplyHit(list.size());
-        mav.addObject("commentList", list);
         mav.addObject("pageCode", this.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
                 request.getServletContext().getContextPath()));
         mav.addObject("mainPage", "foreground/blog/view.jsp");
@@ -126,13 +118,13 @@ public class BlogController {
     private String genUpAndDownPageCode(Blog lastBlog, Blog nextBlog, String projectContext) {
         StringBuffer pageCode = new StringBuffer();
         if (lastBlog == null || lastBlog.getId() == null) {
-            pageCode.append("<p>上一篇：没有了</p>");
+//            pageCode.append("<p>上一篇：没有了</p>");
         } else {
             pageCode.append("<p>上一篇：<a href='" + projectContext + "/blog/articles/" + lastBlog.getId() + ".html'>"
                     + lastBlog.getTitle() + "</a></p>");
         }
         if (nextBlog == null || nextBlog.getId() == null) {
-            pageCode.append("<p>下一篇：没有了</p>");
+//            pageCode.append("<p>下一篇：没有了</p>");
         } else {
             pageCode.append("<p>下一篇：<a href='" + projectContext + "/blog/articles/" + nextBlog.getId() + ".html'>"
                     + nextBlog.getTitle() + "</a></p>");

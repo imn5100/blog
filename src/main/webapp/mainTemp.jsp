@@ -31,6 +31,7 @@
             padding-top: 50px;
             padding-bottom: 20px;
             background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
+            /*font-family:  Helvetica, Arial,sans-serif;*/
         }
     </style>
 </head>
@@ -88,6 +89,29 @@
                         </c:forEach>
                     </ul>
                 </div>
+            </div>
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img src="${pageContext.request.contextPath}/static/images/hot.png"/>
+                    热评文章
+                </div>
+                <!-- 多说热评文章 start -->
+                <div class="ds-top-threads" data-range="daily" data-num-items="5"></div>
+                <!-- 多说热评文章 end -->
+                <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+                <script type="text/javascript">
+                    var duoshuoQuery = {short_name: "shawblog"};
+                    (function () {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0]
+                        || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- 多说公共JS代码 end -->
             </div>
 
             <div class="data_list">

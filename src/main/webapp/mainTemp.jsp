@@ -15,32 +15,19 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
-    <script>
-        //去除百度统计代码
-        //	var _hmt = _hmt || [];
-        //(function() {
-        // var hm = document.createElement("script");
-        // hm.src = "//hm.baidu.com/hm.js?aa5c701f4f646931bf78b6f40b234ef5";
-        //var s = document.getElementsByTagName("script")[0];
-        //s.parentNode.insertBefore(hm, s);
-        //})();
-    </script>
-
     <style type="text/css">
         body {
             padding-top: 50px;
             padding-bottom: 20px;
             background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
-            /*font-family:  Helvetica, Arial,sans-serif;*/
+            font-family:  Helvetica, Arial,sans-serif;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <jsp:include page="/foreground/common/head.jsp"/>
-
     <jsp:include page="/foreground/common/menu.jsp"/>
-
     <div class="row">
         <div class="col-md-9">
             <jsp:include page="${mainPage }"></jsp:include>
@@ -92,27 +79,19 @@
             </div>
             <div class="data_list">
                 <div class="data_list_title">
-                    <img src="${pageContext.request.contextPath}/static/images/hot.png"/>
                     热评文章
                 </div>
-                <!-- 多说热评文章 start -->
                 <div class="ds-top-threads" data-range="daily" data-num-items="5"></div>
-                <!-- 多说热评文章 end -->
-                <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-                <script type="text/javascript">
-                    var duoshuoQuery = {short_name: "shawblog"};
-                    (function () {
-                        var ds = document.createElement('script');
-                        ds.type = 'text/javascript';
-                        ds.async = true;
-                        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
-                        ds.charset = 'UTF-8';
-                        (document.getElementsByTagName('head')[0]
-                        || document.getElementsByTagName('body')[0]).appendChild(ds);
-                    })();
-                </script>
-                <!-- 多说公共JS代码 end -->
+
             </div>
+            <div class="data_list">
+                <div class="data_list_title">
+                    最近访客
+                </div>
+                <ul class="ds-recent-visitors"></ul>
+
+            </div>
+
 
             <div class="data_list">
                 <div class="data_list_title">
@@ -135,3 +114,15 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    var duoshuoQuery = {short_name: "shawblog"};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>

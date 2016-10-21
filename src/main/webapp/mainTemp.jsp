@@ -12,46 +12,48 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">--%>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
     <style type="text/css">
         body {
-            padding-top: 50px;
+            padding-top: 100px;
             padding-bottom: 20px;
             background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .user_image {
+            width: 200px;;
+            height: 250px;;
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container None">
     <jsp:include page="/foreground/common/head.jsp"/>
-    <jsp:include page="/foreground/common/menu.jsp"/>
-    <div class="row">
+    <div class="container theme-showcase">
         <div class="col-md-9">
             <jsp:include page="${mainPage }"></jsp:include>
         </div>
 
-
         <div class="col-md-3">
-            <div class="data_list">
-                <div class="data_list_title">
-                    <img src="${pageContext.request.contextPath}/static/images/user_icon.png"/>
-                    ${blogger.nickName }
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    ${blogger.nickName}
                 </div>
-                <div class="user_image">
-                    <img src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
+                <div class="panel-body">
+                    <img class="user_image"
+                         src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
+                    <div align="center">${blogger.sign }</div>
                 </div>
-                <div class="userSign">${blogger.sign }</div>
             </div>
 
-            <div class="data_list">
-                <div class="data_list_title">
-                    <img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
                     按日志类别
                 </div>
-                <div class="datas">
+                <div class="panel-body">
                     <ul>
                         <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
                             <li><span><a
@@ -62,12 +64,11 @@
                 </div>
             </div>
 
-            <div class="data_list">
-                <div class="data_list_title">
-                    <img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
                     按日志日期
                 </div>
-                <div class="datas">
+                <div class="panel-body">
                     <ul>
                         <c:forEach var="blogCount" items="${blogCountList }">
                             <li><span><a
@@ -77,26 +78,30 @@
                     </ul>
                 </div>
             </div>
-            <div class="data_list">
-                <div class="data_list_title">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
                     热评文章
                 </div>
-                <ul class="ds-top-threads" data-range="daily" data-num-items="5"></ul>
+                <div class="panel-body">
+                    <ul class="ds-top-threads" data-range="daily" data-num-items="5"></ul>
+                </div>
             </div>
-            <div class="data_list">
-                <div class="data_list_title">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
                     最近访客
                 </div>
-                <div class="ds-recent-visitors"></div>
+                <div class="panel-body">
+                    <div class="ds-recent-visitors"></div>
+                </div>
             </div>
 
 
-            <div class="data_list">
-                <div class="data_list_title">
-                    <img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <%--<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>--%>
                     友链
                 </div>
-                <div class="datas">
+                <div class="panel-body">
                     <ul>
                         <c:forEach var="link" items="${linkList }">
                             <li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>

@@ -54,6 +54,7 @@ public class IndexController {
             List<String> imagesList = blog.getImagesList();
             String blogInfo = blog.getContent();
             blog.setReleaseDateStr(TimeUtils.getTime(blog.getReleaseDate(), "yyyy年MM月dd日"));
+            blog.setSummary(replaceStr(blog.getSummary()));
             Document doc = Jsoup.parse(blogInfo);
             //查找图片元素
             Elements jpgs = doc.select("img");
@@ -75,9 +76,14 @@ public class IndexController {
         }
         mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), 10, param.toString()));
         mav.addObject("mainPage", "foreground/blog/list.jsp");
+        mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
         return mav;
+    }
+
+    public static String replaceStr(String str) {
+        return str.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     }
 
     /**
@@ -92,6 +98,7 @@ public class IndexController {
         mav.addObject("mainPage", "foreground/system/aboutSite.jsp");
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
+        mav.addObject("aboutActive", true);
         return mav;
     }
 

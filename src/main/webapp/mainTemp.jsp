@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">--%>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
     <style type="text/css">
@@ -32,11 +31,10 @@
 <body>
 <div class="container None">
     <jsp:include page="/foreground/common/head.jsp"/>
-    <div class="container theme-showcase">
+    <div>
         <div class="col-md-9">
             <jsp:include page="${mainPage }"></jsp:include>
         </div>
-
         <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">

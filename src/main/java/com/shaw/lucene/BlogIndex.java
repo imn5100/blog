@@ -138,8 +138,8 @@ public class BlogIndex {
         TopDocs hits = is.search(booleanQuery.build(), 100, sort);
 
         QueryScorer scorer = new QueryScorer(query);
-        Fragmenter fragmenter = new SimpleSpanFragmenter(scorer);
-        SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<b><font color='red'>", "</font></b>");
+        Fragmenter fragmenter = new SimpleSpanFragmenter(scorer,400);
+        SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
         Highlighter highlighter = new Highlighter(simpleHTMLFormatter, scorer);
         highlighter.setTextFragmenter(fragmenter);
         List<Blog> blogList = new ArrayList<Blog>();
@@ -171,13 +171,14 @@ public class BlogIndex {
                 }
             }
             if (content != null) {
+                content = StringUtil.replaceStr(content);
                 TokenStream tokenStream = analyzer.tokenStream("content", new StringReader(content));
                 String hContent = highlighter.getBestFragment(tokenStream, content);
                 if (StringUtil.isEmpty(hContent)) {
-                    if (content.length() <= 200) {
+                    if (content.length() <= 500) {
                         blog.setContent(content);
                     } else {
-                        blog.setContent(content.substring(0, 200));
+                        blog.setContent(content.substring(0, 500));
                     }
                 } else {
                     blog.setContent(hContent);

@@ -54,7 +54,7 @@ public class IndexController {
             List<String> imagesList = blog.getImagesList();
             String blogInfo = blog.getContent();
             blog.setReleaseDateStr(TimeUtils.getTime(blog.getReleaseDate(), "yyyy年MM月dd日"));
-            blog.setSummary(replaceStr(blog.getSummary()));
+            blog.setSummary(StringUtil.replaceStr(blog.getSummary()));
             Document doc = Jsoup.parse(blogInfo);
             //查找图片元素
             Elements jpgs = doc.select("img");
@@ -80,10 +80,6 @@ public class IndexController {
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
         return mav;
-    }
-
-    public static String replaceStr(String str) {
-        return str.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     }
 
     /**

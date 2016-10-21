@@ -1,7 +1,7 @@
 .data_list{
 	border: 1px solid #E5E5E5;
 	padding: 10px;
-	background-color: #FDFDFD;
+	background-color: #FFF;
 	margin-top: 0px;
 	margin-bottom: 10px;
 }
@@ -59,23 +59,16 @@
 	padding: 5px;
 }
 
-.datas .date ,.datas .title {
+.datas .datas, .title {
 	display:block;
 	line-height: 1.5;
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	padding-bottom: 5px;
-	font-size: 14px;
-}
-
-
-.datas .date a{
-	color: #935A32;
-	font-weight: bold;
+	font-size: 18px;
 }
 
 .datas .title a{
-	  color: #333;
-	  font-weight: bold;
+	  color: #000000;
 }
 
 .datas .summary{
@@ -84,7 +77,6 @@
 	line-height: 19.5px;
 	padding-top: 5px;
 	font-size: 13px;
-	color: rgb(0, 0, 0);
 }
 
 .datas .img{
@@ -105,6 +97,7 @@
 	line-height: 18px;
 	float: right;
 	font-size: 12px;
+	color: #9d9d9d;
 }
 
 .data_list .blog_title{

@@ -7,6 +7,7 @@ import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
+import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class BlogController {
         map.put("state", 1); // 查询审核通过的评论
         mav.addObject("pageCode", this.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
                 request.getServletContext().getContextPath()));
+        mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "foreground/blog/view.jsp");
         mav.addObject("pageTitle", blog.getTitle());
         mav.setViewName("mainTemp");
@@ -93,7 +95,7 @@ public class BlogController {
                 request.getServletContext().getContextPath()));
         mav.addObject("q", q);
         mav.addObject("resultTotal", blogList.size());
-        mav.addObject("pageTitle", Constants.PAGE_TITLE+" 搜索'" + q + "'");
+        mav.addObject("pageTitle", Constants.PAGE_TITLE + " 搜索'" + q + "'");
         mav.setViewName("mainTemp");
         return mav;
     }

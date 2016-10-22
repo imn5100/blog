@@ -23,6 +23,7 @@
                     </div>
                     <span class="info">${blog.releaseDateStr}&nbsp;阅读(${blog.clickHit}) &nbsp;
                         <span class="ds-thread-count" data-thread-key="${blog.id}" data-count-type="comments"></span>
+                        <p></p>
                 </div>
             </c:forEach>
         </div>

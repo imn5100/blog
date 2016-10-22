@@ -139,7 +139,7 @@ public class BlogIndex {
 
         QueryScorer scorer = new QueryScorer(query);
         Fragmenter fragmenter = new SimpleSpanFragmenter(scorer,400);
-        SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
+        SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<code color='red'>", "</code>");
         Highlighter highlighter = new Highlighter(simpleHTMLFormatter, scorer);
         highlighter.setTextFragmenter(fragmenter);
         List<Blog> blogList = new ArrayList<Blog>();

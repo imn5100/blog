@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/list.css">
 <div class="panel panel panel-primary">
     <div class="panel-heading">
-        搜索&nbsp;<font color="black">${q}</font>&nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
+        搜索&nbsp;${q} &nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
     </div>
     <div class="panel-body">
         <div class="bs-docs-section">
@@ -19,7 +19,8 @@
                         <div class="bs-callout bs-callout-info">
                             <h4><a class="title" href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html"
                                    target="_blank">${blog.title }</a></h4>
-                            <code> ${blog.content}...</code>
+
+                            <p> ${blog.content}...</p>
                             <br>
                             <a href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html">http://shawblog.me/blog/articles/${blog.id}.html</a>
                             <span class="info">&nbsp;&nbsp;&nbsp;&nbsp;发布日期：${blog.releaseDateStr }</span>

@@ -61,6 +61,7 @@ public class BlogController {
                 request.getServletContext().getContextPath()));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "foreground/blog/view.jsp");
+        mav.addObject("sideNotLoad", true);
         mav.addObject("pageTitle", blog.getTitle());
         mav.setViewName("mainTemp");
         return mav;

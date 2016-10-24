@@ -9,7 +9,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="${pageContext.request.contextPath}/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
-
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
@@ -32,83 +31,82 @@
 <div class="container None">
     <jsp:include page="/foreground/common/head.jsp"/>
     <div>
-        <div class="col-md-9">
-            <jsp:include page="${mainPage }"></jsp:include>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    ${blogger.nickName}
+        <jsp:include page="${mainPage }"></jsp:include>
+        <c:if test="${sideNotLoad == null}">
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                            ${blogger.nickName}
+                    </div>
+                    <div class="panel-body">
+                        <img class="user_image"
+                             src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
+                        <div align="center">${blogger.sign }</div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <img class="user_image"
-                         src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
-                    <div align="center">${blogger.sign }</div>
-                </div>
-            </div>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    按日志类别
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        按日志类别
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
+                                <li><span><a
+                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }(${blogTypeCount.blogCount })</a></span>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <ul>
-                        <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
-                            <li><span><a
-                                    href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }(${blogTypeCount.blogCount })</a></span>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </div>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    按日志日期
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        按日志日期
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <c:forEach var="blogCount" items="${blogCountList }">
+                                <li><span><a
+                                        href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }(${blogCount.blogCount })</a></span>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <ul>
-                        <c:forEach var="blogCount" items="${blogCountList }">
-                            <li><span><a
-                                    href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }(${blogCount.blogCount })</a></span>
-                            </li>
-                        </c:forEach>
-                    </ul>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        热评文章
+                    </div>
+                    <div class="panel-body">
+                        <ul class="ds-top-threads" data-range="daily" data-num-items="5"></ul>
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    热评文章
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        最近访客
+                    </div>
+                    <div class="panel-body">
+                        <div class="ds-recent-visitors"></div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <ul class="ds-top-threads" data-range="daily" data-num-items="5"></ul>
-                </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    最近访客
-                </div>
-                <div class="panel-body">
-                    <div class="ds-recent-visitors"></div>
-                </div>
-            </div>
 
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <%--<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>--%>
-                    友链
-                </div>
-                <div class="panel-body">
-                    <ul>
-                        <c:forEach var="link" items="${linkList }">
-                            <li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>
-                        </c:forEach>
-                    </ul>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                            <%--<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>--%>
+                        友链
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <c:forEach var="link" items="${linkList }">
+                                <li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </c:if>
     </div>
 
     <jsp:include page="/foreground/common/foot.jsp"/>

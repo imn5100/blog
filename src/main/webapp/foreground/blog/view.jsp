@@ -39,7 +39,6 @@
         border-top: 1px dotted black;
         padding: 10px;
     }
-
 </style>
 <div class="col-md-12">
     <div class="panel panel panel-primary">

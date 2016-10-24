@@ -1,16 +1,12 @@
 package com.shaw.test;
 
-import com.shaw.entity.Blog;
-import com.shaw.lucene.BlogIndex;
-import com.shaw.mapper.BloggerMapper;
-import com.shaw.service.BlogService;
-import org.apache.lucene.document.*;
-import org.apache.lucene.index.IndexWriter;
+import java.util.List;
+
 import org.jsoup.Jsoup;
-import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import com.shaw.entity.Blog;
+import com.shaw.service.BlogService;
 
 /**
  * Created by imn5100 on 2016/8/26 0026.

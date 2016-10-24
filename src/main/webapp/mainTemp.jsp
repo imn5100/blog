@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/embed.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <style type="text/css">
         body {
@@ -74,7 +75,7 @@
                         热评文章
                     </div>
                     <div class="panel-body">
-                        <ul class="ds-top-threads" data-range="daily" data-num-items="5"></ul>
+                        <ul class="ds-top-threads" data-range="weekly" data-num-items="5"></ul>
                     </div>
                 </div>
                 <div class="panel panel-primary">
@@ -114,7 +115,7 @@
         var ds = document.createElement('script');
         ds.type = 'text/javascript';
         ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0]
         || document.getElementsByTagName('body')[0]).appendChild(ds);

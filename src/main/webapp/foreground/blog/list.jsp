@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/list.css">
 <div class="col-md-9">
-    <div class="panel panel panel-primary">
+    <div class="panel panel panel-default">
         <div class="panel-heading">
             博客列表
         </div>

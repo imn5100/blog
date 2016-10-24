@@ -30,7 +30,7 @@
         <jsp:include page="${mainPage }"></jsp:include>
         <c:if test="${sideNotLoad == null}">
             <div class="col-md-3">
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                             ${blogger.nickName}
                     </div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         按日志类别
                     </div>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         按日志日期
                     </div>
@@ -70,7 +70,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         热评文章
                     </div>
@@ -78,7 +78,7 @@
                         <ul class="ds-top-threads" data-range="weekly" data-num-items="5"></ul>
                     </div>
                 </div>
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         最近访客
                     </div>
@@ -88,7 +88,7 @@
                 </div>
 
 
-                <div class="panel panel-primary">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                             <%--<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>--%>
                         友链

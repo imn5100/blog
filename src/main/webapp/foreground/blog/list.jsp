@@ -13,18 +13,17 @@
                         <h4><a class="title"
                                href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html">${blog.title }</a>
                         </h4>
-                        &nbsp;&nbsp;<code>${blog.summary }...</code>
+                        &nbsp;&nbsp;
+                        <small style="color: grey">${blog.summary }...</small>
                         <br>
                         <br>
-                        <div class="listimg">
-                            <c:forEach var="image" items="${blog.imagesList }">
-                                <a href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html">${image }</a>
-                                &nbsp;&nbsp;
-                            </c:forEach>
-                        </div>
+                        <c:forEach var="image" items="${blog.imagesList}">
+                            <img src="${image}" class="img-responsive" style="max-width: 50%"/>
+                            &nbsp;&nbsp;
+                        </c:forEach>
                     <span class="info">${blog.releaseDateStr}&nbsp;阅读(${blog.clickHit}) &nbsp;
                         <span class="ds-thread-count" data-thread-key="${blog.id}" data-count-type="comments"></span>
-                        <p></p>
+                    </span>
                     </div>
                 </c:forEach>
             </div>

@@ -7,23 +7,18 @@
 <html lang="zh-CN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="${pageContext.request.contextPath}/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <style type="text/css">
         body {
             padding-top: 100px;
             padding-bottom: 20px;
             background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-
-        .user_image {
-            width: 200px;;
-            height: 250px;;
         }
     </style>
 </head>
@@ -39,7 +34,7 @@
                             ${blogger.nickName}
                     </div>
                     <div class="panel-body">
-                        <img class="user_image"
+                        <img class="img-responsive"
                              src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
                         <div align="center">${blogger.sign }</div>
                     </div>

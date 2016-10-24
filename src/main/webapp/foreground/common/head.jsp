@@ -13,8 +13,6 @@
     }
 </script>
 <div class="row">
-    <div class="col-md-4">
-    </div>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

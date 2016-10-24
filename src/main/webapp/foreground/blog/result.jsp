@@ -21,8 +21,7 @@
                                 <h4><a class="title"
                                        href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html"
                                        target="_blank">${blog.title }</a></h4>
-
-                                <p> ${blog.content}...</p>
+                                <small style="color: grey">${blog.content}...</small>
                                 <br>
                                 <a href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html">http://shawblog.me/blog/articles/${blog.id}.html</a>
                                 <span class="info">&nbsp;&nbsp;&nbsp;&nbsp;发布日期：${blog.releaseDateStr }</span>

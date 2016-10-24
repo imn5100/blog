@@ -49,7 +49,6 @@ public class IndexController {
         map.put("typeId", typeId);
         map.put("releaseDateStr", releaseDateStr);
         List<Blog> blogList = blogService.list(map);
-        //设置预览图片,最多为3张
         for (Blog blog : blogList) {
             List<String> imagesList = blog.getImagesList();
             String blogInfo = blog.getContent();
@@ -58,12 +57,10 @@ public class IndexController {
             Document doc = Jsoup.parse(blogInfo);
             //查找图片元素
             Elements jpgs = doc.select("img");
-            for (int i = 0; i < jpgs.size(); i++) {
-                Element jpg = jpgs.get(i);
-                imagesList.add(jpg.toString());
-                if (i == 2) {
-                    break;
-                }
+            //当有图片时，加载一张图片作为预览
+            if (jpgs.size() > 0) {
+                Element jpg = jpgs.get(0);
+                imagesList.add(jpg.attr("src"));
             }
         }
         mav.addObject("blogList", blogList);

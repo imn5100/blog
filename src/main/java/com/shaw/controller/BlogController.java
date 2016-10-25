@@ -44,6 +44,10 @@ public class BlogController {
     public ModelAndView details(@PathVariable("id") Integer id, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
         Blog blog = blogService.findById(id);
+        if (blog == null) {
+            mav.setViewName("redirect:/index.html");
+            return mav;
+        }
         String keyWords = blog.getKeyWord();
         if (StringUtil.isNotEmpty(keyWords)) {
             String arr[] = keyWords.split(" ");

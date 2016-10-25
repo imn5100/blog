@@ -32,7 +32,7 @@
                     <li <c:if test="${aboutActive!=null}"> class="active" </c:if> ><a
                             href="${pageContext.request.contextPath}/about.html">关于本站</a></li>
                     <li <c:if test="${aboutBloggerActive !=null}"> class="active" </c:if> ><a
-                            href="${pageContext.request.contextPath}/blogger/aboutBlogger.html">博主介绍</a></li>
+                            href="${pageContext.request.contextPath}/blogger/aboutBlogger.html">关于站长</a></li>
                 </ul>
                 <form action="${pageContext.request.contextPath}/blog/q.html" class="navbar-form navbar-right"
                       role="search" method="post" onsubmit="return checkData()">
@@ -42,7 +42,7 @@
                     </div>
                     <button type="submit" class="btn btn-default">Go!</button>
                 </form>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </nav>
 </div>

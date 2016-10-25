@@ -1,6 +1,6 @@
 package com.shaw.service.impl;
 
-import com.shaw.entity.BlogType;
+import com.shaw.bo.BlogType;
 import com.shaw.mapper.BlogTypeMapper;
 import com.shaw.service.BlogTypeService;
 import org.springframework.stereotype.Service;

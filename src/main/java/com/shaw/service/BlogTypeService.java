@@ -1,6 +1,6 @@
 package com.shaw.service;
 
-import com.shaw.entity.BlogType;
+import com.shaw.bo.BlogType;
 
 import java.util.List;
 import java.util.Map;

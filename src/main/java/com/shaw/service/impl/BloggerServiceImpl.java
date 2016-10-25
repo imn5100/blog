@@ -1,6 +1,6 @@
 package com.shaw.service.impl;
 
-import com.shaw.entity.Blogger;
+import com.shaw.bo.Blogger;
 import com.shaw.mapper.BloggerMapper;
 import com.shaw.service.BloggerService;
 import org.springframework.beans.factory.annotation.Autowired;

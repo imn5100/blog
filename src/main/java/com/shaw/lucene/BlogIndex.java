@@ -1,6 +1,6 @@
 package com.shaw.lucene;
 
-import com.shaw.entity.Blog;
+import com.shaw.bo.Blog;
 import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
 import org.apache.commons.lang.StringEscapeUtils;

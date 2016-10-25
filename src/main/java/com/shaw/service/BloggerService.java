@@ -1,6 +1,6 @@
 package com.shaw.service;
 
-import com.shaw.entity.Blogger;
+import com.shaw.bo.Blogger;
 
 public interface BloggerService {
 

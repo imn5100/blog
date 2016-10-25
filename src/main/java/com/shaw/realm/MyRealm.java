@@ -1,6 +1,6 @@
 package com.shaw.realm;
 
-import com.shaw.entity.Blogger;
+import com.shaw.bo.Blogger;
 import com.shaw.service.BloggerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

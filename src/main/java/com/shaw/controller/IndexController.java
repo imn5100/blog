@@ -1,7 +1,7 @@
 package com.shaw.controller;
 
 import com.shaw.constants.Constants;
-import com.shaw.entity.Blog;
+import com.shaw.bo.Blog;
 import com.shaw.service.BlogService;
 import com.shaw.util.PageBean;
 import com.shaw.util.PageUtil;

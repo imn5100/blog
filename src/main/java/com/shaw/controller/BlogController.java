@@ -2,7 +2,7 @@ package com.shaw.controller;
 
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
-import com.shaw.entity.Blog;
+import com.shaw.bo.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.impl.RedisClient;

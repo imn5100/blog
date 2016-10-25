@@ -1,6 +1,6 @@
 package com.shaw.service.impl;
 
-import com.shaw.entity.Link;
+import com.shaw.bo.Link;
 import com.shaw.mapper.LinkMapper;
 import com.shaw.service.LinkService;
 import org.springframework.stereotype.Service;

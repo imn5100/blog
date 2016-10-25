@@ -1,10 +1,10 @@
 package com.shaw.service.impl;
 
 import com.shaw.constants.CacheKey;
-import com.shaw.entity.Blog;
-import com.shaw.entity.BlogType;
-import com.shaw.entity.Blogger;
-import com.shaw.entity.Link;
+import com.shaw.bo.Blog;
+import com.shaw.bo.BlogType;
+import com.shaw.bo.Blogger;
+import com.shaw.bo.Link;
 import com.shaw.mapper.BlogMapper;
 import com.shaw.mapper.BlogTypeMapper;
 import com.shaw.mapper.BloggerMapper;

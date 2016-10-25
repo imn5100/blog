@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.ResponseCode;
-import com.shaw.entity.Blogger;
+import com.shaw.bo.Blogger;
 import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.ResponseUtil;

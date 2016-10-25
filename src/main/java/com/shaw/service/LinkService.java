@@ -1,6 +1,6 @@
 package com.shaw.service;
 
-import com.shaw.entity.Link;
+import com.shaw.bo.Link;
 
 import java.util.List;
 import java.util.Map;

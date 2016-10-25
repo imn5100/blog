@@ -1,7 +1,7 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shaw.entity.Blogger;
+import com.shaw.bo.Blogger;
 import com.shaw.service.BloggerService;
 import com.shaw.util.DateUtil;
 import com.shaw.util.ResponseUtil;

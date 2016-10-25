@@ -1,7 +1,7 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shaw.entity.Link;
+import com.shaw.bo.Link;
 import com.shaw.service.LinkService;
 import com.shaw.util.PageBean;
 import com.shaw.util.ResponseUtil;

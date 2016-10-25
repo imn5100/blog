@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <div class="col-md-9">
-    <div class="panel panel panel-primary">
+    <div class="panel panel panel-default">
         <div class="panel-heading">
             关于博主
         </div>

@@ -16,12 +16,12 @@
     margin-top: -5px;
 }
 .bs-callout-info {
-    border-left-color: #1b809e;
+    border-left-color: #DA235E;
 }
 
-.bs-callout-info h4 {
-    color: #1b809e;
-}
+/*.bs-callout-info h4 {*/
+    /*color: #1b809e;*/
+/*}*/
 
 .info {
     display: block;

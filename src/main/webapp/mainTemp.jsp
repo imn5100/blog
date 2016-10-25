@@ -21,6 +21,9 @@
             padding-bottom: 20px;
             background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
         }
+        .panel-default>.panel-heading {
+            background-image: linear-gradient(to bottom, #13b4d0 0, #2797b9 100%);
+        }
     </style>
 </head>
 <body>

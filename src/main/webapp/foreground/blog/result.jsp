@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="col-md-9">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/list.css">
-    <div class="panel panel panel-primary">
+    <div class="panel panel panel-default">
         <div class="panel-heading">
             搜索&nbsp;${q} &nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
         </div>

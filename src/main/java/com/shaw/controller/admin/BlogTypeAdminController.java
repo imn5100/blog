@@ -5,7 +5,7 @@ import com.shaw.bo.BlogType;
 import com.shaw.service.BlogService;
 import com.shaw.service.BlogTypeService;
 import com.shaw.util.PageBean;
-import com.shaw.util.ResponseUtil;
+import com.shaw.util.HttpResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +45,7 @@ public class BlogTypeAdminController {
 		JSONObject result=new JSONObject();
 		result.put("rows", blogTypeList);
 		result.put("total", total);
-		ResponseUtil.write(response, result);
+		HttpResponseUtil.write(response, result);
 		return null;
 	}
 	
@@ -70,7 +70,7 @@ public class BlogTypeAdminController {
 		}else{
 			result.put("success", false);
 		}
-		ResponseUtil.write(response, result);
+		HttpResponseUtil.write(response, result);
 		return null;
 	}
 	
@@ -93,7 +93,7 @@ public class BlogTypeAdminController {
 			}
 		}
 		result.put("success", true);
-		ResponseUtil.write(response, result);
+		HttpResponseUtil.write(response, result);
 		return null;
 	}
 }

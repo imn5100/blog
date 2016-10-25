@@ -5,7 +5,7 @@ import com.shaw.bo.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.SystemService;
-import com.shaw.util.ResponseUtil;
+import com.shaw.util.HttpResponseUtil;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
@@ -48,7 +48,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("refresh System success");
-        ResponseUtil.write(response, result);
+        HttpResponseUtil.write(response, result);
         return null;
     }
 
@@ -73,7 +73,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("refresh lucene index success");
-        ResponseUtil.write(response, result);
+        HttpResponseUtil.write(response, result);
         return null;
     }
 
@@ -84,7 +84,7 @@ public class SystemAdminController {
             JSONObject result = new JSONObject();
             result.put("success", false);
             logger.warn("resetSummary fail,warming length:" + length);
-            ResponseUtil.write(response, result);
+            HttpResponseUtil.write(response, result);
             return null;
         }
         for (Blog blog : blogs) {
@@ -99,7 +99,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("resetSummary success");
-        ResponseUtil.write(response, result);
+        HttpResponseUtil.write(response, result);
         return null;
     }
 }

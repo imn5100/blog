@@ -6,7 +6,7 @@ import com.shaw.bo.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.util.PageBean;
-import com.shaw.util.ResponseUtil;
+import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class BlogAdminController {
         } else {
             result.put("success", false);
         }
-        ResponseUtil.write(response, result);
+        HttpResponseUtil.write(response, result);
         return null;
     }
 
@@ -83,7 +83,7 @@ public class BlogAdminController {
         JSONObject result = new JSONObject();
         result.put("rows", blogList);
         result.put("total", total);
-        ResponseUtil.write(response, result.toJSONString());
+        HttpResponseUtil.write(response, result.toJSONString());
         return null;
     }
 
@@ -104,7 +104,7 @@ public class BlogAdminController {
         }
         JSONObject result = new JSONObject();
         result.put("success", true);
-        ResponseUtil.write(response, result);
+        HttpResponseUtil.write(response, result);
         return null;
     }
 
@@ -120,7 +120,7 @@ public class BlogAdminController {
     public String findById(@RequestParam(value = "id") String id, HttpServletResponse response) throws Exception {
         Blog blog = blogService.findById(Integer.parseInt(id));
 //        JSONObject jsonObject = JSONObject.fromObject(blog);
-        ResponseUtil.write(response, JSONObject.toJSONString(blog));
+        HttpResponseUtil.write(response, JSONObject.toJSONString(blog));
         return null;
     }
 

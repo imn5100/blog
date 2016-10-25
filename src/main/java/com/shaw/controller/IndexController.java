@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 主页跳转控制器
+ */
 @Controller
 @RequestMapping("/")
 public class IndexController {
@@ -31,10 +34,7 @@ public class IndexController {
 
 
     /**
-     * 请求主页
-     *
-     * @return
-     * @throws Exception
+     * 主页，获取blog List信息显示
      */
     @RequestMapping("/index")
     public ModelAndView index(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "typeId", required = false) String typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
@@ -80,10 +80,7 @@ public class IndexController {
     }
 
     /**
-     * 关于本站
-     *
-     * @return
-     * @throws Exception
+     * 关于本站跳转
      */
     @RequestMapping("/about")
     public ModelAndView download() throws Exception {
@@ -95,6 +92,9 @@ public class IndexController {
         return mav;
     }
 
+    /**
+     * 后台登陆页面跳转
+     */
     @RequestMapping("/login")
     public ModelAndView loginPage() throws Exception {
         ModelAndView mav = new ModelAndView();

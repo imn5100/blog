@@ -35,10 +35,7 @@ public class BlogController {
     private RedisClient redisClient;
 
     /**
-     * 请求博客详细信息
-     *
-     * @return
-     * @throws Exception
+     * 博客详情
      */
     @RequestMapping("/articles/{id}")
     public ModelAndView details(@PathVariable("id") Integer id, HttpServletRequest request) throws Exception {
@@ -72,11 +69,7 @@ public class BlogController {
     }
 
     /**
-     * 根据关键字查询相关博客信息
-     *
-     * @param q
-     * @return
-     * @throws Exception
+     * *搜索入口
      */
     @RequestMapping("/q")
     public ModelAndView search(@RequestParam(value = "q", required = false, defaultValue = "") String q,
@@ -105,6 +98,10 @@ public class BlogController {
         return mav;
     }
 
+    /**
+     * 获取验证码接口，
+     * 分布式服务时需要 spring-session 支持
+     */
     @RequestMapping("/codesImg")
     public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String codes = CodesImgUtil.getCodesImg(response, request);
@@ -116,11 +113,7 @@ public class BlogController {
     }
 
     /**
-     * 获取下一篇博客和下一篇博客代码
-     *
-     * @param lastBlog
-     * @param nextBlog
-     * @return
+     * 构建上下博客跳转
      */
     private String genUpAndDownPageCode(Blog lastBlog, Blog nextBlog, String projectContext) {
         StringBuffer pageCode = new StringBuffer();
@@ -140,14 +133,7 @@ public class BlogController {
     }
 
     /**
-     * 获取上一页，下一页代码 查询博客用到
-     *
-     * @param page           当前页
-     * @param totalNum       总记录数
-     * @param q              查询关键字
-     * @param pageSize       每页大小
-     * @param projectContext
-     * @return
+     * 构建分页标签
      */
     private String genUpAndDownPageCode(Integer page, Integer totalNum, String q, Integer pageSize,
                                         String projectContext) {

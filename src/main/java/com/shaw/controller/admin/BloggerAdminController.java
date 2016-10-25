@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.Blogger;
 import com.shaw.service.BloggerService;
 import com.shaw.util.DateUtil;
-import com.shaw.util.ResponseUtil;
+import com.shaw.util.HttpResponseUtil;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class BloggerAdminController {
 			result.append("<script language='javascript'>alert('修改失败！');</script>");
 		}
 		logger.info("update blogger success");
-		ResponseUtil.write(response, result);
+		HttpResponseUtil.write(response, result);
 		return null;
 	}
 	
@@ -64,7 +64,7 @@ public class BloggerAdminController {
 	@RequestMapping("/find")
 	public String find(HttpServletResponse response)throws Exception{
 		Blogger blogger=bloggerService.find();
-		ResponseUtil.write(response, JSONObject.toJSONString(blogger));
+		HttpResponseUtil.write(response, JSONObject.toJSONString(blogger));
 		return null;
 	}
 	
@@ -87,7 +87,7 @@ public class BloggerAdminController {
 			result.put("success", false);
 		}
 		logger.info("modify password success,md5 newPassword:"+newPassword);
-		ResponseUtil.write(response, result);
+		HttpResponseUtil.write(response, result);
 		return null;
 	}
 	

@@ -11,7 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * 初始化组件 把博主信息 根据博客类别分类信息 根据日期归档分类信息 存放到application中，用以提供页面请求性能
+ * 容器启动完成监听器，启动完成容器后，缓存系统关键数据
  */
 @Component
 public class InitComponent implements ServletContextListener, ApplicationContextAware {

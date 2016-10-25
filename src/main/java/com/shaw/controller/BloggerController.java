@@ -1,8 +1,11 @@
 package com.shaw.controller;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.shaw.bo.Blogger;
+import com.shaw.constants.CacheKey;
+import com.shaw.constants.ResponseCode;
+import com.shaw.service.BloggerService;
+import com.shaw.service.impl.RedisClient;
+import com.shaw.util.HttpResponseUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -16,12 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shaw.constants.CacheKey;
-import com.shaw.constants.ResponseCode;
-import com.shaw.bo.Blogger;
-import com.shaw.service.BloggerService;
-import com.shaw.service.impl.RedisClient;
-import com.shaw.util.HttpResponseUtil;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 站长相关

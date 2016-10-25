@@ -1,12 +1,13 @@
 package com.shaw.controller;
 
+import com.shaw.bo.Blog;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
-import com.shaw.bo.Blog;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
+import com.shaw.util.PageUtil;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +59,7 @@ public class BlogController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("blogId", blog.getId());
         map.put("state", 1); // 查询审核通过的评论
-        mav.addObject("pageCode", this.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
+        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
                 request.getServletContext().getContextPath()));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "foreground/blog/view.jsp");
@@ -89,7 +90,7 @@ public class BlogController {
         // 。jsp页面访问SubList集合时可能报错。这里直接使用Arraylist 返回集合
         blogList2.addAll(blogList.subList(((page) - 1) * Constants.PAGE_SIZE, toIndex));
         mav.addObject("blogList", blogList2);
-        mav.addObject("pageCode", this.genUpAndDownPageCode((page), blogList.size(), q, Constants.PAGE_SIZE,
+        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode((page), blogList.size(), q, Constants.PAGE_SIZE,
                 request.getServletContext().getContextPath()));
         mav.addObject("q", q);
         mav.addObject("resultTotal", blogList.size());
@@ -112,53 +113,4 @@ public class BlogController {
         return;
     }
 
-    /**
-     * 构建上下博客跳转
-     */
-    private String genUpAndDownPageCode(Blog lastBlog, Blog nextBlog, String projectContext) {
-        StringBuffer pageCode = new StringBuffer();
-        if (lastBlog == null || lastBlog.getId() == null) {
-//            pageCode.append("<p>上一篇：没有了</p>");
-        } else {
-            pageCode.append("<p>上一篇：<a href='" + projectContext + "/blog/articles/" + lastBlog.getId() + ".html'>"
-                    + lastBlog.getTitle() + "</a></p>");
-        }
-        if (nextBlog == null || nextBlog.getId() == null) {
-//            pageCode.append("<p>下一篇：没有了</p>");
-        } else {
-            pageCode.append("<p>下一篇：<a href='" + projectContext + "/blog/articles/" + nextBlog.getId() + ".html'>"
-                    + nextBlog.getTitle() + "</a></p>");
-        }
-        return pageCode.toString();
-    }
-
-    /**
-     * 构建分页标签
-     */
-    private String genUpAndDownPageCode(Integer page, Integer totalNum, String q, Integer pageSize,
-                                        String projectContext) {
-        long totalPage = totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
-        StringBuffer pageCode = new StringBuffer();
-        if (totalPage == 0) {
-            return "";
-        } else {
-            pageCode.append("<nav>");
-            pageCode.append("<ul class='pager' >");
-            if (page > 1) {
-                pageCode.append("<li><a href='" + projectContext + "/blog/q.html?page=" + (page - 1) + "&q=" + q
-                        + "'>上一页</a></li>");
-            } else {
-                pageCode.append("<li class='disabled'><a href='#'>上一页</a></li>");
-            }
-            if (page < totalPage) {
-                pageCode.append("<li><a href='" + projectContext + "/blog/q.html?page=" + (page + 1) + "&q=" + q
-                        + "'>下一页</a></li>");
-            } else {
-                pageCode.append("<li class='disabled'><a href='#'>下一页</a></li>");
-            }
-            pageCode.append("</ul>");
-            pageCode.append("</nav>");
-        }
-        return pageCode.toString();
-    }
 }

@@ -12,6 +12,12 @@ public class TimeUtils {
     public static final String HOUR_FORMAT = "HH:mm";
     public static final String DAY_FORMAT = "MM/dd";
 
+    public static String getCurrentDateStr() throws Exception {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+        return sdf.format(date);
+    }
+
     /**
      * 获得毫秒级的时间，通常用于时间戳，格式为 yyyyMMddHHmmssSSS
      */

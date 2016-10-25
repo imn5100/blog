@@ -1,11 +1,11 @@
 package com.shaw.bo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 博客实体

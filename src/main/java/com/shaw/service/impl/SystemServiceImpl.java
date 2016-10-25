@@ -1,10 +1,10 @@
 package com.shaw.service.impl;
 
-import com.shaw.constants.CacheKey;
 import com.shaw.bo.Blog;
 import com.shaw.bo.BlogType;
 import com.shaw.bo.Blogger;
 import com.shaw.bo.Link;
+import com.shaw.constants.CacheKey;
 import com.shaw.mapper.BlogMapper;
 import com.shaw.mapper.BlogTypeMapper;
 import com.shaw.mapper.BloggerMapper;
@@ -50,6 +50,7 @@ public class SystemServiceImpl implements SystemService {
 
             List<Link> linkList = linkMapper.list(null); // 获取所有友情链接
             application.setAttribute(CacheKey.LINK_LIST, linkList);
+            logger.info("initBlogData success");
         } catch (Exception e) {
             logger.error("initBlogData Error--Exception msg:" + e.getMessage());
             throw e;

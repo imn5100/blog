@@ -27,10 +27,10 @@
                                 <span class="info">&nbsp;&nbsp;&nbsp;&nbsp;发布日期：${blog.releaseDateStr }</span>
                             </div>
                         </c:forEach>
+                        ${pageCode }
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
-        ${pageCode }
     </div>
 </div>

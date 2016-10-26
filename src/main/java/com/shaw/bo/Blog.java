@@ -1,162 +1,175 @@
 package com.shaw.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 博客实体
- * 
- * @author Administrator
  *
+ * @author Administrator
  */
 public class Blog implements Serializable, Comparable<Blog> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4186161649311309864L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4186161649311309864L;
 
-	private Integer id; // 编号
-	private String title; // 博客标题
-	private String summary; // 摘要
-	@JSONField(format = "yyyy-MM-dd HH:mm")
-	private Date releaseDate; // 发布日期
-	private Integer clickHit; // 查看次数
-	private Integer replyHit; // 回复次数
-	private String content; // 博客内容
-	private String contentNoTag; // 博客内容 无网页标签 Lucene分词用
-	private BlogType blogType; // 博客类型
+    private Integer id; // 编号
+    private String title; // 博客标题
+    private String summary; // 摘要
+    @JSONField(format = "yyyy-MM-dd HH:mm")
+    private Date releaseDate; // 发布日期
+    private Integer clickHit; // 查看次数
+    private Integer replyHit; // 回复次数
+    private String content; // 博客内容
+    private String contentNoTag; // 博客内容 无网页标签 Lucene分词用
+    private BlogType blogType; // 博客类型
 
-	private Integer blogCount; // 博客数量 非博客实际属性，主要是 根据发布日期归档查询博客数量用
-	private String releaseDateStr; // 发布日期字符串 只取年和月
-	private String keyWord; // 关键字 空格隔开
+    private Integer blogCount; // 博客数量 非博客实际属性，主要是 根据发布日期归档查询博客数量用
+    private String releaseDateStr; // 发布日期字符串 只取年和月
+    private String keyWord; // 关键字 空格隔开
+    private List<String> keywordList;
+    private List<String> imagesList = new LinkedList<String>(); // 博客里存在的图片		// 主要用于列表展示显示缩略图
 
-	private List<String> imagesList = new LinkedList<String>(); // 博客里存在的图片
-																// 主要用于列表展示显示缩略图
 
-	public Integer getId() {
-		return id;
-	}
+    public List<String> getKeywordList() {
+        if (StringUtils.isNotEmpty(keyWord) && keywordList == null) {
+            keywordList = new ArrayList<String>();
+            String[] keywords = keyWord.split(",");
+            if (keywords.length > 0)
+                for (String keyword : keywords) {
+                    keywordList.add(keyword);
+                }
+        }
+        return keywordList;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getSummary() {
-		return summary;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setSummary(String summary) {
-		this.summary = summary;
-	}
+    public String getSummary() {
+        return summary;
+    }
 
-	public Date getReleaseDate() {
-		return releaseDate;
-	}
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
 
-	public Integer getClickHit() {
-		return clickHit;
-	}
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-	public void setClickHit(Integer clickHit) {
-		this.clickHit = clickHit;
-	}
+    public Integer getClickHit() {
+        return clickHit;
+    }
 
-	public Integer getReplyHit() {
-		return replyHit;
-	}
+    public void setClickHit(Integer clickHit) {
+        this.clickHit = clickHit;
+    }
 
-	public void setReplyHit(Integer replyHit) {
-		this.replyHit = replyHit;
-	}
+    public Integer getReplyHit() {
+        return replyHit;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setReplyHit(Integer replyHit) {
+        this.replyHit = replyHit;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public String getContentNoTag() {
-		return contentNoTag;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setContentNoTag(String contentNoTag) {
-		this.contentNoTag = contentNoTag;
-	}
+    public String getContentNoTag() {
+        return contentNoTag;
+    }
 
-	public BlogType getBlogType() {
-		return blogType;
-	}
+    public void setContentNoTag(String contentNoTag) {
+        this.contentNoTag = contentNoTag;
+    }
 
-	public void setBlogType(BlogType blogType) {
-		this.blogType = blogType;
-	}
+    public BlogType getBlogType() {
+        return blogType;
+    }
 
-	public Integer getBlogCount() {
-		return blogCount;
-	}
+    public void setBlogType(BlogType blogType) {
+        this.blogType = blogType;
+    }
 
-	public void setBlogCount(Integer blogCount) {
-		this.blogCount = blogCount;
-	}
+    public Integer getBlogCount() {
+        return blogCount;
+    }
 
-	public String getReleaseDateStr() {
-		return releaseDateStr;
-	}
+    public void setBlogCount(Integer blogCount) {
+        this.blogCount = blogCount;
+    }
 
-	public void setReleaseDateStr(String releaseDateStr) {
-		this.releaseDateStr = releaseDateStr;
-	}
+    public String getReleaseDateStr() {
+        return releaseDateStr;
+    }
 
-	public String getKeyWord() {
-		return keyWord;
-	}
+    public void setReleaseDateStr(String releaseDateStr) {
+        this.releaseDateStr = releaseDateStr;
+    }
 
-	public void setKeyWord(String keyWord) {
-		this.keyWord = keyWord;
-	}
+    public String getKeyWord() {
+        return keyWord;
+    }
 
-	public List<String> getImagesList() {
-		return imagesList;
-	}
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 
-	public void setImagesList(List<String> imagesList) {
-		this.imagesList = imagesList;
-	}
+    public List<String> getImagesList() {
+        return imagesList;
+    }
 
-	public String getBlogTypeName() {
-		return blogType == null ? null : blogType.getTypeName();
-	}
+    public void setImagesList(List<String> imagesList) {
+        this.imagesList = imagesList;
+    }
 
-	/*
-	 * Id 是递增的，按id倒序排列 就是时间由近到远。
-	 */
-	@Override
-	public int compareTo(Blog o) {
-		if (o == null || o.getId() == null) {
-			return -1;
-		} else {
-			return -(getId() - o.getId());
-		}
+    public String getBlogTypeName() {
+        return blogType == null ? null : blogType.getTypeName();
+    }
 
-	}
+    /*
+     * Id 是递增的，按id倒序排列 就是时间由近到远。
+     */
+    @Override
+    public int compareTo(Blog o) {
+        if (o == null || o.getId() == null) {
+            return -1;
+        } else {
+            return -(getId() - o.getId());
+        }
+
+    }
 
 }

@@ -23,6 +23,20 @@
         <%--url("${pageContext.request.contextPath}/static/images/star02.png");--%>
         }
 
+        .badge {
+            display: block;
+            float: right;
+            text-align: center;
+            margin-right: 15px;
+            margin-top: 3px;
+            padding: 0 10px;
+            font-size: 12px;
+            color: #fff;
+            background-color: #bbb;
+            border-radius: 50%;
+            transition: 0.5s ease-in-out;
+        }
+
         .panel-default > .panel-body {
             background-color: #f8f8fd;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
@@ -50,13 +64,14 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        按日志类别
+                        <span class="glyphicon glyphicon-list"></span>
+                        Categories
                     </div>
                     <div class="panel-body">
                         <ul>
                             <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
                                 <li><span><a
-                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }(${blogTypeCount.blogCount })</a></span>
+                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }</a><span class="badge">${blogTypeCount.blogCount }</span></span>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -65,13 +80,13 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        按日志日期
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        Calendar
                     </div>
                     <div class="panel-body">
                         <ul>
                             <c:forEach var="blogCount" items="${blogCountList }">
-                                <li><span><a
-                                        href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }(${blogCount.blogCount })</a></span>
+                                <li><span><a href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }</a><span class="badge">${blogCount.blogCount }</span></span>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -79,6 +94,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <span class="glyphicon glyphicon-star"></span>
                         热评文章
                     </div>
                     <div class="panel-body">
@@ -87,6 +103,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        <span class="glyphicon glyphicon-user"></span>
                         最近访客
                     </div>
                     <div class="panel-body">
@@ -97,7 +114,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                            <%--<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>--%>
+                        <span class="glyphicon glyphicon-link"></span>
                         友链
                     </div>
                     <div class="panel-body">

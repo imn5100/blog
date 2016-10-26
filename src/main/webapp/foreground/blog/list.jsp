@@ -27,7 +27,7 @@
                         <c:forEach items="${blog.keywordList}" var="keyword">
                             <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}" style="color: #9d9d9d;">${keyword}</a>
                         </c:forEach>
-                        <span class="glyphicon glyphicon-list"></span>
+                        <span class="glyphicon glyphicon-list-alt"></span>
                         <a href="${pageContext.request.contextPath}/index.html?typeId=${blog.blogType.id}" style="color: #9d9d9d;">${blog.blogType.typeName}</a>
                     </span>
                     </div>

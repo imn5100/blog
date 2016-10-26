@@ -42,7 +42,7 @@ public class IndexController {
         if (StringUtil.isEmpty(page)) {
             page = "1";
         }
-        PageBean pageBean = new PageBean(Integer.parseInt(page), 10);
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Constants.PAGE_SIZE);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("start", pageBean.getStart());
         map.put("size", pageBean.getPageSize());
@@ -71,7 +71,7 @@ public class IndexController {
         if (StringUtil.isNotEmpty(releaseDateStr)) {
             param.append("releaseDateStr=" + releaseDateStr + "&");
         }
-        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), 10, param.toString()));
+        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
         mav.addObject("mainPage", "foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);

@@ -41,7 +41,7 @@
     }
 </style>
 <div class="col-md-12">
-    <div class="panel panel panel-primary">
+    <div class="panel panel panel-default">
         <div class="panel-heading">
             博客信息
         </div>

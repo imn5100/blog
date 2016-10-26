@@ -19,10 +19,13 @@
         body {
             padding-top: 100px;
             padding-bottom: 20px;
-            background-image: url("${pageContext.request.contextPath}/static/images/star02.png");
+            background-image: url(https://ooo.0o0.ooo/2016/06/20/5768c606cf9cb.jpg);
+        <%--url("${pageContext.request.contextPath}/static/images/star02.png");--%>
         }
-        .panel-default>.panel-heading {
-            background-image: linear-gradient(to bottom, #13b4d0 0, #2797b9 100%);
+
+        .panel-default > .panel-body {
+            background-color: #f8f8fd;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
         }
     </style>
 </head>
@@ -33,16 +36,17 @@
         <jsp:include page="${mainPage }"></jsp:include>
         <c:if test="${sideNotLoad == null}">
             <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                            ${blogger.nickName}
-                    </div>
-                    <div class="panel-body">
-                        <img class="img-responsive"
-                             src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
-                        <div align="center">${blogger.sign }</div>
-                    </div>
-                </div>
+                    <%--<div class="panel panel-default">--%>
+                    <%--<div class="panel-heading">--%>
+                    <%--${blogger.nickName}--%>
+                    <%--</div>--%>
+                    <%--<div class="panel-body">--%>
+                    <%--<img class="img-responsive"--%>
+                    <%--src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>--%>
+
+                    <%--<div align="center">${blogger.sign }</div>--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">

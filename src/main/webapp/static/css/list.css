@@ -1,7 +1,7 @@
 .bs-callout {
     padding: 20px;
     margin: 20px 0;
-    border: 1px solid #eee;
+    border: 1px solid #D9DADE;
     border-left-width: 5px;
     border-radius: 3px;
 }
@@ -16,7 +16,7 @@
     margin-top: -5px;
 }
 .bs-callout-info {
-    border-left-color: #DA235E;
+    border-left-color: #2d84da;
 }
 
 /*.bs-callout-info h4 {*/

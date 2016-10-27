@@ -20,7 +20,7 @@
             padding-top: 100px;
             padding-bottom: 20px;
             background-image: url(https://ooo.0o0.ooo/2016/06/20/5768c606cf9cb.jpg);
-        <%--url("${pageContext.request.contextPath}/static/images/star02.png");--%>
+            <%--background-image: url("${pageContext.request.contextPath}/static/images/star02.png");--%>
         }
 
         .badge {
@@ -50,17 +50,17 @@
         <jsp:include page="${mainPage }"></jsp:include>
         <c:if test="${sideNotLoad == null}">
             <div class="col-md-3">
-                    <%--<div class="panel panel-default">--%>
-                    <%--<div class="panel-heading">--%>
-                    <%--${blogger.nickName}--%>
-                    <%--</div>--%>
-                    <%--<div class="panel-body">--%>
-                    <%--<img class="img-responsive"--%>
-                    <%--src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>--%>
-
-                    <%--<div align="center">${blogger.sign }</div>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-tower"></span>
+                            ${blogger.nickName}
+                    </div>
+                    <div class="panel-body">
+                        <img class="img-responsive"
+                             src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
+                        <div align="center">${blogger.sign }</div>
+                    </div>
+                </div>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -71,7 +71,8 @@
                         <ul>
                             <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
                                 <li><span><a
-                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }</a><span class="badge">${blogTypeCount.blogCount }</span></span>
+                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }</a><span
+                                        class="badge">${blogTypeCount.blogCount }</span></span>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -86,7 +87,9 @@
                     <div class="panel-body">
                         <ul>
                             <c:forEach var="blogCount" items="${blogCountList }">
-                                <li><span><a href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }</a><span class="badge">${blogCount.blogCount }</span></span>
+                                <li><span><a
+                                        href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }</a><span
+                                        class="badge">${blogCount.blogCount }</span></span>
                                 </li>
                             </c:forEach>
                         </ul>

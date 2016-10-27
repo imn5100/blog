@@ -22,9 +22,6 @@ public class MyRealm extends AuthorizingRealm{
 	@Resource
 	private BloggerService bloggerService;
 	
-	/**
-	 * 为当限前登录的用户授予角色和权
-	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		return null;

@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletContext;
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/8/29 0029.
- */
 @Service("systemService")
 public class SystemServiceImpl implements SystemService {
     @Autowired

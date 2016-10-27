@@ -9,18 +9,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * 博客实体
- *
- * @author Administrator
- */
 public class Blog implements Serializable, Comparable<Blog> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 4186161649311309864L;
-
     private Integer id; // 编号
     private String title; // 博客标题
     private String summary; // 摘要
@@ -39,6 +30,7 @@ public class Blog implements Serializable, Comparable<Blog> {
     private List<String> imagesList = new LinkedList<String>(); // 博客里存在的图片		// 主要用于列表展示显示缩略图
 
 
+    //直接获取拆分后的关键字
     public List<String> getKeywordList() {
         if (StringUtils.isNotEmpty(keyWord) && keywordList == null) {
             keywordList = new ArrayList<String>();

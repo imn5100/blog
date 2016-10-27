@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by shaw on 2016/10/19 0019.
+ *异常捕获，写入日志
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
     Logger logger = LoggerFactory.getLogger(Constants.LOG_EXCEPTION);

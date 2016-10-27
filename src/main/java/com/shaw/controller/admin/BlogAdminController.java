@@ -28,17 +28,11 @@ public class BlogAdminController {
     @Resource
     private BlogService blogService;
 
-    // 博客索引
     @Autowired
     private BlogIndex blogIndex;
 
     /**
      * 添加或者修改博客信息
-     *
-     * @param blog
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/save")
     public String save(Blog blog, HttpServletResponse response) throws Exception {
@@ -64,12 +58,6 @@ public class BlogAdminController {
 
     /**
      * 分页查询博客信息
-     *
-     * @param page
-     * @param rows
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/list")
     public String list(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String rows, Blog s_blog, HttpServletResponse response) throws Exception {
@@ -89,11 +77,6 @@ public class BlogAdminController {
 
     /**
      * 删除博客信息
-     *
-     * @param ids
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/delete")
     public String delete(@RequestParam(value = "ids") String ids, HttpServletResponse response) throws Exception {
@@ -110,11 +93,6 @@ public class BlogAdminController {
 
     /**
      * 通过ID查找实体
-     *
-     * @param id
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/findById")
     public String findById(@RequestParam(value = "id") String id, HttpServletResponse response) throws Exception {

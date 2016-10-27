@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+/**
+ * 博客相关
+ */
 @Controller
 @RequestMapping("/blog")
 public class BlogController {

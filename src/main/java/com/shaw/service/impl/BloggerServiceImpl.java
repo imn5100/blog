@@ -6,27 +6,21 @@ import com.shaw.service.BloggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * 博主Service实现类
- * 
- * @author Administrator
- *
- */
 @Service("bloggerService")
 public class BloggerServiceImpl implements BloggerService {
-	@Autowired
-	private BloggerMapper bloggerMapper;
+    @Autowired
+    private BloggerMapper bloggerMapper;
 
-	public Blogger find() {
-		return bloggerMapper.find();
-	}
+    public Blogger find() {
+        return bloggerMapper.find();
+    }
 
-	public Blogger getByUserName(String userName) {
-		return bloggerMapper.getByUserName(userName);
-	}
+    public Blogger getByUserName(String userName) {
+        return bloggerMapper.getByUserName(userName);
+    }
 
-	public Integer update(Blogger blogger) {
-		return bloggerMapper.update(blogger);
-	}
+    public Integer update(Blogger blogger) {
+        return bloggerMapper.update(blogger);
+    }
 
 }

@@ -9,11 +9,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 博客类型Service实现类
- * @author Administrator
- *
- */
 @Service("blogTypeService")
 public class BlogTypeServiceImpl implements BlogTypeService{
 

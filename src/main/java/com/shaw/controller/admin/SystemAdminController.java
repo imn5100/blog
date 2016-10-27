@@ -36,10 +36,6 @@ public class SystemAdminController {
 
     /**
      * 刷新系统缓存
-     *
-     * @param request
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/refreshSystem")
     public String refreshSystem(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -77,6 +73,9 @@ public class SystemAdminController {
         return null;
     }
 
+    /**
+     * 重置blog简述长度
+     */
     @RequestMapping("resetSummary")
     public String resetSummary(HttpServletResponse response, @RequestParam("length") Integer length) throws Exception {
         List<Blog> blogs = blogService.list(null);

@@ -28,13 +28,6 @@ public class BloggerAdminController {
 
     /**
      * 修改博主信息
-     *
-     * @param imageFile
-     * @param blogger
-     * @param request
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/save")
     public String save(@RequestParam("imageFile") MultipartFile imageFile, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -58,10 +51,6 @@ public class BloggerAdminController {
 
     /**
      * 查询博主信息
-     *
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/find")
     public String find(HttpServletResponse response) throws Exception {
@@ -72,11 +61,6 @@ public class BloggerAdminController {
 
     /**
      * 修改博主密码
-     *
-     * @param newPassword
-     * @param response
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/modifyPassword")
     public String modifyPassword(String newPassword, HttpServletResponse response) throws Exception {

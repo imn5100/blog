@@ -9,11 +9,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 友情链接Service实现类
- * @author Administrator
- *
- */
 @Service("linkService")
 public class LinkServiceImpl implements LinkService{
 

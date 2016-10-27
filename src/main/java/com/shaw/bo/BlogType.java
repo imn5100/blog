@@ -2,9 +2,6 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
-/**
- * 博客类型实体
- */
 public class BlogType implements Serializable {
     private static final long serialVersionUID = 812678430743248648L;
     private Integer id; // 编号

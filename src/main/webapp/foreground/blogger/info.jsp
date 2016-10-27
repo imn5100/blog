@@ -9,7 +9,14 @@
             <div style="padding: 30px">
                 ${blogger.proFile }
             </div>
-            <iframe frameborder="no" height="500" marginheight="0" marginwidth="0" width="100%"  src="http://music.163.com/outchain/player?type=0&id=58441082&auto=0&height=500"></iframe>
+            <div id="music">
+            </div>
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        var musicList = '<iframe frameborder="no" height="500" marginheight="0" marginwidth="0" width="100%"  src="http://music.163.com/outchain/player?type=0&id=58441082&auto=0&height=500"></iframe>';
+        $("#music").html(musicList);
+    });
+</script>

@@ -24,7 +24,7 @@
     border-left-color: #9E9E9E;
 }
 
-.bs-callout-info h4 a{
+.bs-callout-info h4 a {
     color: #009688;
     font-size: 20px;
 
@@ -38,9 +38,10 @@
     color: #9d9d9d;
 }
 
-.listimg img {
-    padding: 10px;
-    padding-left: 0px;
-    max-height: 200px;
-    max-width: 300px;
+.info a {
+    color: #9d9d9d;
+}
+.smallClass {
+    line-height: 1.8;
+    color: #696868;
 }

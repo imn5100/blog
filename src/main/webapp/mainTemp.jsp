@@ -12,36 +12,22 @@
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/embed.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        body {
-            padding-top: 100px;
-            padding-bottom: 20px;
-            background-image: url(https://ooo.0o0.ooo/2016/06/20/5768c606cf9cb.jpg);
-            <%--background-image: url("${pageContext.request.contextPath}/static/images/star02.png");--%>
-        }
-
-        .badge {
-            display: block;
-            float: right;
-            text-align: center;
-            margin-right: 15px;
-            margin-top: 3px;
-            padding: 0 10px;
-            font-size: 12px;
-            color: #fff;
-            background-color: #bbb;
-            border-radius: 50%;
-            transition: 0.5s ease-in-out;
-        }
-
-        .panel-default > .panel-body {
-            background-color: #f8f8fd;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
-        }
-    </style>
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name: "shawblog"};
+        (function () {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';
+            ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
 </head>
 <body>
 <div class="container None">
@@ -58,6 +44,7 @@
                     <div class="panel-body">
                         <img class="img-responsive"
                              src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
+
                         <div align="center">${blogger.sign }</div>
                     </div>
                 </div>
@@ -131,20 +118,7 @@
             </div>
         </c:if>
     </div>
-
     <jsp:include page="/foreground/common/foot.jsp"/>
 </div>
 </body>
 </html>
-<script type="text/javascript">
-    var duoshuoQuery = {short_name: "shawblog"};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>

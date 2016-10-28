@@ -55,7 +55,7 @@ public class SystemAdminController {
     public String refreshLuceneIndex(HttpServletResponse response) throws Exception {
         IndexWriter writer = blogIndex.getWriter();
         writer.deleteAll();
-        logger.info("deleteAll lucene index success");
+        logger.info("delete All lucene index success");
         List<Blog> blogs = blogService.list(null);
         for (Blog blog : blogs) {
             Document doc = new Document();
@@ -93,8 +93,9 @@ public class SystemAdminController {
             else {
                 blog.setSummary(text);
             }
-            blogService.update(blog);
         }
+        //使用批量更新
+        blogService.updateBatchForSummary(blogs);
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("resetSummary success");

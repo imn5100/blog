@@ -58,7 +58,10 @@ public class BlogController {
         }
         mav.addObject("blog", blog);
         blog.setClickHit(blog.getClickHit() + 1); // 博客点击次数加1
-        blogService.update(blog);
+        //避免频繁更新数据库 使用缓存存储blog 点击量
+//        blogService.update(blog);
+        String key = String.format(CacheKey.BLOG_CLICK_KEY, blog.getId());
+        redisClient.incr(key);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("blogId", blog.getId());
         map.put("state", 1); // 查询审核通过的评论

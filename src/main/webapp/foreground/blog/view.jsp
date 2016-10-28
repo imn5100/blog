@@ -56,13 +56,15 @@
             </div>
             <div class="blog_info">
                 <ul>
-                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                     <fmt:formatDate value="${blog.releaseDate }"  type="date"  pattern="yyyy-MM-dd HH:mm"/>
+                    <span class="glyphicon glyphicon-hand-up"></span>
+                    (${blog.clickHit})
                     <span class="glyphicon glyphicon-tags"></span>&nbsp;
                     <c:forEach items="${blog.keywordList}" var="keyword">
                         <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}" target="_blank">${keyword}</a>&nbsp;&nbsp;
                     </c:forEach>
-                    <span class="glyphicon glyphicon-list-alt"></span>
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
                     <a href="${pageContext.request.contextPath}/index.html?typeId=${blog.blogType.id}" target="_blank">${blog.blogType.typeName}</a>
                 </ul>
             </div>

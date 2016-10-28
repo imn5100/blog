@@ -9,44 +9,62 @@ import com.shaw.mapper.BlogMapper;
 import com.shaw.mapper.BlogTypeMapper;
 import com.shaw.mapper.BloggerMapper;
 import com.shaw.mapper.LinkMapper;
-import com.shaw.service.SystemService;
+import com.shaw.service.*;
+import com.shaw.util.BoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("systemService")
 public class SystemServiceImpl implements SystemService {
     @Autowired
-    private BloggerMapper bloggerMapper;
+    private BloggerService bloggerService;
 
     @Autowired
-    private BlogTypeMapper blogTypeMapper;
+    private BlogTypeService blogTypeService;
 
     @Autowired
-    private BlogMapper blogMapper;
+    private BlogService blogService;
 
     @Autowired
-    private LinkMapper linkMapper;
+    private LinkService linkService;
+
+    @Autowired
+    private RedisClient redisClient;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * 刷新系统缓存。
+     * 2016/10/28新增，每次启动初始化数据时，同步redis 中clockHit数据到数据库中
+     */
     public void initBlogData(ServletContext application) {
         try {
-            Blogger blogger = bloggerMapper.find(); // 查询博主信息
+            Blogger blogger = bloggerService.find(); // 查询博主信息
             blogger.setPassword(null);
             application.setAttribute(CacheKey.BLOGGER, blogger);
-
-            List<BlogType> blogTypeCountList = blogTypeMapper.countList(); // 查询博客类别以及博客的数量
+            List<BlogType> blogTypeCountList = blogTypeService.countList(); // 查询博客类别以及博客的数量
             application.setAttribute(CacheKey.BLOG_TYPE_LIST, blogTypeCountList);
-            List<Blog> blogCountList = blogMapper.countList(); // 根据日期分组查询博客
+            List<Blog> blogCountList = blogService.countList(); // 根据日期分组查询博客
             application.setAttribute(CacheKey.BLOG_COUNT_LIST, blogCountList);
-
-            List<Link> linkList = linkMapper.list(null); // 获取所有友情链接
+            List<Link> linkList = linkService.list(null); // 获取所有友情链接
             application.setAttribute(CacheKey.LINK_LIST, linkList);
+            List<Blog> blogs = blogService.list(null);
+            int count = 0;
+            List<Blog> updateBlog = new ArrayList<Blog>();
+            for (Blog blog : blogs) {
+                if (BoUtils.updateClickHit(blog, redisClient)) {
+                    updateBlog.add(blog);
+                    count++;
+                }
+            }
+            if (count > 0)
+                blogService.updateBatchForClickHit(updateBlog);
             logger.info("initBlogData success");
         } catch (Exception e) {
             logger.error("initBlogData Error--Exception msg:" + e.getMessage());

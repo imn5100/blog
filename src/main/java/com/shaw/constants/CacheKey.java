@@ -7,5 +7,5 @@ public class CacheKey {
     public static final String LINK_LIST = "linkList";
     public static final String CODES_KEY = "codes_%s";
     public static final Long CODES_EXPIRE = 60 * 3L;
-    public static final String BLOG_CLICK_KEY = "BlogClick_%s";
+    public static final String BLOG_CLICK_KEY = "ClickCount:BlogClick_%s";
 }

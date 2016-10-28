@@ -46,6 +46,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!--利用redis 和 spring-session 完成 session的共享-->
     <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="1200"></property>
     </bean>
 
 

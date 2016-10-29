@@ -6,6 +6,7 @@ import com.shaw.mapper.BlogMapper;
 import com.shaw.service.BlogService;
 import com.shaw.util.BoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,8 +18,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogMapper blogMapper;
-    @Autowired
-    private RedisClient redisClient;
+
+    @Resource(name = "stringRedisTemplate")
+    private RedisTemplate<String, String> stringRedisTemplate;
 
     @Override
     public List<Blog> countList() {
@@ -41,14 +43,14 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog findById(Integer id) {
         Blog blog = blogMapper.findById(id);
-        BoUtils.updateClickHit(blog, redisClient);
+        BoUtils.updateClickHit(blog, stringRedisTemplate);
         return blog;
     }
 
     @Override
     public Integer update(Blog blog) {
         //每次更新blog的时候将 blog点击量更新到 数据库
-        BoUtils.updateClickHit(blog, redisClient);
+        BoUtils.updateClickHit(blog, stringRedisTemplate);
         return blogMapper.update(blog);
     }
 

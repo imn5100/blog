@@ -2,8 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        ">
 
     <import resource="applicationContext-redis.xml"></import>
     <import resource="applicationContext-db.xml"></import>
@@ -16,4 +20,7 @@
     <bean id="initComponent" class="com.shaw.listener.InitComponent"></bean>
     <bean class="com.shaw.handler.ExceptionHandler"></bean>
 
+    <!--开启aop注解-->
+    <context:component-scan base-package="com.shaw.aop"/>
+    <aop:aspectj-autoproxy/>
 </beans>

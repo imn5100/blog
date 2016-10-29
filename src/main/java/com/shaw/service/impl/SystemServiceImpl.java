@@ -14,8 +14,10 @@ import com.shaw.util.BoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,9 @@ public class SystemServiceImpl implements SystemService {
 
     @Autowired
     private RedisClient redisClient;
+
+    @Resource(name = "stringRedisTemplate")
+    private RedisTemplate<String, String> stringRedisTemplate;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -58,7 +63,7 @@ public class SystemServiceImpl implements SystemService {
             int count = 0;
             List<Blog> updateBlog = new ArrayList<Blog>();
             for (Blog blog : blogs) {
-                if (BoUtils.updateClickHit(blog, redisClient)) {
+                if (BoUtils.updateClickHit(blog, stringRedisTemplate)) {
                     updateBlog.add(blog);
                     count++;
                 }

@@ -15,7 +15,8 @@ public class Blog implements Serializable, Comparable<Blog> {
     private Integer id; // 编号
     private String title; // 博客标题
     private String summary; // 摘要
-    @JSONField(format = "yyyy-MM-dd HH:mm")
+    //这里反序列化时需要注意，fastjson只支持几个标准日期格式
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date releaseDate; // 发布日期
     private Integer clickHit; // 查看次数
     private Integer replyHit; // 回复次数

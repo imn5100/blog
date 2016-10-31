@@ -13,10 +13,17 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!-- jedis 配置 -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--最大空闲-->
         <property name="maxIdle" value="${redis.maxIdle}"/>
+        <!--最小空闲-->
         <property name="minIdle" value="${redis.minIdle}"/>
+        <!--最大连接数-->
         <property name="maxTotal" value="${redis.maxTotal}"/>
+        <!--最大等待连接时间-->
         <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <!--空闲连接最小逐出时间-->
+        <!--<property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>-->
+        <!--在获取连接的时候检查有效性-->
         <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
     </bean>
 

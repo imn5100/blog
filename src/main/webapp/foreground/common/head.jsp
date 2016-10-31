@@ -23,18 +23,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/index.html">ShawのSecret Base</a>
+                <a class="navbar-brand" href="/">ShawのSecret Base</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li <c:if test="${indexActive !=null}"> class="active" </c:if> ><a
-                            href="${pageContext.request.contextPath}/index.html">首页</a></li>
+                            href="/">首页</a></li>
                     <li <c:if test="${aboutActive!=null}"> class="active" </c:if> ><a
-                            href="${pageContext.request.contextPath}/about.html">关于本站</a></li>
+                            href="/about.html">关于本站</a></li>
                     <li <c:if test="${aboutBloggerActive !=null}"> class="active" </c:if> ><a
-                            href="${pageContext.request.contextPath}/blogger/about.html">关于站长</a></li>
+                            href="/blogger/about.html">关于站长</a></li>
                 </ul>
-                <form action="${pageContext.request.contextPath}/blog/q.html" class="navbar-form navbar-right"
+                <form action="/blog/q.html" class="navbar-form navbar-right"
                       role="search" method="post" onsubmit="return checkData()">
                     <div class="form-group">
                         <input type="text" id="q" name="q" value="${q}" class="form-control"

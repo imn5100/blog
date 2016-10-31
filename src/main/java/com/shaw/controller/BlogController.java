@@ -46,7 +46,7 @@ public class BlogController {
         ModelAndView mav = new ModelAndView();
         Blog blog = blogService.findById(id);
         if (blog == null) {
-            mav.setViewName("redirect:/index.html");
+            mav.setViewName("redirect:/");
             return mav;
         }
         String keyWords = blog.getKeyWord();
@@ -84,7 +84,7 @@ public class BlogController {
                                HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
         if (StringUtils.isBlank(q)) {
-            mav.setViewName("redirect:/index.html");
+            mav.setViewName("redirect:/");
             return mav;
         }
         mav.addObject("mainPage", "foreground/blog/result.jsp");

@@ -10,3 +10,11 @@ goaccess_command="goaccess -f $final_logfile -a >$final_file"
 eval $cp_command
 eval $gz_command
 eval $goaccess_command
+
+#赋予权限避免 Permission denied 错误
+#chown root:root /usr/myfile/weblog_analysis.sh
+#crontab -e 添加 任务。每天7:30执行 将日志输出到wla.log
+#30 7 * * * sh  /usr/myfile/weblog_analysis.sh >/usr/myfile/wla.log 2>&1
+
+
+

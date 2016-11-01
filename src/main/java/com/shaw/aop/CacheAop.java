@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.shaw.service.impl.RedisClient;
 
 /**
- * 查询不敏感数据使用缓存，缓存每5S过期。
  * 这里试题数据较为关键，所以只对新闻通知一类数据缓存
  */
 @Aspect

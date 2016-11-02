@@ -27,4 +27,21 @@ public class CacheKey {
      * BLOG内容更新不频繁下，设置1小时的缓存都可以。
      */
     public static final Long SEARCH_EXPIRETIME = 30L;
+    /**
+     * 缓存web日志文件分析html key
+     **/
+    public static final String WEB_LOGS_HTML_KEY = "WebLogs:FileName_%s";
+    /**
+     * 缓存10天
+     */
+    public static final Long WEB_LOGS_HTML_EXPIRE = 60 * 60 * 24 * 10L;
+    /**
+     * web日志分析html 文件列表,避免频繁IO读取 磁盘
+     */
+    public static final String WEB_LOGS_NAME_LIST_KEY = "WebLogs:FileNameList";
+    /**
+     * 1小时失效 ==  最多每小时查看日志文件读取记录
+     **/
+    public static final Long WEB_LOGS_NAME_LIST_EXPIRE = 60 * 60L;
+
 }

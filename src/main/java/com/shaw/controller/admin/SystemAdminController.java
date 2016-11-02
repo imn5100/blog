@@ -2,10 +2,17 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.Blog;
+import com.shaw.constants.CacheKey;
+import com.shaw.constants.Constants;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.SystemService;
+import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
@@ -20,6 +27,11 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -32,6 +44,8 @@ public class SystemAdminController {
     private BlogService blogService;
     @Autowired
     private BlogIndex blogIndex;
+    @Autowired
+    private RedisClient redisClient;
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /**
@@ -101,5 +115,72 @@ public class SystemAdminController {
         logger.info("resetSummary success");
         HttpResponseUtil.write(response, result);
         return null;
+    }
+
+    @RequestMapping("getWebLogHtmlList")
+    public String getWebLogHtmlList(HttpServletResponse response) throws Exception {
+        List<String> filename = new ArrayList<String>();
+        JSONObject result = new JSONObject();
+        result.put("success", true);
+        if (redisClient.exists(CacheKey.WEB_LOGS_NAME_LIST_KEY)) {
+            filename = (List<String>) redisClient.get(CacheKey.WEB_LOGS_NAME_LIST_KEY);
+            if (CollectionUtils.isNotEmpty(filename)) {
+                result.put("data", filename);
+                HttpResponseUtil.write(response, result);
+                return null;
+            }
+        }
+        //执行到此，说明缓存无法取到filename列表，开始IO读取文件夹获取filename，获取和存入缓存
+        File htmlPath = new File(Constants.DEFAULT_WEB_LOGS_PATH);
+        FilenameFilter filter = FileFilterUtils.suffixFileFilter(".html");
+        if (htmlPath.isDirectory()) {
+            File[] accessFiles = htmlPath.listFiles(filter);
+            if (accessFiles.length > 0) {
+                for (File accessFile : accessFiles) {
+                    filename.add(accessFile.getName());
+                }
+            }
+        }
+        redisClient.set(CacheKey.WEB_LOGS_NAME_LIST_KEY, filename);
+        redisClient.expire(CacheKey.WEB_LOGS_NAME_LIST_KEY, CacheKey.WEB_LOGS_NAME_LIST_EXPIRE);
+        result.put("data", filename);
+        HttpResponseUtil.write(response, result);
+        return null;
+    }
+
+    @RequestMapping("getWebLogHtml")
+    public String getWebLogHtml(HttpServletResponse response, @RequestParam("filename") String filename) throws Exception {
+        if (StringUtils.isBlank(filename)) {
+            logger.info("null filename!!");
+            return null;
+        }
+        String key = String.format(CacheKey.WEB_LOGS_HTML_KEY, filename);
+        if (redisClient.exists(key)) {  //是否缓存，缓存存在则直接返回缓存。
+            String data = (String) redisClient.get(key);
+            if (StringUtils.isNotBlank(data)) {
+                HttpResponseUtil.write(response, data);
+                return null;
+            }
+        }
+        //若查找缓存失败 读取文件并写入缓存
+        String data = readWebLogFile(filename);
+        if (StringUtils.isNotBlank(data)) {
+            redisClient.set(key, data);
+            redisClient.expire(key, CacheKey.WEB_LOGS_HTML_EXPIRE);
+            HttpResponseUtil.write(response, data);
+        } else {
+            HttpResponseUtil.write(response, "File not exists!");
+        }
+        return null;
+    }
+
+    private String readWebLogFile(String filename) throws IOException {
+        File file = new File(Constants.DEFAULT_WEB_LOGS_PATH + filename);
+        if (file.exists()) {
+            String data = FileUtils.readFileToString(file, "UTF-8");
+            return data;
+        } else {
+            return null;
+        }
     }
 }

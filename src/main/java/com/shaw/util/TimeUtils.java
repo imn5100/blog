@@ -530,6 +530,17 @@ public class TimeUtils {
         return null;
     }
 
+    public static String formatDate(Date date, String formatPattern) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat(formatPattern);
+            String result = formatter.format(date);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 季节
      *

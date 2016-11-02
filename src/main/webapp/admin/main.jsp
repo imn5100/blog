@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JavaBlog管理界面</title>
+    <title>ShawBlog管理界面</title>
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css"
@@ -38,6 +38,21 @@
         function openPasswordModifyDialog() {
             $("#dlg").dialog("open").dialog("setTitle", "修改密码");
             url = "${pageContext.request.contextPath}/admin/blogger/modifyPassword.do?id=${currentUser.id}";
+        }
+        function openWebLogDialog() {
+            jQuery.post("/admin/system/getWebLogHtmlList.do", function (data) {
+                var obj = jQuery.parseJSON(data);
+                if (obj.success == true) {
+                    var html = "";
+                    obj.data.forEach(function (element, index) {
+                        html += "<tr>"
+                        html += '<td> <a href="/admin/system/getWebLogHtml.html?filename=' + element + '" target="_blank">' + element + '</a></td>'
+                        html += "<tr>"
+                    });
+                    $("#webloglist").html(html);
+                }
+            });
+            $("#weblog").dialog("open").dialog("setTitle", "web日志分析");
         }
 
         function modifyPassword() {
@@ -167,6 +182,8 @@
                data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
             <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
+            <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
             <a href="javascript:refreshIndex()" class="easyui-linkbutton"
@@ -204,6 +221,13 @@
             </tr>
         </table>
     </form>
+</div>
+<div id="weblog" class="easyui-dialog" style="width:200%;height:300%;padding: 10px 20px"
+     closed="true">
+    日志分析生成的报表列表：<br>
+    <table cellspacing="8px" id="webloglist">
+    </table>
+    <br>* 每日7:30生成
 </div>
 
 <div id="dlg-buttons">

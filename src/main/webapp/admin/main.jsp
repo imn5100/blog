@@ -162,6 +162,8 @@
                data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">写博客</a>
             <a href="http://shawblog.duoshuo.com/admin/" target="_blank" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-review'" style="width: 150px">评论审核</a>
+            <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
         </div>
         <div title="博客管理" data-options="iconCls:'icon-bkgl'" style="padding:10px;">
             <a href="javascript:openTab('写博客','writeBlog.jsp','icon-writeblog')" class="easyui-linkbutton"
@@ -183,7 +185,7 @@
             <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析</a>
+               data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
             <a href="javascript:refreshIndex()" class="easyui-linkbutton"

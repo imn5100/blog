@@ -117,11 +117,15 @@ public class SystemAdminController {
         return null;
     }
 
+    /**
+     * 得到web日志分析报表html文件列表
+     */
     @RequestMapping("getWebLogHtmlList")
     public String getWebLogHtmlList(HttpServletResponse response) throws Exception {
         List<String> filename = new ArrayList<String>();
         JSONObject result = new JSONObject();
         result.put("success", true);
+        //查看是否存在缓存，如果存在，返回缓存内容
         if (redisClient.exists(CacheKey.WEB_LOGS_NAME_LIST_KEY)) {
             filename = (List<String>) redisClient.get(CacheKey.WEB_LOGS_NAME_LIST_KEY);
             if (CollectionUtils.isNotEmpty(filename)) {
@@ -131,16 +135,24 @@ public class SystemAdminController {
             }
         }
         //执行到此，说明缓存无法取到filename列表，开始IO读取文件夹获取filename，获取和存入缓存
+        //指定html报表 文件夹
         File htmlPath = new File(Constants.DEFAULT_WEB_LOGS_PATH);
+        //构建过滤器，过滤非html文件
         FilenameFilter filter = FileFilterUtils.suffixFileFilter(".html");
-        if (htmlPath.isDirectory()) {
+        //判断文件夹是否存在
+        if (htmlPath.exists() && htmlPath.isDirectory()) {
+            //获取文件夹下所有文件名
             File[] accessFiles = htmlPath.listFiles(filter);
             if (accessFiles.length > 0) {
                 for (File accessFile : accessFiles) {
                     filename.add(accessFile.getName());
                 }
             }
+        } else {
+            logger.info("can't find dir:" + Constants.DEFAULT_WEB_LOGS_PATH);
+            return null;
         }
+        //结果存入redis 并返回
         redisClient.set(CacheKey.WEB_LOGS_NAME_LIST_KEY, filename);
         redisClient.expire(CacheKey.WEB_LOGS_NAME_LIST_KEY, CacheKey.WEB_LOGS_NAME_LIST_EXPIRE);
         result.put("data", filename);
@@ -148,6 +160,9 @@ public class SystemAdminController {
         return null;
     }
 
+    /**
+     * 得到web日志分析报表html文件详情
+     */
     @RequestMapping("getWebLogHtml")
     public String getWebLogHtml(HttpServletResponse response, @RequestParam("filename") String filename) throws Exception {
         if (StringUtils.isBlank(filename)) {
@@ -174,6 +189,9 @@ public class SystemAdminController {
         return null;
     }
 
+    /**
+     * 使用org.apache.commons.io.FileUtils;读取报表html 返回，写入response
+     */
     private String readWebLogFile(String filename) throws IOException {
         File file = new File(Constants.DEFAULT_WEB_LOGS_PATH + filename);
         if (file.exists()) {

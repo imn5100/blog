@@ -76,7 +76,7 @@ public class BloggerController {
     @RequestMapping("/about")
     public ModelAndView aboutMe() throws Exception {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("mainPage", "foreground/blogger/info.jsp");
+        mav.addObject("mainPage", "/WEB-INF/foreground/blogger/info.jsp");
         mav.addObject("pageTitle", "Master");
         mav.setViewName("mainTemp");
         mav.addObject("aboutBloggerActive", true);

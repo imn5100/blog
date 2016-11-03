@@ -72,7 +72,7 @@ public class IndexController {
             param.append("releaseDateStr=" + releaseDateStr + "&");
         }
         mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
-        mav.addObject("mainPage", "foreground/blog/list.jsp");
+        mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
@@ -85,7 +85,7 @@ public class IndexController {
     @RequestMapping("/about")
     public ModelAndView download() throws Exception {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("mainPage", "foreground/system/aboutSite.jsp");
+        mav.addObject("mainPage", "/WEB-INF/foreground/system/aboutSite.jsp");
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
         mav.setViewName("mainTemp");
         mav.addObject("aboutActive", true);

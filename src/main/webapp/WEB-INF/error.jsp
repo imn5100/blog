@@ -22,6 +22,6 @@
     </DIV>
     <div align="center" style="padding-top: 40px"><font color="red" size="10"><strong>T.T 服务器发生异常</strong></font></div>
 </DIV>
-<jsp:include page="${pageContext.request.contextPath}/foreground/common/foot.jsp"/>
+<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </body>
 </html>

@@ -88,6 +88,6 @@ public class BloggerAdminController {
     public String logout() throws Exception {
         SecurityUtils.getSubject().logout();
         logger.info("blogger logout");
-        return "redirect:/login.html";
+        return "redirect:/";
     }
 }

@@ -31,7 +31,7 @@
 </head>
 <body>
 <div class="container None">
-    <jsp:include page="/foreground/common/head.jsp"/>
+    <jsp:include page="/WEB-INF/foreground/common/head.jsp"/>
     <div>
         <jsp:include page="${mainPage }"></jsp:include>
         <c:if test="${sideNotLoad == null}">
@@ -118,7 +118,7 @@
             </div>
         </c:if>
     </div>
-    <jsp:include page="/foreground/common/foot.jsp"/>
+    <jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </div>
 </body>
 </html>

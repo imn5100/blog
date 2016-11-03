@@ -22,6 +22,6 @@
     </DIV>
     <div align="center" style="padding-top: 40px"><font color="gray" size="10"><strong>好像少了些什么~~</strong></font></div>
 </DIV>
-<jsp:include page="${pageContext.request.contextPath}/foreground/common/foot.jsp"/>
+<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </body>
 </html>

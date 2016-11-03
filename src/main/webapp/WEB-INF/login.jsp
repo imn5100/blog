@@ -116,6 +116,6 @@
         </DIV>
     </DIV>
 </form>
-<jsp:include page="${pageContext.request.contextPath}/foreground/common/foot.jsp"/>
+<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </body>
 </html>

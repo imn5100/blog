@@ -22,6 +22,6 @@
     </DIV>
     <div align="center"><img alt="logo" src="${pageContext.request.contextPath}/static/images/404.png"></div>
 </DIV>
-<jsp:include page="${pageContext.request.contextPath}/foreground/common/foot.jsp"/>
+<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </body>
 </html>

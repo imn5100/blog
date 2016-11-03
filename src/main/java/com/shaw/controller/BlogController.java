@@ -68,7 +68,7 @@ public class BlogController {
         mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
                 request.getServletContext().getContextPath()));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
-        mav.addObject("mainPage", "foreground/blog/view.jsp");
+        mav.addObject("mainPage", "/WEB-INF/foreground/blog/view.jsp");
         mav.addObject("sideNotLoad", true);
         mav.addObject("pageTitle", blog.getTitle());
         mav.setViewName("mainTemp");
@@ -87,7 +87,7 @@ public class BlogController {
             mav.setViewName("redirect:/");
             return mav;
         }
-        mav.addObject("mainPage", "foreground/blog/result.jsp");
+        mav.addObject("mainPage", "/WEB-INF/foreground/blog/result.jsp");
         List<Blog> blogList = blogIndex.searchBlog(q.trim());
         Integer toIndex = blogList.size() >= page * Constants.PAGE_SIZE ? (page) * Constants.PAGE_SIZE
                 : blogList.size();

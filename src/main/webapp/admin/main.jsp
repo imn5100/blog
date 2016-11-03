@@ -178,20 +178,20 @@
         <div title="个人信息管理" data-options="iconCls:'icon-grxx'" style="padding:10px">
             <a href="javascript:openTab('修改个人信息','modifyInfo.jsp','icon-grxxxg')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
+            <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
         </div>
         <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
             <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
-            <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">刷新系统缓存</a>
             <a href="javascript:refreshIndex()" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">重建索引</a>
+               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">重建索引</a>
             <a href="javascript:resetSummary()" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-refresh'" style="width: 150px;">重置博客概述</a>
+               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">重置博客概述</a>
             <a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'"
                style="width: 150px;">安全退出</a>
         </div>
@@ -201,7 +201,7 @@
     Rua~~~~~!
 </div>
 
-<div id="dlg" class="easyui-dialog" style="width:400px;height:200px;padding: 10px 20px"
+<div id="dlg" class="easyui-dialog" style="width:400%;height:200%;padding: 10px 20px"
      closed="true" buttons="#dlg-buttons">
 
     <form id="fm" method="post">

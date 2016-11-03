@@ -6,7 +6,7 @@
 			<span style="">Powered by <a href="https://github.com/imn5100" target="_blank">
                 <img alt="Brand" src="${pageContext.request.contextPath}/static/images/git.png">
                 Imn5100</a></span><br>
-            <span>浙ICP备16038105号-1</span>
+            <span>浙ICP备16038105号</span>
         </div>
     </div>
 </div>

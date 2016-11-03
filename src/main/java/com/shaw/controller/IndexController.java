@@ -37,7 +37,7 @@ public class IndexController {
      * 主页，获取blog List信息显示
      */
     @RequestMapping("/index")
-    public ModelAndView index(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "typeId", required = false) String typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
+    public ModelAndView index(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "typeId", required = false) Integer typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
         if (StringUtil.isEmpty(page)) {
             page = "1";
@@ -46,8 +46,12 @@ public class IndexController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("start", pageBean.getStart());
         map.put("size", pageBean.getPageSize());
-        map.put("typeId", typeId);
-        map.put("releaseDateStr", releaseDateStr);
+        if (typeId != null)
+            map.put("typeId", typeId);
+        if (StringUtil.isNotEmpty(releaseDateStr)) {
+            releaseDateStr = StringUtil.filterSpChar(releaseDateStr);
+            map.put("releaseDateStr", releaseDateStr);
+        }
         List<Blog> blogList = blogService.list(map);
         for (Blog blog : blogList) {
             List<String> imagesList = blog.getImagesList();
@@ -65,7 +69,7 @@ public class IndexController {
         }
         mav.addObject("blogList", blogList);
         StringBuffer param = new StringBuffer(); // 查询参数
-        if (StringUtil.isNotEmpty(typeId)) {
+        if (typeId != null) {
             param.append("typeId=" + typeId + "&");
         }
         if (StringUtil.isNotEmpty(releaseDateStr)) {

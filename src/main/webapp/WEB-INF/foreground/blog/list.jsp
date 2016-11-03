@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/list.css">
-<div class="col-md-9">
     <div class="panel panel panel-default">
         <div class="panel-heading">
             <span class="glyphicon glyphicon-book"></span> 博客列表
@@ -14,7 +13,7 @@
                                href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html">${blog.title }</a>
                         </h4>
                         &nbsp;&nbsp;
-                        <small  class="smallClass">${blog.summary }...</small>
+                        <small class="smallClass">${blog.summary }...</small>
                         <br>
                         <br>
                         <c:forEach var="image" items="${blog.imagesList}">
@@ -25,7 +24,7 @@
                         <span class="glyphicon glyphicon-calendar"></span>${blog.releaseDateStr}&nbsp;
                         <span class="glyphicon glyphicon-tags"></span>&nbsp;
                         <c:forEach items="${blog.keywordList}" var="keyword">
-                            <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}" >${keyword}</a>
+                            <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}">${keyword}</a>
                         </c:forEach>
                         <span class="glyphicon glyphicon-list-alt"></span>
                         <a href="${pageContext.request.contextPath}/index.html?typeId=${blog.blogType.id}">${blog.blogType.typeName}</a>
@@ -43,4 +42,3 @@
             </ul>
         </nav>
     </div>
-</div>

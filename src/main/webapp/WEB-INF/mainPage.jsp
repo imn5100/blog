@@ -8,6 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="技术博客,后端,java">
     <link href="${pageContext.request.contextPath}/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap3/css/bootstrap.min.css">
@@ -27,98 +28,115 @@
             (document.getElementsByTagName('head')[0]
             || document.getElementsByTagName('body')[0]).appendChild(ds);
         })();
+        $(function () {
+            $("#close_side").click(function () {
+                $("#contents").attr("class", "col-md-12")
+                $("#side").hide();
+                $("#up").show();
+            });
+            $(".cd-top").eq(0).click(function () {
+                $("html,body").animate({scrollTop: 0}, 800);
+                return false;
+            });
+        })
     </script>
 </head>
 <body>
 <div class="container None">
     <jsp:include page="/WEB-INF/foreground/common/head.jsp"/>
     <div>
-        <jsp:include page="${mainPage }"></jsp:include>
-        <c:if test="${sideNotLoad == null}">
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-tower"></span>
-                            ${blogger.nickName}
-                    </div>
-                    <div class="panel-body">
-                        <img class="img-responsive"
-                             src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
-
-                        <div align="center">${blogger.sign }</div>
-                    </div>
+        <div class="col-md-9" id="contents">
+            <jsp:include page="${mainPage }"></jsp:include>
+        </div>
+        <div class="col-md-3" id="side">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-tower"></span>
+                    ${blogger.nickName}
                 </div>
+                <div class="panel-body">
+                    <img class="img-responsive"
+                         src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-list"></span>
-                        Categories
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
-                                <li><span><a
-                                        href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }</a><span
-                                        class="badge">${blogTypeCount.blogCount }</span></span>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        Calendar
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <c:forEach var="blogCount" items="${blogCountList }">
-                                <li><span><a
-                                        href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }</a><span
-                                        class="badge">${blogCount.blogCount }</span></span>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-star"></span>
-                        热评文章
-                    </div>
-                    <div class="panel-body">
-                        <ul class="ds-top-threads" data-range="weekly" data-num-items="5"></ul>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-user"></span>
-                        最近访客
-                    </div>
-                    <div class="panel-body">
-                        <div class="ds-recent-visitors"></div>
-                    </div>
-                </div>
-
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-link"></span>
-                        友链
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <c:forEach var="link" items="${linkList }">
-                                <li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>
-                            </c:forEach>
-                        </ul>
-                    </div>
+                    <div align="center">${blogger.sign }</div>
                 </div>
             </div>
-        </c:if>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-list"></span>
+                    Categories
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <c:forEach var="blogTypeCount" items="${blogTypeCountList }">
+                            <li><span><a
+                                    href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id }">${blogTypeCount.typeName }</a><span
+                                    class="badge">${blogTypeCount.blogCount }</span></span>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    Calendar
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <c:forEach var="blogCount" items="${blogCountList }">
+                            <li><span><a
+                                    href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }</a><span
+                                    class="badge">${blogCount.blogCount }</span></span>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-star"></span>
+                    热评文章
+                </div>
+                <div class="panel-body">
+                    <ul class="ds-top-threads" data-range="weekly" data-num-items="5"></ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-user"></span>
+                    最近访客
+                </div>
+                <div class="panel-body">
+                    <div class="ds-recent-visitors"></div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-link"></span>
+                    友链
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <c:forEach var="link" items="${linkList }">
+                            <li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" align="center">
+                    <span><a id="close_side">关闭侧边栏</a></span>
+                </div>
+            </div>
+        </div>
     </div>
     <jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </div>
+<a class="cd-top cd-is-visible"></a>
 </body>
 </html>

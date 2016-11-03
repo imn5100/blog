@@ -2,6 +2,8 @@ package com.shaw.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 字符串工具类
@@ -71,6 +73,16 @@ public class StringUtil {
             }
         }
         return resultList;
+    }
+
+    public static String filterSpChar(String str) {
+        if (isEmpty(str)) {
+            return null;
+        }
+        String regEx = "[`~!@#$%^&*()+=|{}':;',//[//].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.replaceAll("").trim();
     }
 
 }

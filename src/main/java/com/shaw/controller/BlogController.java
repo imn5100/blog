@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 博客相关
@@ -83,6 +85,7 @@ public class BlogController {
                                @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
+        q = StringUtil.filterSpChar(q);
         if (StringUtils.isBlank(q)) {
             mav.setViewName("redirect:/");
             return mav;

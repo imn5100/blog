@@ -18,6 +18,13 @@
     <script src="${pageContext.request.contextPath}/static/embed.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == 0) {
+                $(".cd-top").hide();
+            } else {
+                $(".cd-top").show();
+            }
+        });
         var duoshuoQuery = {short_name: "shawblog"};
         (function () {
             var ds = document.createElement('script');
@@ -35,7 +42,7 @@
                 $("#up").show();
             });
             $(".cd-top").eq(0).click(function () {
-                $("html,body").animate({scrollTop: 0}, 800);
+                $("html,body").animate({scrollTop: 0}, 500);
                 return false;
             });
         })
@@ -137,6 +144,6 @@
     </div>
     <jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
 </div>
-<a class="cd-top cd-is-visible"></a>
+<a class="cd-top"></a>
 </body>
 </html>

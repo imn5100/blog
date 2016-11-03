@@ -75,7 +75,7 @@ public class IndexController {
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
-        mav.setViewName("mainTemp");
+        mav.setViewName("WEB-INF/mainPage");
         return mav;
     }
 
@@ -87,7 +87,7 @@ public class IndexController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/system/aboutSite.jsp");
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
-        mav.setViewName("mainTemp");
+        mav.setViewName("WEB-INF/mainPage");
         mav.addObject("aboutActive", true);
         return mav;
     }

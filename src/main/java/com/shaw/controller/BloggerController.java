@@ -78,7 +78,7 @@ public class BloggerController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/blogger/info.jsp");
         mav.addObject("pageTitle", "Master");
-        mav.setViewName("mainTemp");
+        mav.setViewName("WEB-INF/mainPage");
         mav.addObject("aboutBloggerActive", true);
         return mav;
     }

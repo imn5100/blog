@@ -71,7 +71,7 @@ public class BlogController {
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/view.jsp");
         mav.addObject("sideNotLoad", true);
         mav.addObject("pageTitle", blog.getTitle());
-        mav.setViewName("mainTemp");
+        mav.setViewName("WEB-INF/mainPage");
         return mav;
     }
 
@@ -101,7 +101,7 @@ public class BlogController {
         mav.addObject("q", q);
         mav.addObject("resultTotal", blogList.size());
         mav.addObject("pageTitle", Constants.PAGE_TITLE + " 搜索'" + q + "'");
-        mav.setViewName("mainTemp");
+        mav.setViewName("WEB-INF/mainPage");
         return mav;
     }
 

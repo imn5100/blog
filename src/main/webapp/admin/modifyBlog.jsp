@@ -5,17 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改博客页面</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/bootstrap/easyui.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/icon.css">
+<script type="text/javascript" src="/static/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/static/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="/static/ueditor/ueditor.all.min.js"> </script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="gbk" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 	
 	

@@ -5,17 +5,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ShawBlog管理界面</title>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/bootstrap/easyui.css">
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery.md5.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/static/bootstrap3/js/jquery.md5.js"></script>
     <script type="text/javascript">
 
         var url;
@@ -141,7 +136,8 @@
 <div region="center">
     <div class="easyui-tabs" fit="true" border="false" id="tabs">
         <div title="控制台" data-options="iconCls:'icon-home'">
-            <div align="center" style="padding-top: 100px"><a href="https://ecs.console.aliyun.com/#/home" target="_blank"><font
+            <div align="center" style="padding-top: 100px"><a href="https://ecs.console.aliyun.com/#/home"
+                                                              target="_blank"><font
                     color="#808080" size="5">阿里云控制台</font></a></div>
         </div>
     </div>

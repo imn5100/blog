@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改个人信息页面</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/bootstrap/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
@@ -44,7 +44,7 @@
 	<form id="form1" action="${pageContext.request.contextPath}/admin/blogger/save.do" method="post" enctype="multipart/form-data">
 	 	<table cellspacing="20px">
 	   		<tr>
-	   			<td width="80px">用户名：</td>
+	   			<td width="80px">登录名：</td>
 	   			<td>
 	   				<input type="hidden" id="id" name="id" value="${currentUser.id }"/>
 	   				<input type="text" id="userName" name="userName" style="width: 200px;" value="${currentUser.userName }" readonly="readonly"/>
@@ -55,15 +55,15 @@
 	   			<td><input type="text" id="nickName" name="nickName"  style="width: 200px;"/></td>
 	   		</tr>
 	   		<tr>
-	   			<td>个性签名：</td>
+	   			<td>签名：</td>
 	   			<td><input type="text" id="sign" name="sign" value="${currentUser.sign }" style="width: 400px;"/></td>
 	   		</tr>
 	   		<tr>
-	   			<td>个人头像：</td>
+	   			<td>头像：</td>
 	   			<td><input type="file" id="imageFile" name="imageFile" style="width: 400px;"/></td>
 	   		</tr>
 	   		<tr>
-	   			<td valign="top">个人简介：</td>
+	   			<td valign="top">简介：</td>
 	   			<td>
 					   <script id="proFile" type="text/plain" style="width:100%;height:500px;"></script>
 					   <input type="hidden" id="pF" name="proFile"/>

@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ShawBlog管理界面</title>
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
+          href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
     <script type="text/javascript"
@@ -136,22 +136,13 @@
     </script>
 </head>
 <body class="easyui-layout">
-<div region="north" style="height: 78px;background-color: #E0ECFF">
-    <table style="padding: 5px" width="100%">
-        <tr>
-            <td width="50%">
-                <%--<img alt="logo" src="${pageContext.request.contextPath}/static/images/innerLogo.png">--%>
-            </td>
-            <td valign="bottom" align="right" width="50%">
-                <font size="3">&nbsp;&nbsp;<strong>欢迎：</strong>${currentUser.userName }</font>
-            </td>
-        </tr>
-    </table>
+<div region="north">
 </div>
 <div region="center">
     <div class="easyui-tabs" fit="true" border="false" id="tabs">
-        <div title="首页" data-options="iconCls:'icon-home'">
-            <div align="center" style="padding-top: 100px"><font color="blue" size="10">Welcome</font></div>
+        <div title="控制台" data-options="iconCls:'icon-home'">
+            <div align="center" style="padding-top: 100px"><a href="https://ecs.console.aliyun.com/#/home" target="_blank"><font
+                    color="#808080" size="5">阿里云控制台</font></a></div>
         </div>
     </div>
 </div>
@@ -197,7 +188,7 @@
         </div>
     </div>
 </div>
-<div region="south" style="height: 25px;padding: 5px" align="center">
+<div region="south" align="center">
     Rua~~~~~!
 </div>
 

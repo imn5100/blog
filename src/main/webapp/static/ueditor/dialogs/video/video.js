@@ -1,85 +1,316 @@
 /**
- * User: Jinqn
- * Date: 14-04-08
- * Time: 下午16:34
- * 上传图片对话框逻辑代码,包括tab: 远程图片/上传图片/在线图片/搜索图片
+ * Created by JetBrains PhpStorm.
+ * User: taoqili
+ * Date: 12-2-20
+ * Time: 上午11:19
+ * To change this template use File | Settings | File Templates.
  */
 
-(function () {
+(function(){
 
-    var uploadFile,
-        onlineFile;
+    var video = {},
+        uploadVideoList = [],
+        isModifyUploadVideo = false,
+        uploadFile;
 
-    window.onload = function () {
+    window.onload = function(){
+        $focus($G("videoUrl"));
         initTabs();
-        initButtons();
+        initVideo();
+        initUpload();
     };
 
     /* 初始化tab标签 */
-    function initTabs() {
-        var tabs = $G('tabhead').children;
+    function initTabs(){
+        var tabs = $G('tabHeads').children;
         for (var i = 0; i < tabs.length; i++) {
             domUtils.on(tabs[i], "click", function (e) {
-                var target = e.target || e.srcElement;
-                setTabFocus(target.getAttribute('data-content-id'));
+                var j, bodyId, target = e.target || e.srcElement;
+                for (j = 0; j < tabs.length; j++) {
+                    bodyId = tabs[j].getAttribute('data-content-id');
+                    if(tabs[j] == target){
+                        domUtils.addClass(tabs[j], 'focus');
+                        domUtils.addClass($G(bodyId), 'focus');
+                    }else {
+                        domUtils.removeClasses(tabs[j], 'focus');
+                        domUtils.removeClasses($G(bodyId), 'focus');
+                    }
+                }
+            });
+        }
+    }
+
+    function initVideo(){
+        createAlignButton( ["videoFloat", "upload_alignment"] );
+        addUrlChangeListener($G("videoUrl"));
+        addOkListener();
+
+        //编辑视频时初始化相关信息
+        (function(){
+            var img = editor.selection.getRange().getClosedNode(),url;
+            if(img && img.className){
+                var hasFakedClass = (img.className == "edui-faked-video"),
+                    hasUploadClass = img.className.indexOf("edui-upload-video")!=-1;
+                if(hasFakedClass || hasUploadClass) {
+                    $G("videoUrl").value = url = img.getAttribute("_url");
+                    $G("videoWidth").value = img.width;
+                    $G("videoHeight").value = img.height;
+                    var align = domUtils.getComputedStyle(img,"float"),
+                        parentAlign = domUtils.getComputedStyle(img.parentNode,"text-align");
+                    updateAlignButton(parentAlign==="center"?"center":align);
+                }
+                if(hasUploadClass) {
+                    isModifyUploadVideo = true;
+                }
+            }
+            createPreviewVideo(url);
+        })();
+    }
+
+    /**
+     * 监听确认和取消两个按钮事件，用户执行插入或者清空正在播放的视频实例操作
+     */
+    function addOkListener(){
+        dialog.onok = function(){
+            $G("preview").innerHTML = "";
+            var currentTab =  findFocus("tabHeads","tabSrc");
+            switch(currentTab){
+                case "video":
+                    return insertSingle();
+                    break;
+                case "videoSearch":
+                    return insertSearch("searchList");
+                    break;
+                case "upload":
+                    return insertUpload();
+                    break;
+            }
+        };
+        dialog.oncancel = function(){
+            $G("preview").innerHTML = "";
+        };
+    }
+
+    /**
+     * 依据传入的align值更新按钮信息
+     * @param align
+     */
+    function updateAlignButton( align ) {
+        var aligns = $G( "videoFloat" ).children;
+        for ( var i = 0, ci; ci = aligns[i++]; ) {
+            if ( ci.getAttribute( "name" ) == align ) {
+                if ( ci.className !="focus" ) {
+                    ci.className = "focus";
+                }
+            } else {
+                if ( ci.className =="focus" ) {
+                    ci.className = "";
+                }
+            }
+        }
+    }
+
+    /**
+     * 将单个视频信息插入编辑器中
+     */
+    function insertSingle(){
+        var width = $G("videoWidth"),
+            height = $G("videoHeight"),
+            url=$G('videoUrl').value,
+            align = findFocus("videoFloat","name");
+        if(!url) return false;
+        if ( !checkNum( [width, height] ) ) return false;
+        editor.execCommand('insertvideo', {
+            url: convert_url(url),
+            width: width.value,
+            height: height.value,
+            align: align
+        }, isModifyUploadVideo ? 'upload':null);
+    }
+
+    /**
+     * 将元素id下的所有代表视频的图片插入编辑器中
+     * @param id
+     */
+    function insertSearch(id){
+        var imgs = domUtils.getElementsByTagName($G(id),"img"),
+            videoObjs=[];
+        for(var i=0,img; img=imgs[i++];){
+            if(img.getAttribute("selected")){
+                videoObjs.push({
+                    url:img.getAttribute("ue_video_url"),
+                    width:420,
+                    height:280,
+                    align:"none"
+                });
+            }
+        }
+        editor.execCommand('insertvideo',videoObjs);
+    }
+
+    /**
+     * 找到id下具有focus类的节点并返回该节点下的某个属性
+     * @param id
+     * @param returnProperty
+     */
+    function findFocus( id, returnProperty ) {
+        var tabs = $G( id ).children,
+                property;
+        for ( var i = 0, ci; ci = tabs[i++]; ) {
+            if ( ci.className=="focus" ) {
+                property = ci.getAttribute( returnProperty );
+                break;
+            }
+        }
+        return property;
+    }
+    function convert_url(url){
+        if ( !url ) return '';
+        url = utils.trim(url)
+            .replace(/v\.youku\.com\/v_show\/id_([\w\-=]+)\.html/i, 'player.youku.com/player.php/sid/$1/v.swf')
+            .replace(/(www\.)?youtube\.com\/watch\?v=([\w\-]+)/i, "www.youtube.com/v/$2")
+            .replace(/youtu.be\/(\w+)$/i, "www.youtube.com/v/$1")
+            .replace(/v\.ku6\.com\/.+\/([\w\.]+)\.html.*$/i, "player.ku6.com/refer/$1/v.swf")
+            .replace(/www\.56\.com\/u\d+\/v_([\w\-]+)\.html/i, "player.56.com/v_$1.swf")
+            .replace(/www.56.com\/w\d+\/play_album\-aid\-\d+_vid\-([^.]+)\.html/i, "player.56.com/v_$1.swf")
+            .replace(/v\.pps\.tv\/play_([\w]+)\.html.*$/i, "player.pps.tv/player/sid/$1/v.swf")
+            .replace(/www\.letv\.com\/ptv\/vplay\/([\d]+)\.html.*$/i, "i7.imgs.letv.com/player/swfPlayer.swf?id=$1&autoplay=0")
+            .replace(/www\.tudou\.com\/programs\/view\/([\w\-]+)\/?/i, "www.tudou.com/v/$1")
+            .replace(/v\.qq\.com\/cover\/[\w]+\/[\w]+\/([\w]+)\.html/i, "static.video.qq.com/TPout.swf?vid=$1")
+            .replace(/v\.qq\.com\/.+[\?\&]vid=([^&]+).*$/i, "static.video.qq.com/TPout.swf?vid=$1")
+            .replace(/my\.tv\.sohu\.com\/[\w]+\/[\d]+\/([\d]+)\.shtml.*$/i, "share.vrs.sohu.com/my/v.swf&id=$1");
+
+        return url;
+    }
+
+    /**
+      * 检测传入的所有input框中输入的长宽是否是正数
+      * @param nodes input框集合，
+      */
+     function checkNum( nodes ) {
+         for ( var i = 0, ci; ci = nodes[i++]; ) {
+             var value = ci.value;
+             if ( !isNumber( value ) && value) {
+                 alert( lang.numError );
+                 ci.value = "";
+                 ci.focus();
+                 return false;
+             }
+         }
+         return true;
+     }
+
+    /**
+     * 数字判断
+     * @param value
+     */
+    function isNumber( value ) {
+        return /(0|^[1-9]\d*$)/.test( value );
+    }
+
+    /**
+      * 创建图片浮动选择按钮
+      * @param ids
+      */
+     function createAlignButton( ids ) {
+         for ( var i = 0, ci; ci = ids[i++]; ) {
+             var floatContainer = $G( ci ),
+                     nameMaps = {"none":lang['default'], "left":lang.floatLeft, "right":lang.floatRight, "center":lang.block};
+             for ( var j in nameMaps ) {
+                 var div = document.createElement( "div" );
+                 div.setAttribute( "name", j );
+                 if ( j == "none" ) div.className="focus";
+                 div.style.cssText = "background:url(images/" + j + "_focus.jpg);";
+                 div.setAttribute( "title", nameMaps[j] );
+                 floatContainer.appendChild( div );
+             }
+             switchSelect( ci );
+         }
+     }
+
+    /**
+     * 选择切换
+     * @param selectParentId
+     */
+    function switchSelect( selectParentId ) {
+        var selects = $G( selectParentId ).children;
+        for ( var i = 0, ci; ci = selects[i++]; ) {
+            domUtils.on( ci, "click", function () {
+                for ( var j = 0, cj; cj = selects[j++]; ) {
+                    cj.className = "";
+                    cj.removeAttribute && cj.removeAttribute( "class" );
+                }
+                this.className = "focus";
+            } )
+        }
+    }
+
+    /**
+     * 监听url改变事件
+     * @param url
+     */
+    function addUrlChangeListener(url){
+        if (browser.ie) {
+            url.onpropertychange = function () {
+                createPreviewVideo( this.value );
+            }
+        } else {
+            url.addEventListener( "input", function () {
+                createPreviewVideo( this.value );
+            }, false );
+        }
+    }
+
+    /**
+     * 根据url生成视频预览
+     * @param url
+     */
+    function createPreviewVideo(url){
+        if ( !url )return;
+
+        var conUrl = convert_url(url);
+
+        conUrl = utils.unhtmlForUrl(conUrl);
+
+        $G("preview").innerHTML = '<div class="previewMsg"><span>'+lang.urlError+'</span></div>'+
+        '<embed class="previewVideo" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
+            ' src="' + conUrl + '"' +
+            ' width="' + 420  + '"' +
+            ' height="' + 280  + '"' +
+            ' wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true" >' +
+        '</embed>';
+    }
+
+
+    /* 插入上传视频 */
+    function insertUpload(){
+        var videoObjs=[],
+            uploadDir = editor.getOpt('videoUrlPrefix'),
+            width = parseInt($G('upload_width').value, 10) || 420,
+            height = parseInt($G('upload_height').value, 10) || 280,
+            align = findFocus("upload_alignment","name") || 'none';
+        for(var key in uploadVideoList) {
+            var file = uploadVideoList[key];
+            videoObjs.push({
+                url: uploadDir + file.url,
+                width:width,
+                height:height,
+                align:align
             });
         }
 
-        setTabFocus('upload');
-    }
-
-    /* 初始化tabbody */
-    function setTabFocus(id) {
-        if(!id) return;
-        var i, bodyId, tabs = $G('tabhead').children;
-        for (i = 0; i < tabs.length; i++) {
-            bodyId = tabs[i].getAttribute('data-content-id')
-            if (bodyId == id) {
-                domUtils.addClass(tabs[i], 'focus');
-                domUtils.addClass($G(bodyId), 'focus');
-            } else {
-                domUtils.removeClasses(tabs[i], 'focus');
-                domUtils.removeClasses($G(bodyId), 'focus');
-            }
-        }
-        switch (id) {
-            case 'upload':
-                uploadFile = uploadFile || new UploadFile('queueList');
-                break;
-            case 'online':
-                onlineFile = onlineFile || new OnlineFile('fileList');
-                break;
+        var count = uploadFile.getQueueCount();
+        if (count) {
+            $('.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
+            return false;
+        } else {
+            editor.execCommand('insertvideo', videoObjs, 'upload');
         }
     }
 
-    /* 初始化onok事件 */
-    function initButtons() {
-
-        dialog.onok = function () {
-            var list = [], id, tabs = $G('tabhead').children;
-            for (var i = 0; i < tabs.length; i++) {
-                if (domUtils.hasClass(tabs[i], 'focus')) {
-                    id = tabs[i].getAttribute('data-content-id');
-                    break;
-                }
-            }
-
-            switch (id) {
-                case 'upload':
-                    list = uploadFile.getInsertList();
-                    var count = uploadFile.getQueueCount();
-                    if (count) {
-                        $('.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
-                        return false;
-                    }
-                    break;
-                case 'online':
-                    list = onlineFile.getInsertList();
-                    break;
-            }
-
-            editor.execCommand('insertfile', list);
-        };
+    /*初始化上传标签*/
+    function initUpload(){
+        uploadFile = new UploadFile('queueList');
     }
 
 
@@ -143,14 +374,14 @@
                 })(),
             // WebUploader实例
                 uploader,
-                actionUrl = editor.getActionUrl(editor.getOpt('fileActionName')),
-                fileMaxSize = editor.getOpt('fileMaxSize'),
-                acceptExtensions = (editor.getOpt('fileAllowFiles') || []).join('').replace(/\./g, ',').replace(/^[,]/, '');;
+                actionUrl = editor.getActionUrl(editor.getOpt('videoActionName')),
+                fileMaxSize = editor.getOpt('videoMaxSize'),
+                acceptExtensions = (editor.getOpt('videoAllowFiles') || []).join('').replace(/\./g, ',').replace(/^[,]/, '');;
 
             if (!WebUploader.Uploader.support()) {
                 $('#filePickerReady').after($('<div>').html(lang.errorNotSupport)).hide();
                 return;
-            } else if (!editor.getOpt('fileActionName')) {
+            } else if (!editor.getOpt('videoActionName')) {
                 $('#filePickerReady').after($('<div>').html(lang.errorLoadConfig)).hide();
                 return;
             }
@@ -162,7 +393,7 @@
                 },
                 swf: '../../third-party/webuploader/Uploader.swf',
                 server: actionUrl,
-                fileVal: editor.getOpt('fileFieldName'),
+                fileVal: editor.getOpt('videoFieldName'),
                 duplicate: true,
                 fileSingleSizeLimit: fileMaxSize,
                 compress: false
@@ -220,13 +451,13 @@
                     $wrap.text(lang.uploadPreview);
                     if ('|png|jpg|jpeg|bmp|gif|'.indexOf('|'+file.ext.toLowerCase()+'|') == -1) {
                         $wrap.empty().addClass('notimage').append('<i class="file-preview file-type-' + file.ext.toLowerCase() + '"></i>' +
-                        '<span class="file-title" title="' + file.name + '">' + file.name + '</span>');
+                            '<span class="file-title">' + file.name + '</span>');
                     } else {
                         if (browser.ie && browser.version <= 7) {
                             $wrap.text(lang.uploadNoPreview);
                         } else {
                             uploader.makeThumb(file, function (error, src) {
-                                if (error || !src) {
+                                if (error || !src || (/^data:/.test(src) && browser.ie && browser.version <= 7)) {
                                     $wrap.text(lang.uploadNoPreview);
                                 } else {
                                     var $img = $('<img src="' + src + '">');
@@ -503,7 +734,11 @@
                     var responseText = (ret._raw || ret),
                         json = utils.str2json(responseText);
                     if (json.state == 'SUCCESS') {
-                        _this.fileList.push(json);
+                        uploadVideoList.push({
+                            'url': json.url,
+                            'type': json.type,
+                            'original':json.original
+                        });
                         $file.append('<span class="success"></span>');
                     } else {
                         $file.find('.error').text(json.state).show();
@@ -548,207 +783,9 @@
             }
             return readyFile;
         },
-        getInsertList: function () {
-            var i, link, data, list = [],
-                prefix = editor.getOpt('fileUrlPrefix');
-            for (i = 0; i < this.fileList.length; i++) {
-                data = this.fileList[i];
-                link = data.url;
-                list.push({
-                    title: data.original || link.substr(link.lastIndexOf('/') + 1),
-                    url: prefix + link
-                });
-            }
-            return list;
+        refresh: function(){
+            this.uploader.refresh();
         }
     };
-
-
-    /* 在线附件 */
-    function OnlineFile(target) {
-        this.container = utils.isString(target) ? document.getElementById(target) : target;
-        this.init();
-    }
-    OnlineFile.prototype = {
-        init: function () {
-            this.initContainer();
-            this.initEvents();
-            this.initData();
-        },
-        /* 初始化容器 */
-        initContainer: function () {
-            this.container.innerHTML = '';
-            this.list = document.createElement('ul');
-            this.clearFloat = document.createElement('li');
-
-            domUtils.addClass(this.list, 'list');
-            domUtils.addClass(this.clearFloat, 'clearFloat');
-
-            this.list.appendChild(this.clearFloat);
-            this.container.appendChild(this.list);
-        },
-        /* 初始化滚动事件,滚动到地步自动拉取数据 */
-        initEvents: function () {
-            var _this = this;
-
-            /* 滚动拉取图片 */
-            domUtils.on($G('fileList'), 'scroll', function(e){
-                var panel = this;
-                if (panel.scrollHeight - (panel.offsetHeight + panel.scrollTop) < 10) {
-                    _this.getFileData();
-                }
-            });
-            /* 选中图片 */
-            domUtils.on(this.list, 'click', function (e) {
-                var target = e.target || e.srcElement,
-                    li = target.parentNode;
-
-                if (li.tagName.toLowerCase() == 'li') {
-                    if (domUtils.hasClass(li, 'selected')) {
-                        domUtils.removeClasses(li, 'selected');
-                    } else {
-                        domUtils.addClass(li, 'selected');
-                    }
-                }
-            });
-        },
-        /* 初始化第一次的数据 */
-        initData: function () {
-
-            /* 拉取数据需要使用的值 */
-            this.state = 0;
-            this.listSize = editor.getOpt('fileManagerListSize');
-            this.listIndex = 0;
-            this.listEnd = false;
-
-            /* 第一次拉取数据 */
-            this.getFileData();
-        },
-        /* 向后台拉取图片列表数据 */
-        getFileData: function () {
-            var _this = this;
-
-            if(!_this.listEnd && !this.isLoadingData) {
-                this.isLoadingData = true;
-                ajax.request(editor.getActionUrl(editor.getOpt('fileManagerActionName')), {
-                    timeout: 100000,
-                    data: utils.extend({
-                            start: this.listIndex,
-                            size: this.listSize
-                        }, editor.queryCommandValue('serverparam')),
-                    method: 'get',
-                    onsuccess: function (r) {
-                        try {
-                            var json = eval('(' + r.responseText + ')');
-                            if (json.state == 'SUCCESS') {
-                                _this.pushData(json.list);
-                                _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
-                                if(_this.listIndex >= json.total) {
-                                    _this.listEnd = true;
-                                }
-                                _this.isLoadingData = false;
-                            }
-                        } catch (e) {
-                            if(r.responseText.indexOf('ue_separate_ue') != -1) {
-                                var list = r.responseText.split(r.responseText);
-                                _this.pushData(list);
-                                _this.listIndex = parseInt(list.length);
-                                _this.listEnd = true;
-                                _this.isLoadingData = false;
-                            }
-                        }
-                    },
-                    onerror: function () {
-                        _this.isLoadingData = false;
-                    }
-                });
-            }
-        },
-        /* 添加图片到列表界面上 */
-        pushData: function (list) {
-            var i, item, img, filetype, preview, icon, _this = this,
-                urlPrefix = editor.getOpt('fileManagerUrlPrefix');
-            for (i = 0; i < list.length; i++) {
-                if(list[i] && list[i].url) {
-                    item = document.createElement('li');
-                    icon = document.createElement('span');
-                    filetype = list[i].url.substr(list[i].url.lastIndexOf('.') + 1);
-
-                    if ( "png|jpg|jpeg|gif|bmp".indexOf(filetype) != -1 ) {
-                        preview = document.createElement('img');
-                        domUtils.on(preview, 'load', (function(image){
-                            return function(){
-                                _this.scale(image, image.parentNode.offsetWidth, image.parentNode.offsetHeight);
-                            };
-                        })(preview));
-                        preview.width = 113;
-                        preview.setAttribute('src', urlPrefix + list[i].url + (list[i].url.indexOf('?') == -1 ? '?noCache=':'&noCache=') + (+new Date()).toString(36) );
-                    } else {
-                        var ic = document.createElement('i'),
-                            textSpan = document.createElement('span');
-                        textSpan.innerHTML = list[i].url.substr(list[i].url.lastIndexOf('/') + 1);
-                        preview = document.createElement('div');
-                        preview.appendChild(ic);
-                        preview.appendChild(textSpan);
-                        domUtils.addClass(preview, 'file-wrapper');
-                        domUtils.addClass(textSpan, 'file-title');
-                        domUtils.addClass(ic, 'file-type-' + filetype);
-                        domUtils.addClass(ic, 'file-preview');
-                    }
-                    domUtils.addClass(icon, 'icon');
-                    item.setAttribute('data-url', urlPrefix + list[i].url);
-                    if (list[i].original) {
-                        item.setAttribute('data-title', list[i].original);
-                    }
-
-                    item.appendChild(preview);
-                    item.appendChild(icon);
-                    this.list.insertBefore(item, this.clearFloat);
-                }
-            }
-        },
-        /* 改变图片大小 */
-        scale: function (img, w, h, type) {
-            var ow = img.width,
-                oh = img.height;
-
-            if (type == 'justify') {
-                if (ow >= oh) {
-                    img.width = w;
-                    img.height = h * oh / ow;
-                    img.style.marginLeft = '-' + parseInt((img.width - w) / 2) + 'px';
-                } else {
-                    img.width = w * ow / oh;
-                    img.height = h;
-                    img.style.marginTop = '-' + parseInt((img.height - h) / 2) + 'px';
-                }
-            } else {
-                if (ow >= oh) {
-                    img.width = w * ow / oh;
-                    img.height = h;
-                    img.style.marginLeft = '-' + parseInt((img.width - w) / 2) + 'px';
-                } else {
-                    img.width = w;
-                    img.height = h * oh / ow;
-                    img.style.marginTop = '-' + parseInt((img.height - h) / 2) + 'px';
-                }
-            }
-        },
-        getInsertList: function () {
-            var i, lis = this.list.children, list = [];
-            for (i = 0; i < lis.length; i++) {
-                if (domUtils.hasClass(lis[i], 'selected')) {
-                    var url = lis[i].getAttribute('data-url');
-                    var title = lis[i].getAttribute('data-title') || url.substr(url.lastIndexOf('/') + 1);
-                    list.push({
-                        title: title,
-                        url: url
-                    });
-                }
-            }
-            return list;
-        }
-    };
-
 
 })();

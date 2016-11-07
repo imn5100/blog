@@ -17,24 +17,16 @@
         color: #666;
         font-size: medium;
     }
-
     .blog_info li {
         text-align: -webkit-match-parent;
     }
-
     .blog_content {
         margin-top: 20px;
         padding-bottom: 30px;
     }
-
-    .blog_keyWord a {
-        color: deepskyblue;
-    }
-
     .blog_lastAndNextPage {
         padding: 10px;
     }
-
     hr {
         border: 0;
         border-top: 1px solid #eee;

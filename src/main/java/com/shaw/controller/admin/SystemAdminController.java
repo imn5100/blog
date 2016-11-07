@@ -143,6 +143,7 @@ public class SystemAdminController {
         if (htmlPath.exists() && htmlPath.isDirectory()) {
             //获取文件夹下所有文件名
             File[] accessFiles = htmlPath.listFiles(filter);
+            Arrays.sort(accessFiles);
             if (accessFiles.length > 0) {
                 for (File accessFile : accessFiles) {
                     filename.add(accessFile.getName());

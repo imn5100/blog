@@ -120,7 +120,8 @@ public class SystemAdminController {
     /**
      * 得到web日志分析报表html文件列表
      */
-    @RequestMapping("getWebLogHtmlList")
+    @SuppressWarnings("unchecked")
+	@RequestMapping("getWebLogHtmlList")
     public String getWebLogHtmlList(HttpServletResponse response) throws Exception {
         List<String> filename = new ArrayList<String>();
         JSONObject result = new JSONObject();

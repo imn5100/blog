@@ -10,9 +10,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * 这里试题数据较为关键，所以只对新闻通知一类数据缓存
- */
 @Aspect
 @Component
 public class CacheAop {

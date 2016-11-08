@@ -32,9 +32,6 @@ public class SystemServiceImpl implements SystemService {
     @Autowired
     private LinkService linkService;
 
-    @Autowired
-    private RedisClient redisClient;
-
     @Resource(name = "stringRedisTemplate")
     private RedisTemplate<String, String> stringRedisTemplate;
 

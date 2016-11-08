@@ -19,7 +19,7 @@ public enum ResponseCode {
      */
     private String msg;
 
-    private ResponseCode(int code, String msg) {
+    ResponseCode(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

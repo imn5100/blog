@@ -97,7 +97,6 @@ public class BlogAdminController {
     @RequestMapping("/findById")
     public String findById(@RequestParam(value = "id") String id, HttpServletResponse response) throws Exception {
         Blog blog = blogService.findById(Integer.parseInt(id));
-//        JSONObject jsonObject = JSONObject.fromObject(blog);
         HttpResponseUtil.write(response, JSONObject.toJSONString(blog));
         return null;
     }

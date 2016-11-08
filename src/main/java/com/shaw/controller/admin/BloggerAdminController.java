@@ -38,11 +38,11 @@ public class BloggerAdminController {
             blogger.setImageName(imageName);
         }
         int resultTotal = bloggerService.update(blogger);
-        StringBuffer result = new StringBuffer();
+        JSONObject result = new JSONObject();
         if (resultTotal > 0) {
-            result.append("<script language='javascript'>alert('修改成功！');</script>");
+            result.put("success", true);
         } else {
-            result.append("<script language='javascript'>alert('修改失败！');</script>");
+            result.put("success", false);
         }
         logger.info("update blogger success");
         HttpResponseUtil.write(response, result);

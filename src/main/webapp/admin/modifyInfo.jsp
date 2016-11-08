@@ -47,7 +47,7 @@
                         $.messager.alert("系统提示", "修改成功");
                     }
                     else {
-                        $.messager.alert("系统提示", "重置概述失败");
+                        $.messager.alert("系统提示", "修改失败");
                     }
                 }
             });

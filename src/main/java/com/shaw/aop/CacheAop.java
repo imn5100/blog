@@ -1,6 +1,7 @@
 package com.shaw.aop;
 
 import com.shaw.constants.CacheKey;
+import com.shaw.service.impl.RedisClient;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,8 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.shaw.service.impl.RedisClient;
 
 /**
  * 这里试题数据较为关键，所以只对新闻通知一类数据缓存

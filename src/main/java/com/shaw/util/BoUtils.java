@@ -2,7 +2,6 @@ package com.shaw.util;
 
 import com.shaw.bo.Blog;
 import com.shaw.constants.CacheKey;
-import com.shaw.service.impl.RedisClient;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 

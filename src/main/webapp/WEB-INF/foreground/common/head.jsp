@@ -36,7 +36,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/rainyRoom.html" target="_blank">雨天房间</a></li>
+                            <li><a href="/rainyRoom.html" target="_blank">Rainy Room</a></li>
                         </ul>
                     </li>
                 </ul>

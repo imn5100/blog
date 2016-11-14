@@ -16,14 +16,27 @@
     body {
         padding-top: 50px;
         padding-bottom: 20px;
-        background-color: #F8F8FF;
+        background-color: #efefef;
         font-family: 'marcellus_scregular', serif;
         text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
         font-size: 20px;
         color: #fff;
     }
 
-    .bg {
+    .centerDiv {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 20%;
+        right: 20%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .bgDiv {
         left: 0;
         right: 0;
         top: 0;
@@ -32,21 +45,9 @@
         position: fixed;
     }
 
-    .container {
-        text-align: center;
-        display: table;
-        vertical-align: middle;
-        max-width: 98%;
-        z-index: 100;
-        position: absolute;
-    }
-
     .wallpaper {
         width: 100%;
         height: 100%;
-        transition-duration: 1s;
-        -webkit-transition-timing-function: ease;
-        transition-timing-function: ease;
     }
 </style>
 <script type="text/javascript">
@@ -82,16 +83,20 @@
                     } else {
                         BGswitch.switch(BGswitch.index, BGswitch.index + 1)
                     }
-                }, 20000)
+                }, 15000)
             },
             switch: function (oldi, newi) {
-                BGswitch.images.eq(oldi).fadeOut("slow");
-                BGswitch.images.eq(newi).fadeIn("slow");
+                setTimeout(function () {
+                    BGswitch.images.eq(oldi).fadeOut("normal", function () {
+                    });
+                }, 100);
+                BGswitch.images.eq(newi).fadeIn("normal");
                 BGswitch.index = newi
             }
         }
         BGswitch.init();
     });
+
     function getHost(url) {
         var host = "null";
         if (typeof url == "undefined"
@@ -130,7 +135,15 @@
         }
     }
 </script>
-<div class="container">
+<div class="bgDiv">
+    <div class="wallpaper"
+         style="background: url('/static/images/rainyroom/bg1.jpg') no-repeat center;background-size: cover;">
+    </div>
+    <div class="wallpaper"
+         style="background: url('/static/images/rainyroom/bg3.jpg') no-repeat center;background-size: cover;">
+    </div>
+</div>
+<div class="centerDiv">
     <div id="spinner"><img src="/static/images/rainyroom/spinner2.gif" width="32" height="26" alt=""/></div>
     <div id="volumeDiv" style="display:none;">
         <a onclick="volumeDownOrPause();" title="Volume">
@@ -142,14 +155,6 @@
     <h1>Rainy Room</h1>
 
     <h2>Rain Makes Everything Better,Good Sleep</h2>
-</div>
-<div class="bg">
-    <div class="wallpaper"
-         style="background: url('/static/images/rainyroom/bg1.jpg') no-repeat center;background-size: cover;">
-    </div>
-    <div class="wallpaper"
-         style="background: url('/static/images/rainyroom/bg3.jpg') no-repeat center;background-size: cover;">
-    </div>
 </div>
 </body>
 </html>

@@ -20,4 +20,5 @@
 .classpath
 .checkstyle
 
-#/src/main/webapp/static/userImages/
+/src/main/webapp/static/userImages/
+#/src/main/webapp/static/userImages/sound/

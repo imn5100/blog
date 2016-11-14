@@ -106,5 +106,11 @@ public class IndexController {
         return mav;
     }
 
+    @RequestMapping("/rainyRoom")
+    public ModelAndView rainyRoom() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("WEB-INF/foreground/laboratory/rainy");
+        return mav;
+    }
 
 }

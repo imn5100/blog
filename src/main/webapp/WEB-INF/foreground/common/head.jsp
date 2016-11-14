@@ -33,6 +33,12 @@
                             href="/about.html">关于本站</a></li>
                     <li <c:if test="${aboutBloggerActive !=null}"> class="active" </c:if> ><a
                             href="/blogger/about.html">关于站长</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/rainyRoom.html" target="_blank">雨天房间</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <form action="/blog/q.html" class="navbar-form navbar-right"
                       role="search" method="post" onsubmit="return checkData()">

@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ShawのRainy Room</title>
+    <title>Rainy Room</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="雨天房间,失眠时的小窝">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
@@ -15,17 +16,37 @@
     body {
         padding-top: 50px;
         padding-bottom: 20px;
-        background-color: #5b5c5f;
-        font-family: 'marcellus_scregular',serif;
-        text-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+        background-color: #F8F8FF;
+        font-family: 'marcellus_scregular', serif;
+        text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
         font-size: 20px;
         color: #fff;
     }
-    .container{
+
+    .bg {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 0;
+        position: fixed;
+    }
+
+    .container {
         text-align: center;
         display: table;
         vertical-align: middle;
         max-width: 98%;
+        z-index: 100;
+        position: absolute;
+    }
+
+    .wallpaper {
+        width: 100%;
+        height: 100%;
+        transition-duration: 1s;
+        -webkit-transition-timing-function: ease;
+        transition-timing-function: ease;
     }
 </style>
 <script type="text/javascript">
@@ -48,6 +69,28 @@
                 document.getElementById("volumeDiv").style.display = "block";
             }, swfPath: "/js", loop: true, supplied: "m4a, oga", preload: "none", volume: 1.0
         });
+        var BGswitch = {
+            images: '',
+            imagesLength: '',
+            index: 0,
+            init: function () {
+                BGswitch.images = $('.wallpaper')
+                BGswitch.imagesLength = BGswitch.images.length
+                setInterval(function () {
+                    if (BGswitch.index == BGswitch.imagesLength - 1) {
+                        BGswitch.switch(BGswitch.index, 0)
+                    } else {
+                        BGswitch.switch(BGswitch.index, BGswitch.index + 1)
+                    }
+                }, 20000)
+            },
+            switch: function (oldi, newi) {
+                BGswitch.images.eq(oldi).fadeOut("slow");
+                BGswitch.images.eq(newi).fadeIn("slow");
+                BGswitch.index = newi
+            }
+        }
+        BGswitch.init();
     });
     function getHost(url) {
         var host = "null";
@@ -87,17 +130,26 @@
         }
     }
 </script>
-<br/>
 <div class="container">
-<div id="spinner"><img src="/static/images/rainyroom/spinner2.gif" width="32" height="26" alt=""/></div>
-<div id="volumeDiv" style="display:none;">
-    <a onclick="volumeDownOrPause();" title="Volume">
-        <img id="volume" src="/static/images/rainyroom/volumeWhite3.png" alt="3"/>
-    </a>
+    <div id="spinner"><img src="/static/images/rainyroom/spinner2.gif" width="32" height="26" alt=""/></div>
+    <div id="volumeDiv" style="display:none;">
+        <a onclick="volumeDownOrPause();" title="Volume">
+            <img id="volume" src="/static/images/rainyroom/volumeWhite3.png" alt="3"/>
+        </a>
+    </div>
+    <br/>
+
+    <h1>Rainy Room</h1>
+
+    <h2>Rain Makes Everything Better,Good Sleep</h2>
 </div>
-<br/>
-<h1>Rainy Room</h1>
-<h2>Rain Makes Everything Better</h2>
+<div class="bg">
+    <div class="wallpaper"
+         style="background: url('/static/images/rainyroom/bg1.jpg') no-repeat center;background-size: cover;">
+    </div>
+    <div class="wallpaper"
+         style="background: url('/static/images/rainyroom/bg3.jpg') no-repeat center;background-size: cover;">
+    </div>
 </div>
 </body>
 </html>

@@ -78,7 +78,7 @@
         }
 
         function openUploadWebFileDialog() {
-            $("#dlg").dialog("open").dialog("setTitle", "上传文件");
+            $("#dlg").dialog("open").dialog("setTitle", "上传文件(大文件请使用工具上传)");
             url = "${pageContext.request.contextPath}/admin/webFile/save.do";
         }
         function resetValue() {

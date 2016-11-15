@@ -5,7 +5,6 @@ import com.qiniu.storage.model.FileInfo;
 import com.shaw.WebFileInfoVo;
 import com.shaw.constants.Constants;
 import com.shaw.util.HttpResponseUtil;
-import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
 import org.springframework.stereotype.Controller;

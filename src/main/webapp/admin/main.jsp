@@ -138,7 +138,11 @@
         <div title="控制台" data-options="iconCls:'icon-home'">
             <div align="center" style="padding-top: 100px"><a href="https://ecs.console.aliyun.com/#/home"
                                                               target="_blank"><font
-                    color="#808080" size="5">阿里云控制台</font></a></div>
+                    color="#808080" size="5">阿里云控制台</font></a><br><br>
+                <a href="https://portal.qiniu.com/create"
+                   target="_blank"><font
+                        color="#808080" size="5">七牛管理主页</font></a>
+            </div>
         </div>
     </div>
 </div>
@@ -152,25 +156,9 @@
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
         </div>
-        <div title="博客管理" data-options="iconCls:'icon-bkgl'" style="padding:10px;">
-            <a href="javascript:openTab('写博客','writeBlog.jsp','icon-writeblog')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">写博客</a>
-            <a href="javascript:openTab('博客信息管理','blogManage.jsp','icon-bkgl')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">博客信息管理</a>
-        </div>
-        <div title="博客类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
-            <a href="javascript:openTab('博客类别信息管理','blogTypeManage.jsp','icon-bklb')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博客类别信息管理</a>
+        <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
             <a href="javascript:openTab('web文件管理','webFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">web文件管理</a>
-        </div>
-        <div title="个人信息管理" data-options="iconCls:'icon-grxx'" style="padding:10px">
-            <a href="javascript:openTab('修改个人信息','modifyInfo.jsp','icon-grxxxg')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
-            <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
-        </div>
-        <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
             <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
@@ -183,6 +171,22 @@
                data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">重置博客概述</a>
             <a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-exit'"
                style="width: 150px;">安全退出</a>
+        </div>
+        <div title="博客管理" data-options="iconCls:'icon-bkgl'" style="padding:10px;">
+            <a href="javascript:openTab('写博客','writeBlog.jsp','icon-writeblog')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">写博客</a>
+            <a href="javascript:openTab('博客信息管理','blogManage.jsp','icon-bkgl')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">博客信息管理</a>
+        </div>
+        <div title="博客类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
+            <a href="javascript:openTab('博客类别信息管理','blogTypeManage.jsp','icon-bklb')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博客类别信息管理</a>
+        </div>
+        <div title="个人信息管理" data-options="iconCls:'icon-grxx'" style="padding:10px">
+            <a href="javascript:openTab('修改个人信息','modifyInfo.jsp','icon-grxxxg')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
+            <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
         </div>
     </div>
 </div>

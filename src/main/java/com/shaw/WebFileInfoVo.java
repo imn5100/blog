@@ -3,12 +3,9 @@ package com.shaw;
 
 import com.qiniu.storage.model.FileInfo;
 import com.shaw.constants.Constants;
-import com.shaw.util.DateUtil;
-import com.shaw.util.PropertiesUtil;
 import com.shaw.util.TimeUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

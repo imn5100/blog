@@ -12,7 +12,6 @@
     <script type="text/javascript" src="/static/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="/static/ajaxfileupload.js"></script>
     <script type="text/javascript">
-
         var url;
         function deleteFile() {
             var selectedRows = $("#dg").datagrid("getSelections");
@@ -90,6 +89,11 @@
             $("#dlg").dialog("close");
             resetValue();
         }
+        function searchFile() {
+            $("#dg").datagrid('load', {
+                "prefix": $("#prefix").val()
+            });
+        }
     </script>
 </head>
 <body style="margin: 1px">
@@ -111,6 +115,10 @@
     <div>
         <a href="javascript:openUploadWebFileDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
         <a href="javascript:deleteFile()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+        <div>
+            &nbsp;文件名：&nbsp;<input type="text" id="prefix" size="20" onkeydown="if(event.keyCode==13) searchFile()"/>
+            <a href="javascript:searchFile()" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询</a>
+        </div>
     </div>
 </div>
 <div id="dlg" class="easyui-dialog" style="width:500%;height:200%;padding: 5px 5px"

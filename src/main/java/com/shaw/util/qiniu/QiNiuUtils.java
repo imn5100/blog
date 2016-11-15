@@ -10,6 +10,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
+import com.shaw.constants.Constants;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
@@ -25,14 +26,13 @@ import java.util.List;
  * Created by shaw on 2016/11/15 0015.
  */
 public class QiNiuUtils {
-    private static final String ACCESS_KEY = PropertiesUtil.getConfiguration().getString("qiniu_key");
-    private static final String SECRET_KEY = PropertiesUtil.getConfiguration().getString("qiniu_secret");
+    private static final String ACCESS_KEY = PropertiesUtil.getConfiguration().getString(Constants.QINIU_KEY_KEY);
+    private static final String SECRET_KEY = PropertiesUtil.getConfiguration().getString(Constants.QINIU_SERCET_KEY);
     private static final Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-    private static final String BUCKET_NAME = PropertiesUtil.getConfiguration().getString("qiniu_bucketname");
+    private static final String BUCKET_NAME = PropertiesUtil.getConfiguration().getString(Constants.QINIU_BUCKET_NAME_KEY);
     private static Zone z = Zone.zone0();
     private static Configuration c = new Configuration(z);
     private static Logger logger = LoggerFactory.getLogger(QiNiuUtils.class);
-
 
     private static UploadManager uploadManager = new UploadManager(c);
     private static BucketManager bucketManager = new BucketManager(auth, c);
@@ -132,7 +132,6 @@ public class QiNiuUtils {
     }
 
     public static class QiniuFileQuery {
-        //空间
         private String bucket = QiNiuUtils.BUCKET_NAME;
         private String prefix = null;
         private String marker = null;

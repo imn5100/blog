@@ -94,6 +94,9 @@
                 "prefix": $("#prefix").val()
             });
         }
+        function formatUrl(val, row) {
+            return '<a target="_blank" href="' + val + '">' + val + '</a>'
+        }
     </script>
 </head>
 <body style="margin: 1px">
@@ -108,6 +111,7 @@
         <th field="fsize" align="center">文件大小</th>
         <th field="putTime" align="center">存储时间</th>
         <th field="mimeType" align="center">文件类型</th>
+        <th field="url" align="center" formatter="formatUrl">访问链接</th>
     </tr>
     </thead>
 </table>
@@ -115,6 +119,7 @@
     <div>
         <a href="javascript:openUploadWebFileDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
         <a href="javascript:deleteFile()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+
         <div>
             &nbsp;文件名：&nbsp;<input type="text" id="prefix" size="20" onkeydown="if(event.keyCode==13) searchFile()"/>
             <a href="javascript:searchFile()" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询</a>

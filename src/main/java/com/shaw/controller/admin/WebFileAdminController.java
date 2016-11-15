@@ -2,6 +2,8 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qiniu.storage.model.FileInfo;
+import com.shaw.WebFileInfoVo;
+import com.shaw.constants.Constants;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
@@ -36,14 +38,15 @@ public class WebFileAdminController {
             qiniuFileQuery.setPrefix(prefix);
         }
         List<FileInfo> fileInfoList = QiNiuUtils.listFile(qiniuFileQuery);
-        if (fileInfoList == null) {
-            fileInfoList = new ArrayList<>();
+        List<WebFileInfoVo> list = WebFileInfoVo.convertList(fileInfoList);
+        if (list == null) {
+            list = new ArrayList<>();
         } else {
             if (fileInfoList.size() > 0)
-                result.put("marker", fileInfoList.get(fileInfoList.size() - 1).key);
+                result.put("marker", list.get(list.size() - 1).getKey());
         }
-        result.put("rows", fileInfoList);
-        result.put("total", fileInfoList.size());
+        result.put("rows", list);
+        result.put("total", list.size());
         HttpResponseUtil.write(response, result);
         return null;
     }
@@ -57,7 +60,7 @@ public class WebFileAdminController {
             }
             String key = QiNiuUtils.upload(file.getBytes(), StringUtil.filterSpChar(filename));
             if (StringUtil.isNotEmpty(key)) {
-                String fileUrl = PropertiesUtil.getConfiguration().getString("qiniu_url") + "/" + key;
+                String fileUrl = Constants.QINIU_BASE_URL + key;
                 result.put("success", true);
                 result.put("url", fileUrl);
                 result.put("filename", filename);

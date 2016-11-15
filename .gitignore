@@ -22,3 +22,4 @@
 
 /src/main/webapp/static/userImages/
 #/src/main/webapp/static/userImages/sound/
+/src/main/resources/config.properties

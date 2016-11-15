@@ -31,7 +31,7 @@ public class BloggerAdminController {
      */
     @RequestMapping("/save")
     public String save(@RequestParam("imageFile") MultipartFile imageFile, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (!imageFile.isEmpty()) {
+        if (imageFile!=null&&!imageFile.isEmpty()) {
             String filePath = request.getServletContext().getRealPath("/");
             String imageName = TimeUtils.getCurrentDateStr() + "." + imageFile.getOriginalFilename().split("\\.")[1];
             imageFile.transferTo(new File(filePath + "/static/userImages/" + imageName));

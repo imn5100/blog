@@ -55,8 +55,7 @@
         jQuery("#jquery_jplayer_1").jPlayer({
             ready: function () {
                 jQuery(this).jPlayer("setMedia", {
-                    m4a: "/static/userImages/sound/0.m4a",
-                    oga: "/static/userImages/sound/0.ogg"
+                    m4a: "/static/userImages/sound/0.m4a"
                 }).jPlayer("play");
                 var click = document.ontouchstart === undefined ? 'click' : 'touchstart';
                 var kickoff = function () {

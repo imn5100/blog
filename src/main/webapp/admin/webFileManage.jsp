@@ -45,7 +45,6 @@
         function uploadWebFile() {
             var filename = $("#filename").val();
             var file = $("#file").val();
-            alert(file)
             if (file == null || file == "") {
                 $.messager.alert("系统提示", "请添加需要上传的文件！");
                 return;

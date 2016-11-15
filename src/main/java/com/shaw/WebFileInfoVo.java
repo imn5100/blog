@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/11/15 0015.
+ * Created by shaw on 2016/11/15 0015.
  */
 public class WebFileInfoVo {
     private String key;

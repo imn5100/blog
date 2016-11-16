@@ -42,14 +42,22 @@ public class QiNiuUtils {
         return auth.uploadToken(BUCKET_NAME);
     }
 
+    /**
+     * 用于处理 Ueditor中 StorageManager . saveTmpFile方法。将本地保存文件转化为保持至七牛
+     */
+    public static String uploadForUeditor(File file, String ueditorSavePath) throws IOException {
+        // 获取文件名,文件名在config.json中配置
+        int start = ueditorSavePath.lastIndexOf("/");
+        //文件名+后缀
+        String filename = ueditorSavePath.substring(start + 1);
+        //这里需要处理一下访问路径，图片为前缀 + 路径(webapps开始) +文件名访问。保证存储和访问url相同
+        QiNiuUtils.upload(file, "static/userImages/" + filename);
+        return null;
+    }
+
     public static String upload(File file, String filename) throws IOException {
         try {
-            String fileKey = TimeUtils.getMSTime();
-            //以后缀的形式 设置key ，七牛可以通过前缀 查询文件
-            if (filename != null && filename.length() > 0 && !filename.trim().equals("")) {
-                fileKey = filename + fileKey;
-            }
-            Response res = uploadManager.put(file, fileKey, getUpToken());
+            Response res = uploadManager.put(file, filename, getUpToken());
             JSONObject responseObj = JSONObject.parseObject(res.bodyString());
             logger.info("Upload File To Qiniu Success Response:" + res.bodyString());
             return responseObj.getString("key");
@@ -86,7 +94,7 @@ public class QiNiuUtils {
             FileInfo info = bucketManager.stat(bucket, key);
             return info;
         } catch (QiniuException e) {
-            logger.error("Get Qiniu file  Fail Response:" + e.response.toString());
+            logger.error("Get Qiniu file  Fail Response:" + e.response);
             return null;
         }
     }
@@ -99,7 +107,7 @@ public class QiNiuUtils {
             bucketManager.delete(bucket, key);
             return true;
         } catch (QiniuException e) {
-            logger.error("delete Qiniu file  Fail Response:" + e.response.toString());
+            logger.error("delete Qiniu file  Fail Response:" + e.response);
             return false;
         }
     }
@@ -112,7 +120,7 @@ public class QiNiuUtils {
             }
             return null;
         } catch (QiniuException e) {
-            logger.error("List Qiniu file  Fail Response:" + e.response.toString());
+            logger.error("List Qiniu file  Fail Response:" + e.response);
             return null;
         }
     }
@@ -126,7 +134,7 @@ public class QiNiuUtils {
             logger.info("batch delete file keys:" + keys + " response:" + response.bodyString());
             return true;
         } catch (QiniuException e) {
-            logger.error("List Qiniu file  Fail Response:" + e.response.toString());
+            logger.error("List Qiniu file  Fail Response:" + e.response);
             return false;
         }
     }

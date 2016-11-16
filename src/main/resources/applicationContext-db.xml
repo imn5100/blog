@@ -15,8 +15,8 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="url"
                   value="jdbc:mysql://localhost:3306/db_blog?useUnicode=true&amp;characterEncoding=UTF-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="xlsw5"/>
+        <property name="username" value="shaw"/>
+        <property name="password" value="xlsw%"/>
     </bean>
 
     <!-- 配置mybatis的sqlSessionFactory -->

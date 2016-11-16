@@ -25,6 +25,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
                 <configuration>
                     <packagingExcludes>static/userImages/**</packagingExcludes>
                     <includeEmptyDirectories>true</includeEmptyDirectories>
@@ -218,11 +219,11 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--<version>1.1.1</version>-->
+        <!--</dependency>-->
 
         <!-- 添加lucene支持 -->
         <dependency>
@@ -317,12 +318,12 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.baidu.ueditor</groupId>
-            <artifactId>ueditor</artifactId>
-            <version>1.1.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ueditor.jar</systemPath>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.baidu.ueditor</groupId>-->
+            <!--<artifactId>ueditor</artifactId>-->
+            <!--<version>1.1.2</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ueditor.jar</systemPath>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

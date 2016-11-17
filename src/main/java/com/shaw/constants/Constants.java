@@ -11,7 +11,10 @@ public class Constants {
     public static final String QINIU_KEY_KEY = "qiniu_key";
     public static final String QINIU_SERCET_KEY = "qiniu_secret";
     public static final String QINIU_BUCKET_NAME_KEY = "qiniu_bucketname";
+    public static final String SMMS_UPLOAD_URL_KEY = "smms_url_upload";
     public static final String DEFAULT_SITE = "http://shawblog.me";
     public static final String DEFAULT_WEB_LOGS_PATH = "/usr/myfile/logs/html/";
     public static final String QINIU_BASE_URL = PropertiesUtil.getConfiguration().getString(Constants.QINIU_URL_KEY);
+    public static final Integer HTTP_READ_TIMEOUT = 60 * 1000;
+    public static final Integer HTTP_CONNECT_TIMEOUT = 10 * 1000;
 }

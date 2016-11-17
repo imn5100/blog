@@ -13,6 +13,18 @@
     <import resource="applicationContext-db.xml"></import>
     <import resource="applicationContext-shiro.xml"></import>
 
+    <bean id="httpClient" class="com.shaw.util.HttpClientUtils" factory-method="acceptsUntrustedCertsHttpClient"/>
+    <bean id="clientHttpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="httpClient"/>
+        <property name="readTimeout" value="60000"></property>
+        <property name="connectTimeout" value="10000"></property>
+    </bean>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="clientHttpRequestFactory"></constructor-arg>
+    </bean>
+
+
+
     <bean id="blogIndex" class="com.shaw.lucene.BlogIndex"/>
     <!-- 自动扫描 -->
     <context:component-scan base-package="com.shaw.service"/>

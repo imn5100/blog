@@ -8,7 +8,11 @@ import com.shaw.mapper.UploadFileMapper;
 import com.shaw.service.UploadFileService;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
+import com.shaw.util.smms.SMMSUtils;
+import com.shaw.vo.SMMSUploadResponseVo;
 import com.shaw.vo.WebFileInfoVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +28,8 @@ import java.util.List;
 public class UploadFileServiceImpl implements UploadFileService {
     @Resource
     private UploadFileMapper uploadFileMapper;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Override
@@ -49,7 +55,12 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadFile.setPath(key);
             uploadFile.setUploadTime(System.currentTimeMillis());
             uploadFile.setHash(hash);
-            uploadFile.setMimetype(StringUtil.getSuffix(file.getOriginalFilename()));
+            String suffix = StringUtil.getSuffix(file.getOriginalFilename());
+            if (suffix != null) {
+                uploadFile.setMimetype(suffix);
+            } else {
+                uploadFile.setMimetype(file.getContentType());
+            }
             uploadFile.setIsValid((byte) 1);
             uploadFileMapper.insert(uploadFile);
             return uploadFile;
@@ -68,7 +79,40 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public String uploadToSMMS(File file) {
+    public UploadFile uploadToSMMS(MultipartFile mfile) throws Exception {
+        File file = new File(mfile.getOriginalFilename());
+        try {
+            mfile.transferTo(file);
+            String response = SMMSUtils.uploadFile(file);
+            if (response != null) {
+                SMMSUploadResponseVo vo = JSONObject.parseObject(response, SMMSUploadResponseVo.class);
+                UploadFile uploadFile = new UploadFile();
+                uploadFile.setFilename(mfile.getOriginalFilename());
+                uploadFile.setUrl(vo.getData().getUrl());
+                uploadFile.setType((byte) 2);
+                uploadFile.setSize(vo.getData().getSize());
+                uploadFile.setStorename(vo.getData().getStorename());
+                uploadFile.setPath(vo.getData().getPath());
+                uploadFile.setUploadTime(System.currentTimeMillis());
+                uploadFile.setHash(vo.getData().getHash());
+                String suffix = StringUtil.getSuffix(mfile.getOriginalFilename());
+                if (suffix != null) {
+                    uploadFile.setMimetype(suffix);
+                } else {
+                    uploadFile.setMimetype(mfile.getContentType());
+                }
+                uploadFile.setIsValid((byte) 1);
+                uploadFileMapper.insert(uploadFile);
+                return uploadFile;
+            }
+        } catch (Exception e) {
+            logger.error("Upload SMMS file fail Exception:" + e.getMessage());
+            return null;
+        } finally {
+            if (file.exists()) {
+                file.delete();
+            }
+        }
         return null;
     }
 }

@@ -61,11 +61,27 @@ public class WebFileAdminController {
             if (StringUtil.isEmpty(filename)) {
                 filename = StringUtil.getFileName(file.getOriginalFilename()).toLowerCase();
             }
-            UploadFile uploadFile = uploadFileService.uploadToQiniu(file, filename);
+            UploadFile uploadFile = uploadFileService.uploadToQiniu(file, filename.trim());
             if (uploadFile != null) {
                 result.put("success", true);
                 result.put("url", uploadFile.getUrl());
                 result.put("filename", filename);
+                HttpResponseUtil.write(response, result);
+            } else {
+                result.put("success", false);
+                HttpResponseUtil.write(response, result);
+            }
+        }
+    }
+
+    @RequestMapping("/SMMSUpload")
+    public void uploadToSMMS(@RequestParam("file") MultipartFile file, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        if (file != null && !file.isEmpty()) {
+            UploadFile uploadFile = uploadFileService.uploadToSMMS(file);
+            if (uploadFile != null) {
+                result.put("success", true);
+                result.put("uploadFile", uploadFile);
                 HttpResponseUtil.write(response, result);
             } else {
                 result.put("success", false);

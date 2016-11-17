@@ -65,11 +65,44 @@
                 dataType: 'json',  // 返回数据的类型
                 success: function (data) {
                     if (data.success == true) {
-                        $("#url").html('<a href="' + data.url + '" target="_blank" >' + data.url + '</a>');
+                        var html = "URL:" + '<a href="' + data.url + '" target="_blank" >' + data.url + '</a></br>';
+                        html += '<img  style="max-width: 100%;height: 350px;" src="' + data.url + '"/>'
+                        $("#url").html(html);
                         $.messager.alert("系统提示", "上传成功");
                     }
                     else {
                         $.messager.alert("系统提示", "上传失败");
+                    }
+                }
+            });
+            return false;
+        }
+        function uploadWebFileSMMS() {
+            var file = $("#fileForSMMS").val();
+            if (file == null || file == "") {
+                $.messager.alert("系统提示", "请添加需要上传的文件！");
+                return;
+            }
+            $.ajaxFileUpload({
+                type: 'POST',
+                contentType: 'application/json',
+                url: '/admin/webFile/SMMSUpload.do',
+                secureuri: false,
+                processData: false,
+                cache: false,
+                fileElementId: 'fileForSMMS', // file标签的id
+                async: true,
+                data: "",
+                dataType: 'json',  // 返回数据的类型
+                success: function (data) {
+                    if (data.success == true) {
+                        var html = "URL:" + '<a href="' + data.uploadFile.url + '" target="_blank" >' + data.uploadFile.url + '</a></br>';
+                        html += '<img  style="max-width: 100%;height: 350px;" src="' + data.uploadFile.url + '"/>'
+                        $("#showData").html(html);
+                        $.messager.alert("系统提示", "上传图片成功");
+                    }
+                    else {
+                        $.messager.alert("系统提示", "上传图片失败");
                     }
                 }
             });
@@ -80,13 +113,20 @@
             $("#dlg").dialog("open").dialog("setTitle", "上传文件(大文件请使用工具上传)");
             url = "${pageContext.request.contextPath}/admin/webFile/save.do";
         }
+        function openUploadWebFileDialogSMMS() {
+            $("#dlg2").dialog("open").dialog("setTitle", "上传图片(SMMS)");
+        }
         function resetValue() {
             $("#fileName").val("");
             $("#file").val("");
         }
-        function closeBlogTypeDialog() {
+        function closeUploadFileDialog() {
             $("#dlg").dialog("close");
             resetValue();
+        }
+        function closeUploadImageDialog() {
+            $("#dlg2").dialog("close");
+            $("#fileForSMMS").val("")
         }
         function searchFile() {
             $("#dg").datagrid('load', {
@@ -116,7 +156,8 @@
 </table>
 <div id="tb">
     <div>
-        <a href="javascript:openUploadWebFileDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a>
+        <a href="javascript:openUploadWebFileDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">上传文件(QINIU)</a>
+        <a href="javascript:openUploadWebFileDialogSMMS()" class="easyui-linkbutton" iconCls="icon-add" plain="true">上传图片(SMMS)</a>
         <a href="javascript:deleteFile()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 
         <div>
@@ -125,7 +166,7 @@
         </div>
     </div>
 </div>
-<div id="dlg" class="easyui-dialog" style="width:500%;height:200%;padding: 5px 5px"
+<div id="dlg" class="easyui-dialog" style="width:500%;height:500%;padding: 5px 5px"
      closed="true" buttons="#dlg-buttons">
     <form id="fm" method="post">
         <table cellspacing="8px">
@@ -138,17 +179,32 @@
                 <td>文件：</td>
                 <td><input type="file" id="file" name="file"/></td>
             </tr>
+        </table>
+        <div id="url">
+
+        </div>
+    </form>
+</div>
+<div id="dlg2" class="easyui-dialog" style="width:500%;height:500%;padding: 5px 5px"
+     closed="true" buttons="#dlg2-buttons">
+    <form id="fm2" method="post">
+        <table cellspacing="8px">
             <tr>
-                <td>访问链接：</td>
-                <td id="url">
-                </td>
+                <td>文件：</td>
+                <td><input type="file" id="fileForSMMS" name="file"/></td>
             </tr>
         </table>
+        <div id="showData">
+        </div>
     </form>
 </div>
 <div id="dlg-buttons">
     <a href="javascript:uploadWebFile()" class="easyui-linkbutton" iconCls="icon-ok">上传</a>
-    <a href="javascript:closeBlogTypeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+    <a href="javascript:closeUploadFileDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+<div id="dlg2-buttons">
+    <a href="javascript:uploadWebFileSMMS()" class="easyui-linkbutton" iconCls="icon-ok">上传</a>
+    <a href="javascript:closeUploadImageDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 </div>
 </body>
 </html>

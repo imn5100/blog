@@ -18,5 +18,5 @@ public interface UploadFileService {
 
     boolean batchDeleteQiniuFile(String[] idsStr) throws Exception;
 
-    String uploadToSMMS(File file) throws Exception;
+    UploadFile uploadToSMMS(MultipartFile file) throws Exception;
 }

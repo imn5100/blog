@@ -12,7 +12,6 @@ import com.qiniu.util.Auth;
 import com.shaw.constants.Constants;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
-import com.shaw.util.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

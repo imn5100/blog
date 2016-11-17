@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>博客类别管理页面</title>
+    <title>上传web文件管理</title>
     <link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css" href="/static/jquery-easyui/themes/icon.css">
     <script type="text/javascript" src="/static/jquery-easyui/jquery.min.js"></script>
@@ -99,7 +99,7 @@
     </script>
 </head>
 <body style="margin: 1px">
-<table id="dg" title="博客类别管理" class="easyui-datagrid"
+<table id="dg" title="web文件管理" class="easyui-datagrid"
        fitColumns="true" pagination="true" rownumbers="true"
        url="/admin/webFile/list.do" fit="true" toolbar="#tb">
     <thead>

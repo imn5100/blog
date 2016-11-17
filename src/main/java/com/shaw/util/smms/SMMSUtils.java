@@ -37,7 +37,7 @@ public class SMMSUtils {
         restTemplate = new RestTemplate(requestFactory);
     }
 
-    public static Object uploadFile(File file) {
+    public static String uploadFile(File file) {
         FileSystemResource resource = new FileSystemResource(file);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         param.add("smfile", resource);
@@ -47,6 +47,6 @@ public class SMMSUtils {
 
 
     public static void main(String[] args) {
-        uploadFile(new File("E:/imageDownLoad/13531995.png"));
+        System.out.println( uploadFile(new File("E:/imageDownLoad/20161027074304.png")));
     }
 }

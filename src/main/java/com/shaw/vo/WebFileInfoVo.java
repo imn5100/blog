@@ -1,4 +1,4 @@
-package com.shaw;
+package com.shaw.vo;
 
 
 import com.qiniu.storage.model.FileInfo;

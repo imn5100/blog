@@ -1,10 +1,15 @@
 package com.shaw.test;
 
 import com.shaw.bo.Blog;
+import com.shaw.bo.UploadFile;
+import com.shaw.mapper.UploadFileMapper;
 import com.shaw.service.BlogService;
+import com.shaw.service.UploadFileService;
 import org.jsoup.Jsoup;
+import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,6 +19,8 @@ public class MapperTest extends SpringTestCase {
 
     @Autowired
     BlogService blogService;
+    @Autowired
+    UploadFileMapper uploadFileMapper;
 
     /**
      * 调整数据，将summary 由简介改为 无html的
@@ -30,5 +37,11 @@ public class MapperTest extends SpringTestCase {
             }
             blogService.update(blog);
         }
+    }
+
+    @org.junit.Test
+    public void testBatchDelete() {
+        List<String> keys = Arrays.asList(new String[]{"misaki", "sakura"});
+        uploadFileMapper.deleteQiniuByKey(keys);
     }
 }

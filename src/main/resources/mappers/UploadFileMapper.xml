@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shaw.mapper.UploadFileMapper">
+    <resultMap id="BaseResultMap" type="com.shaw.bo.UploadFile">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="filename" property="filename" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="size" property="size" jdbcType="BIGINT"/>
+        <result column="storename" property="storename" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="upload_time" property="uploadTime" jdbcType="BIGINT"/>
+        <result column="hash" property="hash" jdbcType="VARCHAR"/>
+        <result column="mimeType" property="mimetype" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="is_valid" property="isValid" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, filename, url, type, size, storename, path, upload_time, hash, mimeType, detail, 
+    is_valid
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_upload
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_upload
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.shaw.bo.UploadFile">
+    insert into t_upload (id, filename, url, 
+      type, size, storename, 
+      path, upload_time, hash, 
+      mimeType, detail, is_valid
+      )
+    values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{size,jdbcType=BIGINT}, #{storename,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{uploadTime,jdbcType=BIGINT}, #{hash,jdbcType=VARCHAR}, 
+      #{mimetype,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{isValid,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.shaw.bo.UploadFile">
+        insert into t_upload
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="filename != null">
+                filename,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="storename != null">
+                storename,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+            <if test="hash != null">
+                hash,
+            </if>
+            <if test="mimetype != null">
+                mimeType,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="filename != null">
+                #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="size != null">
+                #{size,jdbcType=BIGINT},
+            </if>
+            <if test="storename != null">
+                #{storename,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime,jdbcType=BIGINT},
+            </if>
+            <if test="hash != null">
+                #{hash,jdbcType=VARCHAR},
+            </if>
+            <if test="mimetype != null">
+                #{mimetype,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                #{isValid,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shaw.bo.UploadFile">
+        update t_upload
+        <set>
+            <if test="filename != null">
+                filename = #{filename,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="size != null">
+                size = #{size,jdbcType=BIGINT},
+            </if>
+            <if test="storename != null">
+                storename = #{storename,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                upload_time = #{uploadTime,jdbcType=BIGINT},
+            </if>
+            <if test="hash != null">
+                hash = #{hash,jdbcType=VARCHAR},
+            </if>
+            <if test="mimetype != null">
+                mimeType = #{mimetype,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null">
+                is_valid = #{isValid,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shaw.bo.UploadFile">
+    update t_upload
+    set filename = #{filename,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      size = #{size,jdbcType=BIGINT},
+      storename = #{storename,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=BIGINT},
+      hash = #{hash,jdbcType=VARCHAR},
+      mimeType = #{mimetype,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <delete id="deleteQiniuByKey" parameterType="List">
+        delete from t_upload WHERE
+        type = 1
+        AND storename in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

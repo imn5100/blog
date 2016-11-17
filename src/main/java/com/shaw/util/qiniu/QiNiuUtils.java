@@ -1,6 +1,5 @@
 package com.shaw.util.qiniu;
 
-import com.alibaba.fastjson.JSONObject;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -58,9 +57,9 @@ public class QiNiuUtils {
     public static String upload(File file, String filename) throws IOException {
         try {
             Response res = uploadManager.put(file, filename, getUpToken());
-            JSONObject responseObj = JSONObject.parseObject(res.bodyString());
-            logger.info("Upload File To Qiniu Success Response:" + res.bodyString());
-            return responseObj.getString("key");
+            String bodyString = res == null ? null : res.bodyString();
+            logger.info("Upload File To Qiniu Success Response:" + bodyString);
+            return bodyString;
         } catch (QiniuException e) {
             Response r = e.response;
             logger.error("Upload File To Qiniu Fail Response:" + r.toString());
@@ -70,15 +69,15 @@ public class QiNiuUtils {
 
     public static String upload(byte[] file, String filename) throws IOException {
         try {
-            String fileKey = TimeUtils.getMSTime();
+            String fileKey = new Long(System.currentTimeMillis()).toString();
             //以后缀的形式 设置key ，七牛可以通过前缀 查询文件
             if (filename != null && filename.length() > 0 && !filename.trim().equals("")) {
-                fileKey = filename + fileKey;
+                fileKey = filename + "_" + fileKey;
             }
             Response res = uploadManager.put(file, fileKey, getUpToken());
-            JSONObject responseObj = JSONObject.parseObject(res.bodyString());
-            logger.info("Upload File To Qiniu Success Response:" + res.bodyString());
-            return responseObj.getString("key");
+            String bodyString = res == null ? null : res.bodyString();
+            logger.info("Upload File To Qiniu Success Response:" + bodyString);
+            return bodyString;
         } catch (QiniuException e) {
             Response r = e.response;
             logger.error("Upload File To Qiniu Fail Response:" + r.toString());

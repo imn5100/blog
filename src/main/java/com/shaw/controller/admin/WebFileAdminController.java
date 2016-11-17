@@ -1,12 +1,14 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiniu.storage.model.FileInfo;
-import com.shaw.WebFileInfoVo;
+import com.shaw.bo.UploadFile;
+import com.shaw.vo.WebFileInfoVo;
 import com.shaw.constants.Constants;
+import com.shaw.service.UploadFileService;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/webFile")
 public class WebFileAdminController {
+    @Autowired
+    private UploadFileService uploadFileService;
+
     /**
      * 分页查询博客类别信息
      * easyUI 格式
@@ -36,12 +41,11 @@ public class WebFileAdminController {
         if (StringUtil.isNotEmpty(prefix)) {
             qiniuFileQuery.setPrefix(prefix);
         }
-        List<FileInfo> fileInfoList = QiNiuUtils.listFile(qiniuFileQuery);
-        List<WebFileInfoVo> list = WebFileInfoVo.convertList(fileInfoList);
+        List<WebFileInfoVo> list = uploadFileService.listQiniuWebFile(qiniuFileQuery);
         if (list == null) {
             list = new ArrayList<>();
         } else {
-            if (fileInfoList.size() > 0)
+            if (list.size() > 0)
                 result.put("marker", list.get(list.size() - 1).getKey());
         }
         result.put("rows", list);
@@ -55,13 +59,12 @@ public class WebFileAdminController {
         JSONObject result = new JSONObject();
         if (file != null && !file.isEmpty()) {
             if (StringUtil.isEmpty(filename)) {
-                filename = file.getOriginalFilename().split("\\.")[1];
+                filename = StringUtil.getFileName(file.getOriginalFilename()).toLowerCase();
             }
-            String key = QiNiuUtils.upload(file.getBytes(), StringUtil.filterSpChar(filename));
-            if (StringUtil.isNotEmpty(key)) {
-                String fileUrl = Constants.QINIU_BASE_URL + key;
+            UploadFile uploadFile = uploadFileService.uploadToQiniu(file, filename);
+            if (uploadFile != null) {
                 result.put("success", true);
-                result.put("url", fileUrl);
+                result.put("url", uploadFile.getUrl());
                 result.put("filename", filename);
                 HttpResponseUtil.write(response, result);
             } else {
@@ -76,7 +79,7 @@ public class WebFileAdminController {
         JSONObject result = new JSONObject();
         String[] idsStr = ids.split(",");
         if (idsStr.length > 0) {
-            if (QiNiuUtils.batchDelete(null, idsStr)) {
+            if (uploadFileService.batchDeleteQiniuFile(idsStr)) {
                 result.put("success", true);
                 HttpResponseUtil.write(response, result);
             } else {

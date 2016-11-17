@@ -65,7 +65,7 @@ public class StringUtil {
 
     /**
      * 过滤特殊字符
-     * */
+     */
     public static String filterSpChar(String str) {
         if (isEmpty(str)) {
             return null;
@@ -74,6 +74,35 @@ public class StringUtil {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
         return m.replaceAll("").trim();
+    }
+
+
+    public static String getFileName(String filename) {
+        if (isEmpty(filename)) {
+            return null;
+        }
+        String name;
+        int end = filename.lastIndexOf(".");
+        if (end > 0) {
+            name = filename.substring(0, end);
+        } else {
+            name = filename;
+        }
+        return name;
+    }
+
+    public static String getSuffix(String filename) {
+        if (isEmpty(filename)) {
+            return null;
+        }
+        String suffix;
+        int start = filename.lastIndexOf(".");
+        if (start > 0) {
+            suffix = filename.substring(start + 1);
+        } else {
+            suffix = "";
+        }
+        return suffix;
     }
 
 }

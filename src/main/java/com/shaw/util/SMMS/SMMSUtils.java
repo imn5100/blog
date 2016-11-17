@@ -3,7 +3,12 @@ package com.shaw.util.smms;
 import com.shaw.constants.Constants;
 import com.shaw.util.HttpClientUtils;
 import com.shaw.util.PropertiesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -19,7 +24,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SMMSUtils {
     private static RestTemplate restTemplate;
-    public static final String UPLOAD_URL = PropertiesUtil.getConfiguration().getString(Constants.QINIU_KEY_KEY);
+    public static final String UPLOAD_URL = PropertiesUtil.getConfiguration().getString(Constants.SMMS_UPLOAD_URL_KEY);
+    static Logger logger = LoggerFactory.getLogger(SMMSUtils.class);
 
     static {
         HttpComponentsClientHttpRequestFactory requestFactory = null;
@@ -42,11 +48,11 @@ public class SMMSUtils {
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         param.add("smfile", resource);
         String response = restTemplate.postForObject(UPLOAD_URL, param, String.class);
+        logger.info("upload file to smms Response:" + response);
         return response;
     }
 
-
     public static void main(String[] args) {
-        System.out.println( uploadFile(new File("E:/imageDownLoad/20161027074304.png")));
+        System.out.println(uploadFile(new File("E:/imageDownLoad/20161027074304.png")));
     }
 }

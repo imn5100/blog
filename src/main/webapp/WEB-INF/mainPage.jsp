@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
-    <script src="/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(window).scroll(function () {
@@ -29,7 +29,7 @@
             var ds = document.createElement('script');
             ds.type = 'text/javascript';
             ds.async = true;
-            ds.src = "/static/embed.js";//(document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +"//shawblog.me/static/embed.js";//(document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
             ds.charset = 'UTF-8';
             (document.getElementsByTagName('head')[0]
             || document.getElementsByTagName('body')[0]).appendChild(ds);
@@ -63,6 +63,7 @@
                 <div class="panel-body">
                     <img class="img-responsive"
                          src="${blogger.imageName}"/>
+
                     <div align="center">${blogger.sign }</div>
                 </div>
             </div>
@@ -158,20 +159,5 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-87589134-1', 'auto');
     ga('send', 'pageview');
-</script>
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-
 </script>
 </html>

@@ -75,7 +75,7 @@
 <div class="ds-thread" data-thread-key="${blog.id}" data-title="${blog.title}"
      data-url="${rootSite}/blog/${blog.id}.html"></div>
 <div class="ds-share" data-thread-key="${blog.id}" data-title="${blog.title}"
-     data-images="${rootSite}/static/userImages/${blogger.imageName}" data-content=""
+     data-images="${blogger.imageName}" data-content=""
      data-url="${rootSite}/blog/${blog.id}.html">
     <div class="ds-share-aside-right">
         <div class="ds-share-aside-inner">

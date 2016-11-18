@@ -8,7 +8,7 @@
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
-    <script src="/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
     <script src="/static/bootstrap3/js/jquery.jplayer.min.js"></script>
 </head>

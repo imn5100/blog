@@ -4,8 +4,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>X.X Error</title>
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery.md5.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/inner.css">
 </head>
 <body>

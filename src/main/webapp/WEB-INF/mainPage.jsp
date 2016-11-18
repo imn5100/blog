@@ -62,8 +62,7 @@
                 </div>
                 <div class="panel-body">
                     <img class="img-responsive"
-                         src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName }"/>
-
+                         src="${blogger.imageName}"/>
                     <div align="center">${blogger.sign }</div>
                 </div>
             </div>

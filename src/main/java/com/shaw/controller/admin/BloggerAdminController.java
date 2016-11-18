@@ -2,12 +2,16 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.Blogger;
+import com.shaw.bo.UploadFile;
 import com.shaw.service.BloggerService;
+import com.shaw.service.UploadFileService;
 import com.shaw.util.HttpResponseUtil;
+import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,22 +28,30 @@ public class BloggerAdminController {
 
     @Resource
     private BloggerService bloggerService;
-    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    @Autowired
+    private UploadFileService uploadFileService;
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /**
      * 修改博主信息
      */
     @RequestMapping("/save")
-    public String save(@RequestParam("imageFile") MultipartFile imageFile, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (imageFile!=null&&!imageFile.isEmpty()) {
-            String filePath = request.getServletContext().getRealPath("/");
-            String imageName = TimeUtils.getCurrentDateStr() + "." + imageFile.getOriginalFilename().split("\\.")[1];
-            imageFile.transferTo(new File(filePath + "/static/userImages/" + imageName));
-            blogger.setImageName(imageName);
+    public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            UploadFile uploadFile = uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
+//            String filePath = request.getServletContext().getRealPath("/");
+//            String imageName = TimeUtils.getCurrentDateStr() + "." + imageFile.getOriginalFilename().split("\\.")[1];
+//            imageFile.transferTo(new File(filePath + "/static/userImages/" + imageName));
+            blogger.setImageName(uploadFile.getUrl());
+        } else {
+            if (StringUtil.isNotEmpty(imageUrl)) {
+                blogger.setImageName(imageUrl.trim());
+            }
         }
         int resultTotal = bloggerService.update(blogger);
         JSONObject result = new JSONObject();
         if (resultTotal > 0) {
+            result.put("imageUrl", blogger.getImageName());
             result.put("success", true);
         } else {
             result.put("success", false);

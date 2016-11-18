@@ -23,13 +23,15 @@
             var userName = $("#id").val();
             var nickName = $("#nickName").val();
             var sign = $("#sign").val();
+            var imageUrl = $("#imageUrl").val();
             var proFile = UE.getEditor('proFile').getContent();
             var params = {
                 "id": id,
                 "userName": userName,
                 "nickName": nickName,
                 "sign": sign,
-                "proFile": proFile
+                "proFile": proFile,
+                "imageUrl": imageUrl
             }
             $.ajaxFileUpload({
                 type: 'POST',
@@ -44,6 +46,7 @@
                 dataType: 'json',  // 返回数据的类型
                 success: function (data) {
                     if (data.success == true) {
+                        $("#imageUrl").val(data.imageUrl);
                         $.messager.alert("系统提示", "修改成功");
                     }
                     else {
@@ -77,7 +80,11 @@
             </tr>
             <tr>
                 <td>头像：</td>
-                <td><input type="file" id="imageFile" name="imageFile" style="width: 400px;"/></td>
+                <td><input type="file" id="imageFile" name="imageFile"/></td>
+            </tr>
+            <tr>
+                <td>头像URL</td>
+                <td><input type="text" id="imageUrl" name="imageUrl" style="width: 400px;"/></td>
             </tr>
             <tr>
                 <td valign="top">简介：</td>
@@ -105,7 +112,7 @@
 
     ue.addListener("ready", function () {
         //通过ajax请求数据
-        UE.ajax.request("${pageContext.request.contextPath}/admin/blogger/find.do",
+        UE.ajax.request("/admin/blogger/find.do",
                 {
                     method: "post",
                     async: false,
@@ -115,6 +122,7 @@
                         $("#nickName").val(result.nickName);
                         $("#sign").val(result.sign);
                         $("#nickName").val(result.nickName);
+                        $("#imageUrl").val(result.imageName);
                         UE.getEditor('proFile').setContent(result.proFile);
                     }
                 }

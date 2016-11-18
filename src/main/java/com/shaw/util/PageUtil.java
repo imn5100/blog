@@ -83,13 +83,13 @@ public class PageUtil {
             pageCode.append("<nav>");
             pageCode.append("<ul class='pager' >");
             if (page > 1) {
-                pageCode.append("<li><a href='" + projectContext + "/blog/q.html?page=" + (page - 1) + "&q=" + q
+                pageCode.append("<li><a href='" + projectContext + "/blog/search.html?page=" + (page - 1) + "&keyword=" + q
                         + "'>上一页</a></li>");
             } else {
                 pageCode.append("<li class='disabled'><a href='#'>上一页</a></li>");
             }
             if (page < totalPage) {
-                pageCode.append("<li><a href='" + projectContext + "/blog/q.html?page=" + (page + 1) + "&q=" + q
+                pageCode.append("<li><a href='" + projectContext + "/blog/search.html?page=" + (page + 1) + "&keyword=" + q
                         + "'>下一页</a></li>");
             } else {
                 pageCode.append("<li class='disabled'><a href='#'>下一页</a></li>");

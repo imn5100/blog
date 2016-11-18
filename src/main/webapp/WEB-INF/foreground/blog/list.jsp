@@ -24,7 +24,7 @@
                         <span class="glyphicon glyphicon-calendar"></span>${blog.releaseDateStr}&nbsp;
                         <span class="glyphicon glyphicon-tags"></span>&nbsp;
                         <c:forEach items="${blog.keywordList}" var="keyword">
-                            <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}">${keyword}</a>
+                            <a href="${pageContext.request.contextPath}/blog/search.html?keyword=${keyword}">${keyword}</a>
                         </c:forEach>
                         <span class="glyphicon glyphicon-list-alt"></span>
                         <a href="${pageContext.request.contextPath}/index.html?typeId=${blog.blogType.id}">${blog.blogType.typeName}</a>

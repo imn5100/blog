@@ -78,18 +78,18 @@ public class BlogController {
     /**
      * *搜索入口
      */
-    @RequestMapping("/q")
-    public ModelAndView search(@RequestParam(value = "q", required = false, defaultValue = "") String q,
+    @RequestMapping("/search")
+    public ModelAndView search(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
-        q = StringUtil.filterSpChar(q);
-        if (StringUtils.isBlank(q)) {
+        keyword = StringUtil.filterSpChar(keyword);
+        if (StringUtils.isBlank(keyword)) {
             mav.setViewName("redirect:/");
             return mav;
         }
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/result.jsp");
-        List<Blog> blogList = blogIndex.searchBlog(q.trim());
+        List<Blog> blogList = blogIndex.searchBlog(keyword);
         Integer toIndex = blogList.size() >= page * Constants.PAGE_SIZE ? (page) * Constants.PAGE_SIZE
                 : blogList.size();
         List<Blog> blogList2 = new ArrayList<Blog>();
@@ -97,11 +97,11 @@ public class BlogController {
         // 。jsp页面访问SubList集合时可能报错。这里直接使用Arraylist 返回集合
         blogList2.addAll(blogList.subList(((page) - 1) * Constants.PAGE_SIZE, toIndex));
         mav.addObject("blogList", blogList2);
-        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode((page), blogList.size(), q, Constants.PAGE_SIZE,
+        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode((page), blogList.size(), keyword, Constants.PAGE_SIZE,
                 request.getServletContext().getContextPath()));
-        mav.addObject("q", q);
+        mav.addObject("keyword", keyword);
         mav.addObject("resultTotal", blogList.size());
-        mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + q);
+        mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + keyword);
         mav.setViewName("WEB-INF/mainPage");
         return mav;
     }

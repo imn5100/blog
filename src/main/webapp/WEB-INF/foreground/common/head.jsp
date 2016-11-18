@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
     function checkData() {
-        var q = document.getElementById("q").value.trim();
-        if (q == null || q == "") {
+        var keyword = document.getElementById("keyword").value.trim();
+        if (keyword == null || keyword == "") {
             alert("请输入您要查询的关键字！");
             return false;
         } else {
@@ -40,10 +40,10 @@
                         </ul>
                     </li>
                 </ul>
-                <form action="/blog/q.html" class="navbar-form navbar-right"
+                <form action="/blog/search.html" class="navbar-form navbar-right"
                       role="search" method="post" onsubmit="return checkData()">
                     <div class="form-group">
-                        <input type="text" id="q" name="q" value="${q}" class="form-control"
+                        <input type="text" id="keyword" name="keyword" value="${keyword}" class="form-control"
                                placeholder="Search...">
                     </div>
                     <button type="submit" class="btn btn-inverse">Go!</button>

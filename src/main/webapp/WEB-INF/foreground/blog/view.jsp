@@ -55,7 +55,7 @@
                 (${blog.clickHit})
                 <span class="glyphicon glyphicon-tags"></span>&nbsp;
                 <c:forEach items="${blog.keywordList}" var="keyword">
-                    <a href="${pageContext.request.contextPath}/blog/q.html?q=${keyword}"
+                    <a href="${pageContext.request.contextPath}/blog/search.html?keyword=${keyword}"
                        target="_blank">${keyword}</a>&nbsp;&nbsp;
                 </c:forEach>
                 <span class="glyphicon glyphicon-list-alt"></span>&nbsp;

@@ -1,6 +1,7 @@
 package com.shaw.mapper;
 
 import com.shaw.bo.UploadFile;
+import com.shaw.vo.WebFileQuery;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface UploadFileMapper {
     int updateByPrimaryKey(UploadFile record);
 
     int deleteQiniuByKey(List<String> key);
+
+    List<UploadFile> queryList(WebFileQuery query);
+
+    Integer countList(WebFileQuery query);
 }

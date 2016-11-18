@@ -5,6 +5,7 @@ import com.qiniu.storage.model.FileInfo;
 import com.shaw.constants.Constants;
 import com.shaw.util.TimeUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class WebFileInfoVo {
         }
         vo.setHash(fileInfo.hash);
         vo.setEndUser(fileInfo.endUser);
-        vo.setFsize((fileInfo.fsize / 1024) + "kb");
+        vo.setFsize(new DecimalFormat("#.00").format((fileInfo.fsize / 1024.0)) + "kb");
         vo.setKey(fileInfo.key);
         vo.setMimeType(fileInfo.mimeType);
         vo.setPutTime(TimeUtils.getFormatTime(fileInfo.putTime / 10000));

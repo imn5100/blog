@@ -11,6 +11,7 @@ import com.shaw.util.qiniu.QiNiuUtils;
 import com.shaw.util.smms.SMMSUtils;
 import com.shaw.vo.SMMSUploadResponseVo;
 import com.shaw.vo.WebFileInfoVo;
+import com.shaw.vo.WebFileQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -130,5 +131,15 @@ public class UploadFileServiceImpl implements UploadFileService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<UploadFile> queryList(WebFileQuery query) {
+        return this.uploadFileMapper.queryList(query);
+    }
+
+    @Override
+    public Integer countList(WebFileQuery query) {
+        return this.uploadFileMapper.countList(query);
     }
 }

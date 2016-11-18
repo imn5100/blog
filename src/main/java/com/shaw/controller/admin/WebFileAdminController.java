@@ -1,12 +1,15 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shaw.bo.BlogType;
 import com.shaw.bo.UploadFile;
 import com.shaw.service.UploadFileService;
 import com.shaw.util.HttpResponseUtil;
+import com.shaw.util.PageBean;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
 import com.shaw.vo.WebFileInfoVo;
+import com.shaw.vo.WebFileQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shaw on 2016/11/15 0015.
@@ -27,7 +32,46 @@ public class WebFileAdminController {
     private UploadFileService uploadFileService;
 
     /**
-     * 分页查询博客类别信息
+     * 外链文件管理 七牛 SMMS
+     */
+    @RequestMapping("/listWebFile")
+    public void listWebFile(WebFileQuery query, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        if (query != null) {
+            if (StringUtil.isEmpty(query.getFilename())) {
+                query.setFilename(null);
+            }
+            if (StringUtil.isEmpty(query.getMimetype())) {
+                query.setMimetype(null);
+            }
+            List<UploadFile> list = uploadFileService.queryList(query);
+            Integer count = uploadFileService.countList(query);
+            result.put("success", true);
+            result.put("rows", list);
+            result.put("total", count);
+        }
+        HttpResponseUtil.write(response, result);
+    }
+
+    /**
+     * 外链文件管理 七牛 SMMS.更新信息
+     */
+    @RequestMapping("/updateWebFile")
+    public void update(WebFileQuery query, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        if (query != null) {
+            List<UploadFile> list = uploadFileService.queryList(query);
+            Integer count = uploadFileService.countList(query);
+            result.put("success", true);
+            result.put("rows", list);
+            result.put("total", count);
+        }
+        HttpResponseUtil.write(response, result);
+    }
+
+
+    /**
+     * 列出七牛文件
      * easyUI 格式
      */
     @RequestMapping("/list")

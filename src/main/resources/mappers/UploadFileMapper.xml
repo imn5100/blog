@@ -182,4 +182,38 @@
             #{item}
         </foreach>
     </delete>
+    <select id="queryList" parameterType="com.shaw.vo.WebFileQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from t_upload
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="filename!=null">
+                and filename like CONCAT(#{filename},"%")
+            </if>
+            <if test="mimetype!=null">
+                and mimeType=#{mimetype}
+            </if>
+        </where>
+        ORDER BY upload_time DESC
+        limit #{start},#{pageSize}
+    </select>
+    <select id="countList" parameterType="com.shaw.vo.WebFileQuery" resultType="Integer">
+        SELECT
+        count(1)
+        from t_upload
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="filename!=null">
+                and filename=#{filename}
+            </if>
+            <if test="mimetype!=null">
+                and mimeType=#{mimetype}
+            </if>
+        </where>
+    </select>
 </mapper>

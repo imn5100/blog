@@ -3,6 +3,7 @@ package com.shaw.service;
 import com.shaw.bo.UploadFile;
 import com.shaw.util.qiniu.QiNiuUtils;
 import com.shaw.vo.WebFileInfoVo;
+import com.shaw.vo.WebFileQuery;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface UploadFileService {
     boolean batchDeleteQiniuFile(String[] idsStr) throws Exception;
 
     UploadFile uploadToSMMS(MultipartFile file) throws Exception;
+
+    List<UploadFile> queryList(WebFileQuery query);
+
+    Integer countList(WebFileQuery query);
 }

@@ -1,11 +1,10 @@
 package com.shaw.service;
 
 import com.shaw.bo.UploadFile;
-import com.shaw.vo.WebFileInfoVo;
 import com.shaw.util.qiniu.QiNiuUtils;
+import com.shaw.vo.WebFileInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 /**

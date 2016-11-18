@@ -3,7 +3,9 @@ package com.shaw.bo;
 import java.io.Serializable;
 
 public class UploadFile implements Serializable {
-    private Integer id;
+	private static final long serialVersionUID = -2966775441929340585L;
+
+	private Integer id;
 
     private String filename;
 

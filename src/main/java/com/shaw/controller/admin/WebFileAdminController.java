@@ -2,12 +2,11 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.UploadFile;
-import com.shaw.vo.WebFileInfoVo;
-import com.shaw.constants.Constants;
 import com.shaw.service.UploadFileService;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
+import com.shaw.vo.WebFileInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

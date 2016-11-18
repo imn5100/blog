@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/list.css">
 <div class="panel panel panel-default">
     <div class="panel-heading">
-        搜索&nbsp;${q} &nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
+        搜索&nbsp;${keyword} &nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
     </div>
     <div class="panel-body">
         <div class="bs-docs-section">

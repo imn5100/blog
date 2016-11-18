@@ -4,6 +4,7 @@ import com.shaw.bo.UploadFile;
 import com.shaw.util.qiniu.QiNiuUtils;
 import com.shaw.vo.WebFileInfoVo;
 import com.shaw.vo.WebFileQuery;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface UploadFileService {
     List<UploadFile> queryList(WebFileQuery query);
 
     Integer countList(WebFileQuery query);
+
+    Integer batchDelete(List<Integer> ids);
+
+    Integer updateValid(List<Integer> ids, boolean valid);
 }

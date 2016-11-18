@@ -2,6 +2,7 @@ package com.shaw.mapper;
 
 import com.shaw.bo.UploadFile;
 import com.shaw.vo.WebFileQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface UploadFileMapper {
     List<UploadFile> queryList(WebFileQuery query);
 
     Integer countList(WebFileQuery query);
+
+    Integer batchDelete(List<Integer> ids);
+
+    Integer updateValid(@Param("list") List<Integer> ids, @Param("valid") boolean valid);
 }

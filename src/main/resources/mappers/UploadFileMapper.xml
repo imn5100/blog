@@ -216,4 +216,30 @@
             </if>
         </where>
     </select>
+    <delete id="batchDelete" parameterType="List">
+        delete from t_upload WHERE
+        id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="updateValid">
+        UPDATE t_upload
+        <choose>
+            <when test="valid ==true">
+                set is_valid= 1
+                WHERE is_valid = 0 AND id IN
+                <foreach collection="list" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </when>
+            <otherwise>
+                set is_valid= 0
+                WHERE is_valid = 1 AND id IN
+                <foreach collection="list" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </otherwise>
+        </choose>
+    </update>
 </mapper>

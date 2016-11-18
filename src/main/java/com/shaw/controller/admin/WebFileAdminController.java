@@ -32,45 +32,6 @@ public class WebFileAdminController {
     private UploadFileService uploadFileService;
 
     /**
-     * 外链文件管理 七牛 SMMS
-     */
-    @RequestMapping("/listWebFile")
-    public void listWebFile(WebFileQuery query, HttpServletResponse response) throws Exception {
-        JSONObject result = new JSONObject();
-        if (query != null) {
-            if (StringUtil.isEmpty(query.getFilename())) {
-                query.setFilename(null);
-            }
-            if (StringUtil.isEmpty(query.getMimetype())) {
-                query.setMimetype(null);
-            }
-            List<UploadFile> list = uploadFileService.queryList(query);
-            Integer count = uploadFileService.countList(query);
-            result.put("success", true);
-            result.put("rows", list);
-            result.put("total", count);
-        }
-        HttpResponseUtil.write(response, result);
-    }
-
-    /**
-     * 外链文件管理 七牛 SMMS.更新信息
-     */
-    @RequestMapping("/updateWebFile")
-    public void update(WebFileQuery query, HttpServletResponse response) throws Exception {
-        JSONObject result = new JSONObject();
-        if (query != null) {
-            List<UploadFile> list = uploadFileService.queryList(query);
-            Integer count = uploadFileService.countList(query);
-            result.put("success", true);
-            result.put("rows", list);
-            result.put("total", count);
-        }
-        HttpResponseUtil.write(response, result);
-    }
-
-
-    /**
      * 列出七牛文件
      * easyUI 格式
      */

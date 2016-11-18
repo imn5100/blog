@@ -105,4 +105,22 @@ public class StringUtil {
         return suffix;
     }
 
+    public static List<Integer> parseToIntList(String ids) {
+        List<Integer> idList = new ArrayList<Integer>();
+        if (isEmpty(ids)) {
+            return idList;
+        }
+        String[] idArgs = ids.split(",");
+        if (idArgs.length == 0) {
+            return idList;
+        }
+        for (String idstr : idArgs) {
+            try {
+                idList.add(Integer.parseInt(idstr));
+            } catch (NumberFormatException e) {
+                continue;
+            }
+        }
+        return idList;
+    }
 }

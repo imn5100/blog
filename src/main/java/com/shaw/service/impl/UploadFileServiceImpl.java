@@ -142,4 +142,14 @@ public class UploadFileServiceImpl implements UploadFileService {
     public Integer countList(WebFileQuery query) {
         return this.uploadFileMapper.countList(query);
     }
+
+    @Override
+    public Integer batchDelete(List<Integer> ids) {
+        return uploadFileMapper.batchDelete(ids);
+    }
+
+    @Override
+    public Integer updateValid(List<Integer> ids, boolean valid) {
+        return uploadFileMapper.updateValid(ids, valid);
+    }
 }

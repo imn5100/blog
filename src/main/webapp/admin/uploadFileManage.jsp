@@ -21,31 +21,75 @@
             }
             var strIds = [];
             for (var i = 0; i < selectedRows.length; i++) {
-                strIds.push(selectedRows[i].key);
+                strIds.push(selectedRows[i].id);
             }
             var ids = strIds.join(",");
             $.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length + "</font>条数据吗？", function (r) {
                 if (r) {
-                    $.post("${pageContext.request.contextPath}/admin/webFile/delete.do", {ids: ids}, function (result) {
+                    $.post("/admin/uploadFile/batchDelete.do", {ids: ids}, function (result) {
                         if (result.success) {
                             $.messager.alert("系统提示", "删除文件成功！");
                             $("#dg").datagrid("reload");
                         } else {
-                            if (result.msg) {
-                                $.messager.alert("系统提示", "删除文件失败," + msg);
-                            } else {
-                                $.messager.alert("系统提示", "删除文件失败！");
-                            }
+                            $.messager.alert("系统提示", "删除文件失败！");
                         }
                     }, "json");
                 }
             });
         }
         function toValid() {
-
+            var selectedRows = $("#dg").datagrid("getSelections");
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择要设置的文件！");
+                return;
+            }
+            var strIds = [];
+            for (var i = 0; i < selectedRows.length; i++) {
+                strIds.push(selectedRows[i].id);
+            }
+            var ids = strIds.join(",");
+            $.messager.confirm("系统提示", "将<font color=red>" + selectedRows.length + "</font>个文件置为有效？", function (r) {
+                if (r) {
+                    $.post("/admin/uploadFile/setValid.do", {
+                        ids: ids,
+                        valid: 2
+                    }, function (result) {
+                        if (result.success) {
+                            $.messager.alert("系统提示", "设置成功！");
+                            $("#dg").datagrid("reload");
+                        } else {
+                            $.messager.alert("系统提示", "设置失败！");
+                        }
+                    }, "json");
+                }
+            });
         }
         function notValid() {
-
+            var selectedRows = $("#dg").datagrid("getSelections");
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择要设置的文件！");
+                return;
+            }
+            var strIds = [];
+            for (var i = 0; i < selectedRows.length; i++) {
+                strIds.push(selectedRows[i].id);
+            }
+            var ids = strIds.join(",");
+            $.messager.confirm("系统提示", "将<font color=red>" + selectedRows.length + "</font>个文件置为无效？", function (r) {
+                if (r) {
+                    $.post("/admin/uploadFile/setValid.do", {
+                        ids: ids,
+                        valid: 1
+                    }, function (result) {
+                        if (result.success) {
+                            $.messager.alert("系统提示", "设置成功！");
+                            $("#dg").datagrid("reload");
+                        } else {
+                            $.messager.alert("系统提示", "设置失败！");
+                        }
+                    }, "json");
+                }
+            });
         }
         function searchFile() {
             var type = ""
@@ -97,7 +141,7 @@
 <body style="margin: 1px">
 <table id="dg" title="外链文件管理" class="easyui-datagrid"
        fitColumns="true" pagination="true" rownumbers="true"
-       url="/admin/webFile/listWebFile.do" fit="true" toolbar="#tb">
+       url="/admin/uploadFile/listWebFile.do" fit="true" toolbar="#tb">
     <thead>
     <tr>
         <th field="cb" checkbox="true" align="center"></th>

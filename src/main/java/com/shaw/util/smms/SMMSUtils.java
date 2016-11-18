@@ -1,23 +1,21 @@
 package com.shaw.util.smms;
 
-import com.shaw.constants.Constants;
-import com.shaw.util.HttpClientUtils;
-import com.shaw.util.PropertiesUtil;
+import java.io.File;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import com.shaw.constants.Constants;
+import com.shaw.util.HttpClientUtils;
+import com.shaw.util.PropertiesUtil;
 
 /**
  * Created by shaw on 2016/11/16 0016.

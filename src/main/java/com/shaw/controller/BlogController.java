@@ -41,7 +41,7 @@ public class BlogController {
     /**
      * 博客详情
      */
-    @RequestMapping("/articles/{id}")
+    @RequestMapping("/{id}")
     public ModelAndView details(@PathVariable("id") Integer id, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
         Blog blog = blogService.findById(id);
@@ -100,6 +100,7 @@ public class BlogController {
         mav.addObject("pageCode", PageUtil.genUpAndDownPageCode((page), blogList.size(), keyword, Constants.PAGE_SIZE,
                 request.getServletContext().getContextPath()));
         mav.addObject("keyword", keyword);
+        mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("resultTotal", blogList.size());
         mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + keyword);
         mav.setViewName("WEB-INF/mainPage");

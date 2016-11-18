@@ -16,7 +16,10 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <property name="url"
                   value="jdbc:mysql://localhost:3306/db_blog?useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="shaw"/>
-        <property name="password" value="xlsw%"/>
+        <property name="password"
+                  value="NfTXNktomxhq3xJN4y3mdg+oHkP2IY452RP5xanmMHYkCxWn1tQBQhBzjJgFN+u44szy+65FVdXFhQmTshBwYA=="/>
+        <property name="filters" value="config"/>
+        <property name="connectionProperties" value="config.decrypt=true"/>
     </bean>
 
     <!-- 配置mybatis的sqlSessionFactory -->

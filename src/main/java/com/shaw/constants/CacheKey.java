@@ -32,9 +32,9 @@ public class CacheKey {
      **/
     public static final String WEB_LOGS_HTML_KEY = "WebLogs:FileName_%s";
     /**
-     * 缓存10天
+     * 缓存3天
      */
-    public static final Long WEB_LOGS_HTML_EXPIRE = 60 * 60 * 24 * 10L;
+    public static final Long WEB_LOGS_HTML_EXPIRE = 60 * 60 * 24 * 3L;
     /**
      * web日志分析html 文件列表,避免频繁IO读取 磁盘
      */

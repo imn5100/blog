@@ -5,7 +5,6 @@
     function checkData() {
         var keyword = document.getElementById("keyword").value.trim();
         if (keyword == null || keyword == "") {
-            alert("请输入您要查询的关键字！");
             return false;
         } else {
             return true;
@@ -44,9 +43,9 @@
                       role="search" method="post" onsubmit="return checkData()">
                     <div class="form-group">
                         <input type="text" id="keyword" name="keyword" value="${keyword}" class="form-control"
-                               placeholder="Search...">
+                               placeholder="">
                     </div>
-                    <button type="submit" class="btn btn-inverse">Go!</button>
+                    <button type="submit" class="btn btn-inverse">Go~!</button>
                 </form>
             </div>
         </div>

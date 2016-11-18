@@ -50,7 +50,7 @@
         <div class="blog_info">
             <ul>
                 <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                <fmt:formatDate value="${blog.releaseDate }" type="date" pattern="yyyy-MM-dd HH:mm"/>
+                <fmt:formatDate value="${blog.releaseDate}" type="date" pattern="yyyy-MM-dd HH:mm"/>
                 <span class="glyphicon glyphicon-hand-up"></span>
                 (${blog.clickHit})
                 <span class="glyphicon glyphicon-tags"></span>&nbsp;

@@ -40,7 +40,7 @@
 		 var ids=strIds.join(",");
 		 $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 				if(r){
-					$.post("${pageContext.request.contextPath}/admin/blog/delete.do",{ids:ids},function(result){
+					$.post("/admin/blog/delete.do",{ids:ids},function(result){
 						if(result.success){
 							 $.messager.alert("系统提示","数据已成功删除！");
 							 $("#dg").datagrid("reload");
@@ -68,7 +68,7 @@
 <body style="margin: 1px">
 <table id="dg" title="博客管理" class="easyui-datagrid"
    fitColumns="true" pagination="true" rownumbers="true"
-   url="${pageContext.request.contextPath}/admin/blog/list.do" fit="true" toolbar="#tb">
+   url="/admin/blog/list.do" fit="true" toolbar="#tb">
    <thead>
    	<tr>
    		<th field="cb" checkbox="true" align="center"></th>

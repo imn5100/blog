@@ -28,7 +28,7 @@
 		 var ids=strIds.join(",");
 		 $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 				if(r){
-					$.post("${pageContext.request.contextPath}/admin/link/delete.do",{ids:ids},function(result){
+					$.post("/admin/link/delete.do",{ids:ids},function(result){
 						if(result.success){
 							 $.messager.alert("系统提示","数据已成功删除！");
 							 $("#dg").datagrid("reload");
@@ -42,7 +42,7 @@
 	
 	function openLinkAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
-		url="${pageContext.request.contextPath}/admin/link/save.do";
+		url="/admin/link/save.do";
 	}
 	
 	function openLinkModifyDialog(){
@@ -54,7 +54,7 @@
 		 var row=selectedRows[0];
 		 $("#dlg").dialog("open").dialog("setTitle","编辑友情链接信息");
 		 $("#fm").form("load",row);
-		 url="${pageContext.request.contextPath}/admin/link/save.do?id="+row.id;
+		 url="/admin/link/save.do?id="+row.id;
 	 }
 	
 	function saveLink(){
@@ -93,7 +93,7 @@
 <body style="margin: 1px">
 <table id="dg" title="友情链接管理" class="easyui-datagrid"
    fitColumns="true" pagination="true" rownumbers="true"
-   url="${pageContext.request.contextPath}/admin/link/list.do" fit="true" toolbar="#tb">
+   url="/admin/link/list.do" fit="true" toolbar="#tb">
    <thead>
    	<tr>
    		<th field="cb" checkbox="true" align="center"></th>

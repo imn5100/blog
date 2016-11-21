@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Blogger Login</title>
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery.md5.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/inner.css">
+    <script src="/static/bootstrap3/js/jquery.js"></script>
+    <script src="/static/bootstrap3/js/jquery.md5.js"></script>
+    <link rel="stylesheet" href="/static/css/inner.css">
     <SCRIPT type="text/javascript">
         $(function () {
             //得到焦点
@@ -46,7 +46,7 @@
                 $.ajax({
                     type: "POST",
                     async: false,
-                    url: "${pageContext.request.contextPath}/blogger/login.do",
+                    url: "/blogger/login.do",
                     data: "username=" + userName + "&password=" + $.md5(password) + "&vcode=" + vcode,
                     success: function (data) {
                         $("#error").text("");
@@ -66,7 +66,7 @@
 
         });
         function loadimage() {
-            document.getElementById("randImage").src = "${pageContext.request.contextPath}/blog/codesImg.do?" + Math.random();
+            document.getElementById("randImage").src = "/blog/codesImg.do?" + Math.random();
         }
     </SCRIPT>
 </head>
@@ -100,7 +100,7 @@
                 <SPAN class="v_logo"></SPAN>
                 <input id="vcode" name="vcode" class="ipt2" type="text" placeholder="验证码" maxlength="4" value=""
                        required/>
-                <img onclick="javascript:loadimage();" title="换一张试试" name="randImage" id="randImage"  align="absmiddle" class="vcode" src="${pageContext.request.contextPath}/blog/codesImg.do">
+                <img onclick="javascript:loadimage();" title="换一张试试" name="randImage" id="randImage"  align="absmiddle" class="vcode" src="/blog/codesImg.do">
             </P>
         </div>
         <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">

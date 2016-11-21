@@ -4,9 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <meta name="keywords" content="${blog.keyWord}"/>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+        src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
 <link rel="stylesheet"
-      href="${pageContext.request.contextPath}/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
+      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
 <script type="text/javascript">
     SyntaxHighlighter.all();
 </script>
@@ -17,16 +17,20 @@
         color: #666;
         font-size: medium;
     }
+
     .blog_info li {
         text-align: -webkit-match-parent;
     }
+
     .blog_content {
         margin-top: 20px;
         padding-bottom: 30px;
     }
+
     .blog_lastAndNextPage {
         padding: 10px;
     }
+
     hr {
         border: 0;
         border-top: 1px solid #eee;
@@ -55,11 +59,11 @@
                 (${blog.clickHit})
                 <span class="glyphicon glyphicon-tags"></span>&nbsp;
                 <c:forEach items="${blog.keywordList}" var="keyword">
-                    <a href="${pageContext.request.contextPath}/blog/search.html?keyword=${keyword}"
+                    <a href="/blog/search.html?keyword=${keyword}"
                        target="_blank">${keyword}</a>&nbsp;&nbsp;
                 </c:forEach>
                 <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-                <a href="${pageContext.request.contextPath}/index.html?typeId=${blog.blogType.id}"
+                <a href="/index.html?typeId=${blog.blogType.id}"
                    target="_blank">${blog.blogType.typeName}</a>
             </ul>
         </div>

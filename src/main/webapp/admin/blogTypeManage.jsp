@@ -28,7 +28,7 @@
 		 var ids=strIds.join(",");
 		 $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 				if(r){
-					$.post("${pageContext.request.contextPath}/admin/blogType/delete.do",{ids:ids},function(result){
+					$.post("/admin/blogType/delete.do",{ids:ids},function(result){
 						if(result.success){
 							if(result.exist){
 								 $.messager.alert("系统提示",result.exist);
@@ -46,7 +46,7 @@
 	
 	function openBlogTypeAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","添加博客类别信息");
-		url="${pageContext.request.contextPath}/admin/blogType/save.do";
+		url="/admin/blogType/save.do";
 	}
 	
 	function openBlogTypeModifyDialog(){
@@ -58,7 +58,7 @@
 		 var row=selectedRows[0];
 		 $("#dlg").dialog("open").dialog("setTitle","编辑博客类别信息");
 		 $("#fm").form("load",row);
-		 url="${pageContext.request.contextPath}/admin/blogType/save.do?id="+row.id;
+		 url="/admin/blogType/save.do?id="+row.id;
 	 }
 	
 	function saveBlogType(){
@@ -96,7 +96,7 @@
 <body style="margin: 1px">
 <table id="dg" title="博客类别管理" class="easyui-datagrid"
    fitColumns="true" pagination="true" rownumbers="true"
-   url="${pageContext.request.contextPath}/admin/blogType/list.do" fit="true" toolbar="#tb">
+   url="/admin/blogType/list.do" fit="true" toolbar="#tb">
    <thead>
    	<tr>
    		<th field="cb" checkbox="true" align="center"></th>

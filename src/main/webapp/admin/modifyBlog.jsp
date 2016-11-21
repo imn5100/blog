@@ -33,7 +33,7 @@
 		}else if(content==null || content==''){
 			alert("请输入内容！");
 		}else{
-			$.post("${pageContext.request.contextPath}/admin/blog/save.do",{'id':'${param.id}','title':title,'blogType.id':blogTypeId,'content':content,'contentNoTag':UE.getEditor('editor').getContentTxt(),'summary':UE.getEditor('editor').getContentTxt().substr(0,200),'keyWord':keyWord},function(result){
+			$.post("/admin/blog/save.do",{'id':'${param.id}','title':title,'blogType.id':blogTypeId,'content':content,'contentNoTag':UE.getEditor('editor').getContentTxt(),'summary':UE.getEditor('editor').getContentTxt().substr(0,200),'keyWord':keyWord},function(result){
 				if(result.success){
 					alert("博客修改成功！");
 				}else{
@@ -93,7 +93,7 @@
 
     ue.addListener("ready",function(){
         //通过ajax请求数据
-        UE.ajax.request("${pageContext.request.contextPath}/admin/blog/findById.do",
+        UE.ajax.request("/admin/blog/findById.do",
             {
                 method:"post",
                 async : false,  

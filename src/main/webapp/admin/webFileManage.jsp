@@ -26,7 +26,7 @@
             var ids = strIds.join(",");
             $.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length + "</font>条数据吗？", function (r) {
                 if (r) {
-                    $.post("${pageContext.request.contextPath}/admin/webFile/delete.do", {ids: ids}, function (result) {
+                    $.post("/admin/webFile/delete.do", {ids: ids}, function (result) {
                         if (result.success) {
                             $.messager.alert("系统提示", "删除文件成功！");
                             $("#dg").datagrid("reload");
@@ -111,7 +111,7 @@
 
         function openUploadWebFileDialog() {
             $("#dlg").dialog("open").dialog("setTitle", "上传文件(大文件请使用工具上传)");
-            url = "${pageContext.request.contextPath}/admin/webFile/save.do";
+            url = "/admin/webFile/save.do";
         }
         function openUploadWebFileDialogSMMS() {
             $("#dlg2").dialog("open").dialog("setTitle", "上传图片(SMMS)");

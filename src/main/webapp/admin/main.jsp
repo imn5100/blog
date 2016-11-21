@@ -19,7 +19,7 @@
             if ($("#tabs").tabs("exists", text)) {
                 $("#tabs").tabs("select", text);
             } else {
-                var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}/admin/" + url + "'></iframe>";
+                var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/admin/" + url + "'></iframe>";
                 $("#tabs").tabs("add", {
                     title: text,
                     closable: true,
@@ -32,7 +32,7 @@
 
         function openPasswordModifyDialog() {
             $("#dlg").dialog("open").dialog("setTitle", "修改密码");
-            url = "${pageContext.request.contextPath}/admin/blogger/modifyPassword.do?id=${currentUser.id}";
+            url = "/admin/blogger/modifyPassword.do?id=${currentUser.id}";
         }
         function openWebLogDialog() {
             jQuery.post("/admin/system/getWebLogHtmlList.do", function (data) {
@@ -95,13 +95,13 @@
         function logout() {
             $.messager.confirm("系统提示", "您确定要退出系统吗？", function (r) {
                 if (r) {
-                    window.location.href = '${pageContext.request.contextPath}/admin/blogger/logout.do';
+                    window.location.href = '/admin/blogger/logout.do';
                 }
             });
         }
 
         function refreshSystem() {
-            $.post("${pageContext.request.contextPath}/admin/system/refreshSystem.do", {}, function (result) {
+            $.post("/admin/system/refreshSystem.do", {}, function (result) {
                 if (result.success) {
                     $.messager.alert("系统提示", "已成功刷新系统缓存！");
                 } else {
@@ -110,7 +110,7 @@
             }, "json");
         }
         function refreshIndex() {
-            $.post("${pageContext.request.contextPath}/admin/system/refreshIndex.do", {}, function (result) {
+            $.post("/admin/system/refreshIndex.do", {}, function (result) {
                 if (result.success) {
                     $.messager.alert("系统提示", "重建索引成功！");
                 } else {
@@ -119,7 +119,7 @@
             }, "json");
         }
         function resetSummary() {
-            $.post("${pageContext.request.contextPath}/admin/system/resetSummary.do?length=280", {}, function (result) {
+            $.post("/admin/system/resetSummary.do?length=280", {}, function (result) {
                 if (result.success) {
                     $.messager.alert("系统提示", "重置概述成功！");
                 } else {

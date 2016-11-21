@@ -22,9 +22,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by shaw on 2016/11/17 0017.
- */
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
     @Resource

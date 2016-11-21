@@ -6,7 +6,7 @@ import com.shaw.service.BloggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("bloggerService")
+@Service
 public class BloggerServiceImpl implements BloggerService {
     @Autowired
     private BloggerMapper bloggerMapper;

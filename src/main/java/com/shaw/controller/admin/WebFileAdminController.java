@@ -1,15 +1,12 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shaw.bo.BlogType;
 import com.shaw.bo.UploadFile;
 import com.shaw.service.UploadFileService;
 import com.shaw.util.HttpResponseUtil;
-import com.shaw.util.PageBean;
 import com.shaw.util.StringUtil;
 import com.shaw.util.qiniu.QiNiuUtils;
 import com.shaw.vo.WebFileInfoVo;
-import com.shaw.vo.WebFileQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by shaw on 2016/11/15 0015.

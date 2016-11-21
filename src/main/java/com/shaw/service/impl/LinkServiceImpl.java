@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-@Service("linkService")
+@Service
 public class LinkServiceImpl implements LinkService{
 
 	@Resource

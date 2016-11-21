@@ -15,12 +15,9 @@ public interface BlogTypeMapper {
 
     Long getTotal(Map<String, Object> map);
 
-
     Integer add(BlogType blogType);
 
-
     Integer update(BlogType blogType);
-
 
     Integer delete(Integer id);
 }

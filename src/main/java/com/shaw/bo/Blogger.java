@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Blogger implements Serializable {
 
     private static final long serialVersionUID = -3883346387813043440L;
-    private Integer id; // 编号
-    private String userName; // 用户名
-    private String password; // 密码
-    private String nickName; // 昵称
-    private String sign; // 个性签名
-    private String proFile; // 个人简介
-    private String imageName; // 头像
+    private Integer id;
+    private String userName;
+    private String password;
+    private String nickName;
+    private String sign;
+    private String proFile;
+    private String imageName;
 
     public Integer getId() {
         return id;

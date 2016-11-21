@@ -151,8 +151,8 @@
         <div title="常用操作" data-options="iconCls:'icon-item'" style="padding: 10px">
             <a href="javascript:openTab('写博客','writeBlog.jsp','icon-writeblog')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px">写博客</a>
-            <a href="javascript:openTab('外链文件管理','uploadFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">外链文件管理</a>
+            <a href="javascript:openTab('外链文件本地管理','uploadFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">外链文件本地管理</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-reload'" style="width: 150px;">刷新系统缓存</a>
             <a href="http://shawblog.duoshuo.com/admin/" target="_blank" class="easyui-linkbutton"
@@ -171,10 +171,10 @@
                data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博客类别信息管理</a>
         </div>
         <div title="文件管理" data-options="iconCls:'icon-mini-edit'" style="padding: 10px">
-            <a href="javascript:openTab('外链文件管理','uploadFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">外链文件管理</a>
-            <a href="javascript:openTab('web文件管理','webFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">web文件管理</a>
+            <a href="javascript:openTab('外链文件本地管理','uploadFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">外链文件本地管理</a>
+            <a href="javascript:openTab('web文件远程管理','webFileManage.jsp','icon-bklb')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">web文件远程管理</a>
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
         </div>

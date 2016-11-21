@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Link implements Serializable {
 
     private static final long serialVersionUID = -8043108573384293372L;
-    private Integer id; // 编号
-    private String linkName; // 链接名称
-    private String linkUrl; // 链接地址
-    private Integer orderNo; // 排序序号 从小到大排序
+    private Integer id;
+    private String linkName;
+    private String linkUrl;
+    private Integer orderNo;
 
     public Integer getId() {
         return id;

@@ -7,8 +7,6 @@ import java.util.Map;
 
 
 public interface BlogService {
-
-
     List<Blog> countList();
 
     List<Blog> list(Map<String, Object> map);
@@ -31,13 +29,7 @@ public interface BlogService {
 
     List<Blog> listSimple(Map<String, Object> map);
 
-    /**
-     * 批量更新操作，clickHit
-     **/
     Integer updateBatchForClickHit(List<Blog> list);
 
-    /**
-     * 批量更新 summary
-     */
     Integer updateBatchForSummary(List<Blog> list);
 }

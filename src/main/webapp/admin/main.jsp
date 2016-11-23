@@ -101,31 +101,44 @@
         }
 
         function refreshSystem() {
-            $.post("/admin/system/refreshSystem.do", {}, function (result) {
-                if (result.success) {
-                    $.messager.alert("系统提示", "已成功刷新系统缓存！");
-                } else {
-                    $.messager.alert("系统提示", "刷新系统缓存失败！");
+            $.messager.confirm("系统提示", "您确定要刷新系统缓存吗？", function (r) {
+                if (r) {
+                    $.post("/admin/system/refreshSystem.do", {}, function (result) {
+                        if (result.success) {
+                            $.messager.alert("系统提示", "已成功刷新系统缓存！");
+                        } else {
+                            $.messager.alert("系统提示", "刷新系统缓存失败！");
+                        }
+                    }, "json");
                 }
-            }, "json");
+            });
         }
         function refreshIndex() {
-            $.post("/admin/system/refreshIndex.do", {}, function (result) {
-                if (result.success) {
-                    $.messager.alert("系统提示", "重建索引成功！");
-                } else {
-                    $.messager.alert("系统提示", "重建索引失败");
+            $.messager.confirm("系统提示", "确定重建索引？", function (r) {
+                if (r) {
+                    $.post("/admin/system/refreshIndex.do", {}, function (result) {
+                        if (result.success) {
+                            $.messager.alert("系统提示", "重建索引成功！");
+                        } else {
+                            $.messager.alert("系统提示", "重建索引失败");
+                        }
+                    }, "json");
                 }
-            }, "json");
+            });
         }
         function resetSummary() {
-            $.post("/admin/system/resetSummary.do?length=280", {}, function (result) {
-                if (result.success) {
-                    $.messager.alert("系统提示", "重置概述成功！");
-                } else {
-                    $.messager.alert("系统提示", "重置概述失败");
-                }
-            }, "json");
+            $.messager.confirm("系统提示", "确定要重置概述？", function (r) {
+                        if (r) {
+                            $.post("/admin/system/resetSummary.do?length=280", {}, function (result) {
+                                if (result.success) {
+                                    $.messager.alert("系统提示", "重置概述成功！");
+                                } else {
+                                    $.messager.alert("系统提示", "重置概述失败");
+                                }
+                            }, "json");
+                        }
+                    }
+            );
         }
 
     </script>

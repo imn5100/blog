@@ -18,13 +18,33 @@
     <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-        $(window).scroll(function () {
-            if ($(window).scrollTop() == 0) {
+        //节流函数 避免监听事件频繁调用函数
+        //method 要执行的函数
+        //delay 延迟
+        //duration  在time时间内必须执行一次
+        function throttle(method, delay, duration) {
+            var timer = null, begin = new Date();
+            return function () {
+                var context = this, args = arguments, current = new Date();
+                clearTimeout(timer);
+                if (current - begin >= duration) {
+                    method.apply(context, args);
+                    begin = current;
+                } else {
+                    timer = setTimeout(function () {
+                        method.apply(context, args);
+                    }, delay);
+                }
+            }
+        }
+        function showTop() {
+            if ($(window).scrollTop() < 100) {
                 $(".cd-top").hide();
             } else {
                 $(".cd-top").show();
             }
-        });
+        }
+        $(window).scroll(throttle(showTop, 500, 1000));
         $(function () {
             $("#close_side").click(function () {
                 $("#contents").attr("class", "col-md-12")

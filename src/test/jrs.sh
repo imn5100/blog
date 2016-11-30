@@ -4,4 +4,11 @@ cp -f /usr/local/jetty/webapps/root.war /usr/myfile/blog_bak.war;
 sh /usr/local/jetty/bin/jetty.sh  stop;
 cp -f /usr/myfile/root.war /usr/local/jetty/webapps/root.war;
 sh /usr/local/jetty/bin/jetty.sh start
-\cp -rf  /usr/myfile/userImagesBak/* /usr/myfile/jettyTmp/webapp/static/userImages/
+path=/usr/myfile/jettyTmp/webapp/static/userImages/
+if  [ -d $path ];then
+ \cp -rf  /usr/myfile/userImagesBak/* $path
+else
+ mkdir $path
+ \cp -rf  /usr/myfile/userImagesBak/* $path
+fi
+

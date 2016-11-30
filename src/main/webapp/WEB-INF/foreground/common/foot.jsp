@@ -6,13 +6,8 @@
 			<span style="">Powered by <a href="https://github.com/imn5100" target="_blank">
                 <img alt="Brand" src="${pageContext.request.contextPath}/static/images/git.png">
                 Imn5100</a></span><br>
-            <span>浙ICP备16038105号</span>
-            <div style="width:300px;margin:0 auto; padding:0px 0;">
-                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602007235"
-                   style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
-                    <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#5b5c5f;">
-                        浙公网安备33010602007235号</p></a>
-            </div>
+            <span>浙ICP备16038105号</span><br>
+            <span>浙公网安备33010602007235号</span>
         </div>
     </div>
 </div>

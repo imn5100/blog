@@ -82,7 +82,7 @@
                     } else {
                         BGswitch.switch(BGswitch.index, BGswitch.index + 1)
                     }
-                }, 15000)
+                }, 1000 * 60 * 5)
             },
             switch: function (oldi, newi) {
                 setTimeout(function () {

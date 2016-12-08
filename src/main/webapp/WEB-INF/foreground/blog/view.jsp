@@ -7,8 +7,19 @@
         src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
 <link rel="stylesheet"
       href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
+<link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript">
     SyntaxHighlighter.all();
+    var duoshuoQuery = {short_name: "shawblog", theme: "none"};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + "//shawblog.me/static/embed.js";//(document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
 </script>
 <style>
     .blog_info {
@@ -87,3 +98,4 @@
         <div class="ds-share-aside-toggle">分享到</div>
     </div>
 </div>
+

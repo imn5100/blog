@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="/static/css/embed.default.css">
     <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -78,7 +77,6 @@
                     <div align="center">${blogger.sign }</div>
                 </div>
             </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-list"></span>
@@ -95,7 +93,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -112,26 +109,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-star"></span>
-                    热评文章
-                </div>
-                <div class="panel-body">
-                    <ul class="ds-top-threads" data-range="weekly" data-num-items="5"></ul>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-user"></span>
-                    最近访客
-                </div>
-                <div class="panel-body">
-                    <div class="ds-recent-visitors"></div>
-                </div>
-            </div>
-
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-link"></span>
@@ -156,30 +133,4 @@
 </div>
 <a class="cd-top"></a>
 </body>
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-87589134-1', 'auto');
-    ga('send', 'pageview');
-
-    var duoshuoQuery = {short_name: "shawblog", theme: "none"};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + "//shawblog.me/static/embed.js";//(document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
 </html>

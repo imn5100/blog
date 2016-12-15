@@ -11,6 +11,7 @@
     <meta name="description" content="技术博客,后端,java">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/search.xml" title="shawblog">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/static/css/main.css">

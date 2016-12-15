@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+    <InputEncoding>utf-8</InputEncoding>
+    <ShortName>休的秘密基地</ShortName>
+    <Description>Rua~~~</Description>
+    <!--<Image height="16" width="16" type="image/x-icon"></Image>-->
+    <Url type="text/html" template="https://shawblog.me/blog/search.html?keyword={searchTerms}"/>
+</OpenSearchDescription>

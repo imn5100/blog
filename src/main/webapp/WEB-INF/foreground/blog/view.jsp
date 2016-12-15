@@ -9,6 +9,7 @@
       href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
 <link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript">
+    SyntaxHighlighter.config.bloggerMode = true;
     SyntaxHighlighter.all();
     var duoshuoQuery = {short_name: "shawblog", theme: "none"};
     (function () {

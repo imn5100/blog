@@ -8,7 +8,7 @@
 <script type="text/javascript"
         src="/static/ueditor/third-party/SyntaxHighlighter/brush.js"></script>
 <link rel="stylesheet"
-      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreRDark.css">
+      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
 <link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript">
     SyntaxHighlighter.config.bloggerMode = true;

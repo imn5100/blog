@@ -17,7 +17,7 @@
         function submitData() {
             var title = $("#title").val();
             var blogTypeId = $("#blogTypeId").combobox("getValue");
-            var content = UE.getEditor('editor').getContent();
+            var content = UE.getEditor('editor').getContent().replace(/<img src=/g, "<img class='img-responsive' src=");
             var keyWord = $("#keyWord").val();
 
             if (title == null || title == '') {

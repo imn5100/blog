@@ -5,8 +5,10 @@
 <meta name="keywords" content="${blog.keyWord}"/>
 <script type="text/javascript"
         src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+<script type="text/javascript"
+        src="/static/ueditor/third-party/SyntaxHighlighter/brush.js"></script>
 <link rel="stylesheet"
-      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
+      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreRDark.css">
 <link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript">
     SyntaxHighlighter.config.bloggerMode = true;

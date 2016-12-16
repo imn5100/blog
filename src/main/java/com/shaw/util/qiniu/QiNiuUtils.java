@@ -49,6 +49,7 @@ public class QiNiuUtils {
         //文件名+后缀
         String filename = ueditorSavePath.substring(start + 1);
         //这里需要处理一下访问路径，图片为前缀 + 路径(webapps开始) +文件名访问。保证存储和访问url相同
+        logger.info("Ueditor Upload file to qiniu filename:" + file.getName());
         QiNiuUtils.upload(file, "static/userImages/" + filename);
         return null;
     }

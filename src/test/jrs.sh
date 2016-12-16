@@ -1,4 +1,6 @@
 #! /bin/bash
+cp  root.war blog_rollback.war
+mv  blog_bak.war root.war
 cp -f /usr/local/jetty/webapps/root.war /usr/myfile/blog_bak.war;
 \cp -rf  /usr/myfile/jettyTmp/webapp/static/userImages/* /usr/myfile/userImagesBak
 sh /usr/local/jetty/bin/jetty.sh  stop;
@@ -11,4 +13,3 @@ else
  mkdir $path
  \cp -rf  /usr/myfile/userImagesBak/* $path
 fi
-

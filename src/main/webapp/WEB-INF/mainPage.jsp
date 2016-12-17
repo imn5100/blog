@@ -71,7 +71,7 @@
                     <span class="glyphicon glyphicon-tower"></span>
                     ${blogger.nickName}
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" align="center">
                     <img class="img-responsive"
                          src="${blogger.imageName}"/>
 

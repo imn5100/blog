@@ -34,9 +34,9 @@
         ORDER BY create_time DESC
         limit #{start},#{pageSize}
     </select>
-    <select id="countList" resultType="Integer" parameterType="com.shaw.vo.RemoteMsgQuery">
+    <select id="queryCount" resultType="Integer" parameterType="com.shaw.vo.RemoteMsgQuery">
         SELECT
-        <include refid="Base_Column_List"/>
+        count(1)
         from t_remote_msg
         <where>
             <if test="status!=null">
@@ -46,7 +46,6 @@
                 and topic=#{topic}
             </if>
         </where>
-        ORDER BY create_time DESC
     </select>
     <select id="consumerMsg" resultMap="BaseResultMap" parameterType="String">
         SELECT

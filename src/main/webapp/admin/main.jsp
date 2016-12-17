@@ -198,6 +198,8 @@
                data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
         </div>
         <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
+            <a href="javascript:openTab('远程任务管理','remoteMsgManage.jsp','icon-link')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-link'" style="width: 150px">远程任务管理</a>
             <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"

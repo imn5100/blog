@@ -7,6 +7,7 @@ public enum ResponseCode {
     SUCCESS(200, "操作成功"),
     PARAM_NULL(400, "参数为空"),
     CODES_WRONG(601, "验证码错误"),
+    IP_WRONG(602, "IP验证无效"),
     LOGIN_WRONG(999, "账号或密码错误"),
     PARAM_NOT_FORMAT(1001, "参数格式错误");
 

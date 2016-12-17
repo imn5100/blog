@@ -6,6 +6,8 @@ import com.shaw.constants.ResponseCode;
 import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
+import com.shaw.util.RequestUtil;
+import com.sun.tools.javac.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 /**
  * 站长相关
@@ -68,6 +72,31 @@ public class BloggerController {
             HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
         }
         return null;
+    }
+
+    @RequestMapping("/script/login")
+    @ResponseBody
+    public void scriptLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
+        String ip = RequestUtil.getIpAddr(request);
+        Set<Object> ipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
+        if (ipList != null && ipList.size() > 0 && ipList.contains(ip)) {
+            try {
+                Blogger blogger = bloggerService.getByUserName(username);
+                if (blogger != null && blogger.getPassword().equals(password)) {
+                    Subject subject = SecurityUtils.getSubject();
+                    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+                    subject.login(token); // 登录验证
+                    logger.info("login success username:" + username + "->md5(password):" + password);
+                    HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+                } else {
+                    HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+                }
+            } catch (AuthenticationException e) {
+                HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+            }
+        } else {
+            HttpResponseUtil.write(response, ResponseCode.IP_WRONG.getCode());
+        }
     }
 
     /**

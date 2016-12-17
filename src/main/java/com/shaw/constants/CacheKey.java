@@ -44,4 +44,6 @@ public class CacheKey {
      **/
     public static final Long WEB_LOGS_NAME_LIST_EXPIRE = 60 * 60L;
 
+    public static final String WHITE_LIST_IP = "remoteMsg:White_list";
+
 }

@@ -55,8 +55,29 @@
             $.post("/admin/remote/pushMsg.do", params, function (result, textstatus, xhr) {
                 if (result == "200") {
                     $.messager.alert("系统提示", "添加成功！");
+                    closeDialog2()
                     $("#dg").datagrid("reload");
-                    $("#dg").datagrid("reload");
+                } else {
+                    $.messager.alert("系统提示", "添加失败！");
+                }
+            }, "json").error(function () {
+                $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+            });
+            return false;
+        }
+        function addWhiteList() {
+            var ip = $("#ip").val();
+            if (ip == null || ip == "") {
+                $.messager.alert("系统提示", "请填写必要内容！");
+                return;
+            }
+            params = {
+                "ip": ip
+            }
+            $.post("/admin/remote/addWhiteList.do", params, function (result, textstatus, xhr) {
+                if (result == "200") {
+                    $.messager.alert("系统提示", "添加成功！");
+                    closeDialog3()
                 } else {
                     $.messager.alert("系统提示", "添加失败！");
                 }
@@ -113,11 +134,18 @@
         function openSendMsgDialog() {
             $("#dlg2").dialog("open").dialog("setTitle", "添加远程消息任务");
         }
+        function openDialog3() {
+            $("#dlg3").dialog("open").dialog("setTitle", "添加白名单");
+        }
         function closeDialog2() {
             $("#dlg2").dialog("close");
             $("#topic").val("")
             $("#contents").val("")
             $("#other").val("")
+        }
+        function closeDialog3() {
+            $("#dlg3").dialog("close");
+            $("#ip").val("")
         }
     </script>
 </head>
@@ -141,6 +169,7 @@
 <div id="tb">
     <div>
         <a href="javascript:openSendMsgDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">提交任务</a>
+        <a href="javascript:openDialog3()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加白名单</a>
         <a href="javascript:deleteMsg()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除远程任务消息</a>
 
         <div>
@@ -179,6 +208,16 @@
 
     </form>
 </div>
+<div id="dlg3" class="easyui-dialog" style="width:300%;height:150%;padding: 5px 5px"
+     closed="true" buttons="#dlg3-buttons">
+    <table cellspacing="8px">
+        <tr>
+            <td>IP：</td>
+            <td><input type="text" id="ip" class="easyui-validatebox" placeholder=""/>
+            </td>
+        </tr>
+    </table>
+</div>
 <div id="dlg" class="easyui-dialog" style="width:500px;height:500px;padding: 10px 20px" closed="true">
     <div id="detail">
     </div>
@@ -186,6 +225,10 @@
 <div id="dlg2-buttons">
     <a href="javascript:sendMsg()" class="easyui-linkbutton" iconCls="icon-ok">提交</a>
     <a href="javascript:closeDialog2()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+<div id="dlg3-buttons">
+    <a href="javascript:addWhiteList()" class="easyui-linkbutton" iconCls="icon-ok">提交</a>
+    <a href="javascript:closeDialog3()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 </div>
 </body>
 </html>

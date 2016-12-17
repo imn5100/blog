@@ -13,7 +13,7 @@
     <script type="text/javascript" src="/static/ajaxfileupload.js"></script>
     <script type="text/javascript">
         var url;
-        function deleteFile() {
+        function deleteMsg() {
             var selectedRows = $("#dg").datagrid("getSelections");
             if (selectedRows.length == 0) {
                 $.messager.alert("系统提示", "请选择要删除的数据！");
@@ -26,14 +26,16 @@
             var ids = strIds.join(",");
             $.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length + "</font>条数据吗？", function (r) {
                 if (r) {
-                    $.post("/admin/uploadFile/batchDelete.do", {ids: ids}, function (result) {
+                    $.post("/admin/remote/batchDelete.do", {ids: ids}, function (result) {
                         if (result.success) {
-                            $.messager.alert("系统提示", "删除文件成功！");
+                            $.messager.alert("系统提示", "删除任务成功！");
                             $("#dg").datagrid("reload");
                         } else {
-                            $.messager.alert("系统提示", "删除文件失败！");
+                            $.messager.alert("系统提示", "删除任务失败！");
                         }
-                    }, "json");
+                    }, "json").error(function () {
+                        $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+                    });
                 }
             });
         }
@@ -50,14 +52,17 @@
                 "contents": contents,
                 "other": other
             }
-            $.post("/admin/remote/pushMsg.do", params, function (result) {
+            $.post("/admin/remote/pushMsg.do", params, function (result, textstatus, xhr) {
                 if (result == "200") {
                     $.messager.alert("系统提示", "添加成功！");
+                    $("#dg").datagrid("reload");
                     $("#dg").datagrid("reload");
                 } else {
                     $.messager.alert("系统提示", "添加失败！");
                 }
-            }, "json");
+            }, "json").error(function () {
+                $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+            });
             return false;
         }
         function searchMsg() {
@@ -71,7 +76,7 @@
             });
         }
         function formatTime(val, row) {
-            if(val==null){
+            if (val == null) {
                 return ""
             }
             return new Date(val).toLocaleString();
@@ -94,13 +99,16 @@
             if (val == undefined || val == null) {
                 return "";
             } else {
+                if (val.length < 100) {
+                    return val;
+                }
                 detailMap.set(row.id, val);
                 return '<a href="javascript:seeDetail(' + row.id + ')">查看</a>';
             }
         }
         function seeDetail(val) {
-            $("#detail").html(detailMap.get(val));
-            $("#dlg").dialog("open").dialog("setTitle", "远程消息任务其他信息");
+            $("#detail").html("<textarea style='margin: 0px; height: 300px; width: 400px;' readonly='readonly' >" + detailMap.get(val) + "</textarea>");
+            $("#dlg").dialog("open").dialog("setTitle", "详情");
         }
         function openSendMsgDialog() {
             $("#dlg2").dialog("open").dialog("setTitle", "添加远程消息任务");
@@ -123,7 +131,7 @@
         <th field="id" align="center">编号</th>
         <th field="topic" align="center">主题</th>
         <th field="status" formatter="formatStatus" align="center">状态</th>
-        <th field="contents" align="center">执行内容</th>
+        <th field="contents" formatter="formatDetail" align="center">执行内容</th>
         <th field="createTime" align="center" formatter="formatTime">创建时间</th>
         <th field="opTime" align="center" formatter="formatTime">操作时间</th>
         <th field="other" align="center" formatter="formatDetail">其他信息</th>
@@ -133,6 +141,7 @@
 <div id="tb">
     <div>
         <a href="javascript:openSendMsgDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">提交任务</a>
+        <a href="javascript:deleteMsg()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除远程任务消息</a>
 
         <div>
             &nbsp;任务主题：&nbsp;<input type="text" id="searchTopic" size="20"
@@ -170,7 +179,7 @@
 
     </form>
 </div>
-<div id="dlg" class="easyui-dialog" style="width:300px;height:120px;padding: 10px 20px" closed="true">
+<div id="dlg" class="easyui-dialog" style="width:500px;height:500px;padding: 10px 20px" closed="true">
     <div id="detail">
     </div>
 </div>

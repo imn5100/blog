@@ -26,4 +26,6 @@ public interface RemoteMsgService {
     int queryCount(RemoteMsgQuery query);
 
     RemoteMsg consumerMsg(String topic);
+
+    int batchDelete(List<Integer> id);
 }

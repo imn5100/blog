@@ -68,4 +68,9 @@ public class RemoteMsgServiceImpl implements RemoteMsgService {
     public RemoteMsg consumerMsg(String topic) {
         return remoteMsgMapper.consumerMsg(topic);
     }
+
+    @Override
+    public int batchDelete(List<Integer> id) {
+        return remoteMsgMapper.batchDelete(id);
+    }
 }

@@ -23,4 +23,6 @@ public interface RemoteMsgMapper {
     int queryCount(RemoteMsgQuery query);
 
     RemoteMsg consumerMsg(String topic);
+
+    int batchDelete(List<Integer> id);
 }

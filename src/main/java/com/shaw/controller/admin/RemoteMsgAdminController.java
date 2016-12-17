@@ -116,5 +116,21 @@ public class RemoteMsgAdminController {
         }
     }
 
+    @RequestMapping("/batchDelete")
+    public void batchDelete(String ids, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        List<Integer> idList = StringUtil.parseToIntList(ids);
+        if (idList.size() == 0) {
+            result.put("success", true);
+            HttpResponseUtil.write(response, result);
+            return;
+        } else {
+            Integer count = remoteMsgService.batchDelete(idList);
+            result.put("count", count);
+            result.put("success", true);
+            HttpResponseUtil.write(response, result);
+        }
+    }
+
 
 }

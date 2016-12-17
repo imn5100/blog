@@ -55,7 +55,13 @@
         ORDER BY create_time
         limit 1
     </select>
-
+    <delete id="batchDelete" parameterType="List">
+        delete from t_remote_msg WHERE
+        id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_remote_msg
     where id = #{id,jdbcType=INTEGER}

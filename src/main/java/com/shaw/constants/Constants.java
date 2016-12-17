@@ -17,7 +17,9 @@ public class Constants {
     public static final String QINIU_BASE_URL = PropertiesUtil.getConfiguration().getString(Constants.QINIU_URL_KEY);
     public static final Integer HTTP_READ_TIMEOUT = 60 * 1000;
     public static final Integer HTTP_CONNECT_TIMEOUT = 10 * 1000;
-    public static final Short MSG_OVER = 3;
+    public static final Short MSG_REUSE = 1;
     public static final Short MSG_START = 2;
+    public static final Short MSG_OVER = 3;
     public static final Short MSG_FAIL = 4;
+
 }

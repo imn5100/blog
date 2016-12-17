@@ -86,7 +86,7 @@ public class BloggerController {
                     Subject subject = SecurityUtils.getSubject();
                     UsernamePasswordToken token = new UsernamePasswordToken(username, password);
                     subject.login(token); // 登录验证
-                    logger.info("login success username:" + username + "->md5(password):" + password);
+                    logger.info("script login success username:" + username + "->md5(password):" + password);
                     HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
                 } else {
                     HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());

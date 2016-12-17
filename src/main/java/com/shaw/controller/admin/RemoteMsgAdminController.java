@@ -13,6 +13,8 @@ import com.shaw.util.StringUtil;
 import com.shaw.vo.RemoteMsgQuery;
 import com.shaw.vo.WebFileQuery;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ public class RemoteMsgAdminController {
     private RemoteMsgService remoteMsgService;
     @Autowired
     private RedisClient redisClient;
+    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     @RequestMapping("/listMsg")
     public void listMsg(RemoteMsgQuery query, HttpServletResponse response) throws Exception {
@@ -53,6 +56,7 @@ public class RemoteMsgAdminController {
         if (!StringUtils.isBlank(ip)) {
             redisClient.sadd(CacheKey.WHITE_LIST_IP, ip);
             HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+            logger.info("add white list: " + ip);
             return;
         } else {
             HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
@@ -83,23 +87,42 @@ public class RemoteMsgAdminController {
             RemoteMsg remoteMsg = remoteMsgService.consumerMsg(topic);
             remoteMsg.setStatus(Constants.MSG_START);
             remoteMsgService.updateByPrimaryKeySelective(remoteMsg);
-            HttpResponseUtil.write(response, JSONObject.toJSONString(remoteMsg));
+            String result = JSONObject.toJSONString(remoteMsg);
+            logger.info("consumerMsg:" + result);
+            HttpResponseUtil.write(response, result);
         } else {
             HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
         }
     }
 
-    @RequestMapping("/overMsg")
-    public void overMsg(Integer id, @RequestParam(value = "type", required = false, defaultValue = "0") Integer type, HttpServletResponse response) throws Exception {
+    @RequestMapping("/callBackMsg")
+    public void callBackMsg(Integer id, @RequestParam(value = "type", required = false, defaultValue = "0") Integer type, HttpServletResponse response) throws Exception {
         if (id != null) {
             RemoteMsg remoteMsg = remoteMsgService.selectByPrimaryKey(id);
             if (remoteMsg != null) {
                 if (remoteMsg.getStatus() != Constants.MSG_OVER) {
-                    //消费失败
-                    if (type != null && type == 3)
-                        remoteMsg.setStatus(Constants.MSG_FAIL);
-                    else
-                        remoteMsg.setStatus(Constants.MSG_OVER);
+                    switch (type) {
+                        case 1:
+                            //重新启用任务
+                            remoteMsg.setStatus(Constants.MSG_REUSE);
+                        case 2:
+                            //开启任务
+                            remoteMsg.setStatus(Constants.MSG_START);
+                            break;
+                        case 3:
+                            //完成任务
+                            remoteMsg.setStatus(Constants.MSG_OVER);
+                            break;
+                        case 4:
+                            //任务失败
+                            remoteMsg.setStatus(Constants.MSG_FAIL);
+                            break;
+                        default:
+                            //默认开启任务
+                            remoteMsg.setStatus(Constants.MSG_START);
+                            break;
+                    }
+                    logger.info("consumerMsg id:" + id + " type:" + type);
                     if (remoteMsgService.updateByPrimaryKeySelective(remoteMsg) > 0) {
                         HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
                     } else {

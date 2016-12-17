@@ -11,6 +11,10 @@ public class RemoteMsg {
 
     private String other;
 
+    private Long createTime;
+
+    private Long opTime;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +53,21 @@ public class RemoteMsg {
 
     public void setOther(String other) {
         this.other = other == null ? null : other.trim();
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getOpTime() {
+        return opTime;
+    }
+
+    public void setOpTime(Long opTime) {
+        this.opTime = opTime;
     }
 }

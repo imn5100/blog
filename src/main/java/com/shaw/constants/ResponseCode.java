@@ -6,8 +6,11 @@ package com.shaw.constants;
 public enum ResponseCode {
     SUCCESS(200, "操作成功"),
     PARAM_NULL(400, "参数为空"),
+    FAIL(600, "操作失败"),
     CODES_WRONG(601, "验证码错误"),
     IP_WRONG(602, "IP验证无效"),
+    ID_WRONG(603, "ID无效"),
+    MSG_OVER(604, "消息已结束"),
     LOGIN_WRONG(999, "账号或密码错误"),
     PARAM_NOT_FORMAT(1001, "参数格式错误");
 

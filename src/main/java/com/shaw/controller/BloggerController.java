@@ -7,6 +7,7 @@ import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.HttpRequestUtil;
+import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -76,6 +77,10 @@ public class BloggerController {
     @RequestMapping("/script/login")
     @ResponseBody
     public void scriptLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
+        if (StringUtil.isEmpty(username) || StringUtil.isEmpty(password)) {
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NULL);
+            return;
+        }
         String ip = HttpRequestUtil.getIpAddr(request);
         if (redisClient.sismember(CacheKey.WHITE_LIST_IP, ip)) {
             try {

@@ -53,7 +53,7 @@ public class SystemAdminController {
      */
     @RequestMapping("/refreshSystem")
     public String refreshSystem(HttpServletResponse response, HttpServletRequest request) throws Exception {
-        ServletContext application = RequestContextUtils.getWebApplicationContext(request).getServletContext();
+        ServletContext application = RequestContextUtils.findWebApplicationContext(request).getServletContext();
         systemService.initBlogData(application);
         JSONObject result = new JSONObject();
         result.put("success", true);
@@ -121,7 +121,7 @@ public class SystemAdminController {
      * 得到web日志分析报表html文件列表
      */
     @SuppressWarnings("unchecked")
-	@RequestMapping("getWebLogHtmlList")
+    @RequestMapping("getWebLogHtmlList")
     public String getWebLogHtmlList(HttpServletResponse response) throws Exception {
         List<String> filename = new ArrayList<String>();
         JSONObject result = new JSONObject();

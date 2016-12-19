@@ -43,15 +43,4 @@ public class HttpRequestUtil {
         }
         return ipAddress;
     }
-
-    public static Map<String, String[]> getAllParams(HttpServletRequest request) {
-        Map<String, String[]> map = new HashMap();
-        Enumeration paramNames = request.getParameterNames();
-        while (paramNames.hasMoreElements()) {
-            String paramName = (String) paramNames.nextElement();
-            String[] paramValues = request.getParameterValues(paramName);
-            map.put(paramName, paramValues);
-        }
-        return map;
-    }
 }

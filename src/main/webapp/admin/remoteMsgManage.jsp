@@ -136,6 +136,18 @@
                 "status": status
             });
         }
+        function removeIp(ip) {
+            $.post("/admin/remote/removeWhiteList.do?ip=" + ip, function (result, textstatus, xhr) {
+                if (result == "200") {
+                    $.messager.alert("系统提示", "删除成功！");
+                    closeDialog4()
+                } else {
+                    $.messager.alert("系统提示", "删除失败！");
+                }
+            }, "json").error(function () {
+                $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+            });
+        }
         function formatTime(val, row) {
             if (val == null) {
                 return ""
@@ -177,6 +189,28 @@
         function openDialog3() {
             $("#dlg3").dialog("open").dialog("setTitle", "添加白名单");
         }
+        function openDialog4() {
+            $.post("/admin/remote/whiteList.do", function (result, textstatus, xhr) {
+                if (result.code == 200) {
+                    ip_list = String(result.data).split(",")
+                    str = ""
+                    ip_list.forEach(function (element, index) {
+                        str += "<tr><td>" + String(index + 1) + "</td><td>"
+                        str += String(element)
+                        str += "</td><td>"
+                        str += "<a href=javascript:removeIp('" + String(element) + "')>删除</a></tr>"
+                    })
+                    $("#ipList").html(str)
+                }
+            }, "json").error(function () {
+                $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+            });
+            $("#dlg4").dialog("open").dialog("setTitle", "管理白名单");
+        }
+        function closeDialog4() {
+            $("#dlg4").dialog("close");
+            $("#ipList").html("")
+        }
         function closeDialog2() {
             $("#dlg2").dialog("close");
             $("#topic").val("")
@@ -213,8 +247,9 @@
     <div>
         <a href="javascript:openSendMsgDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">提交消息</a>
         <a href="javascript:openMsgModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑消息</a>
-        <a href="javascript:openDialog3()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加白名单</a>
         <a href="javascript:deleteMsg()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除消息</a>
+        <a href="javascript:openDialog3()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加白名单</a>
+        <a href="javascript:openDialog4()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">管理白名单</a>
 
         <div>
             &nbsp;任务主题：&nbsp;<input type="text" id="searchTopic" size="20"
@@ -301,6 +336,19 @@
             <td><input type="text" id="ip" class="easyui-validatebox" placeholder=""/>
             </td>
         </tr>
+    </table>
+</div>
+<div id="dlg4" class="easyui-dialog" style="width:250%;height:250%;padding: 5px 5px" closed="true">
+    <table border="1">
+        <thead>
+        <tr>
+            <td>编号</td>
+            <td>IP</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody id="ipList">
+        </tbody>
     </table>
 </div>
 <div id="dlg" class="easyui-dialog" style="width:500px;height:500px;padding: 10px 20px" closed="true">

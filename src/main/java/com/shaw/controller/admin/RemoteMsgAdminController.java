@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by shaw on 2016/12/17 0017.
@@ -59,6 +60,24 @@ public class RemoteMsgAdminController {
         } else {
             HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
         }
+    }
+
+    @RequestMapping("/removeWhiteList")
+    public void removeWhiteList(String ip, HttpServletResponse response) throws Exception {
+        if (!StringUtils.isBlank(ip)) {
+            redisClient.srem(CacheKey.WHITE_LIST_IP, ip);
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+            logger.info("remove white list: " + ip);
+            return;
+        } else {
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+        }
+    }
+
+    @RequestMapping("/whiteList")
+    public void addWhiteList(HttpServletResponse response) throws Exception {
+        Set<Object> wipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
+        HttpResponseUtil.writeUseData(response, wipList, ResponseCode.SUCCESS);
     }
 
     @RequestMapping("/pushMsg")

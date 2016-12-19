@@ -79,6 +79,19 @@ public class RemoteMsgAdminController {
         }
     }
 
+    @RequestMapping("/updateMsg")
+    public void updateMsg(RemoteMsg remoteMsg, HttpServletResponse response) throws Exception {
+        if (remoteMsg != null && remoteMsg.getId() != null && StringUtil.isNotEmpty(remoteMsg.getContents()) && StringUtil.isNotEmpty(remoteMsg.getTopic())) {
+            if (remoteMsgService.updateByPrimaryKeySelective(remoteMsg) > 0) {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+            } else {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+            }
+        } else {
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+        }
+    }
+
     @RequestMapping("/batchDelete")
     public void batchDelete(String ids, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -114,7 +127,7 @@ public class RemoteMsgAdminController {
                     HttpResponseUtil.writeUseData(response, remoteMsg, ResponseCode.SUCCESS);
                 }
             } catch (Exception e) {
-                HttpResponseUtil.writeCode(response,ResponseCode.FAIL);
+                HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
             }
         } else {
             HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());

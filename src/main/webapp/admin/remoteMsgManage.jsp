@@ -65,6 +65,46 @@
             });
             return false;
         }
+        function openMsgModifyDialog() {
+            var selectedRows = $("#dg").datagrid("getSelections");
+            if (selectedRows.length != 1) {
+                $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+                return;
+            }
+            var row = selectedRows[0];
+            $("#dlg_u").dialog("open").dialog("setTitle", "编辑远程消息任务信息");
+            $("#fm_u").form("load", row);
+        }
+        function updateMsg() {
+            var id = $("#id").val();
+            var topic = $("#topic_u").val();
+            var contents = $("#contents_u").val();
+            var other = $("#other_u").val();
+            var status = $("#status_u").val();
+            if (id == null || id == "" || status == null || status == "" || topic == null || topic == "" || contents == null || contents == "") {
+                $.messager.alert("系统提示", "请填写必要内容！");
+                return;
+            }
+            params = {
+                "id": id,
+                "topic": topic,
+                "contents": contents,
+                "other": other,
+                "status": status
+            }
+            $.post("/admin/remote/updateMsg.do", params, function (result, textstatus, xhr) {
+                if (result == "200") {
+                    $.messager.alert("系统提示", "更新成功！");
+                    closeDialog_u()
+                    $("#dg").datagrid("reload");
+                } else {
+                    $.messager.alert("系统提示", "更新失败！");
+                }
+            }, "json").error(function () {
+                $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
+            });
+            return false;
+        }
         function addWhiteList() {
             var ip = $("#ip").val();
             if (ip == null || ip == "") {
@@ -147,6 +187,9 @@
             $("#dlg3").dialog("close");
             $("#ip").val("")
         }
+        function closeDialog_u() {
+            $("#dlg_u").dialog("close");
+        }
     </script>
 </head>
 <body style="margin: 1px">
@@ -168,15 +211,16 @@
 </table>
 <div id="tb">
     <div>
-        <a href="javascript:openSendMsgDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">提交任务</a>
+        <a href="javascript:openSendMsgDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">提交消息</a>
+        <a href="javascript:openMsgModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑消息</a>
         <a href="javascript:openDialog3()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加白名单</a>
-        <a href="javascript:deleteMsg()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除远程任务消息</a>
+        <a href="javascript:deleteMsg()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除消息</a>
 
         <div>
             &nbsp;任务主题：&nbsp;<input type="text" id="searchTopic" size="20"
                                     onkeydown="if(event.keyCode==13) searchMsg()"/>
             <select id="status">
-                <option value="0" selected="selected">请选择任务状态</option>
+                <option value="0" selected="selected">请选择消息状态</option>
                 <option value="1">提交</option>
                 <option value="2">开始</option>
                 <option value="3">完成</option>
@@ -198,7 +242,8 @@
             <tr>
                 <td>内容：</td>
                 <td><textarea id="contents"
-                              style="margin: 0px; height: 200px; width: 400px;"></textarea></td>
+                              style="margin: 0px; height: 200px; width: 400px;" class="easyui-validatebox"></textarea>
+                </td>
             </tr>
             <tr>
                 <td>附加内容：</td>
@@ -206,6 +251,46 @@
             </tr>
         </table>
 
+    </form>
+</div>
+<div id="dlg_u" class="easyui-dialog" style="width:500%;height:550%;padding: 5px 5px"
+     closed="true" buttons="#dlg_u-buttons">
+    <form id="fm_u" method="post">
+        <table cellspacing="8px">
+            <tr>
+                <td>ID：</td>
+                <td><input type="text" id="id" name="id" class="easyui-validatebox" required="true"
+                           readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>主题：</td>
+                <td><input type="text" id="topic_u" name="topic" class="easyui-validatebox" required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>内容：</td>
+                <td><textarea id="contents_u" name="contents" class="easyui-validatebox" required="true"
+                              style="margin: 0px; height: 200px; width: 400px;"></textarea></td>
+            </tr>
+            <tr>
+                <td>附加内容：</td>
+                <td><textarea id="other_u" name="other" style="margin: 0px; height: 100px; width: 400px;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    消息状态
+                </td>
+                <td>
+                    <select id="status_u" name="status">
+                        <option value="1">提交</option>
+                        <option value="2">开始</option>
+                        <option value="3">完成</option>
+                        <option value="4">失败</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 <div id="dlg3" class="easyui-dialog" style="width:300%;height:150%;padding: 5px 5px"
@@ -229,6 +314,10 @@
 <div id="dlg3-buttons">
     <a href="javascript:addWhiteList()" class="easyui-linkbutton" iconCls="icon-ok">提交</a>
     <a href="javascript:closeDialog3()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+<div id="dlg_u-buttons">
+    <a href="javascript:updateMsg()" class="easyui-linkbutton" iconCls="icon-ok">更改</a>
+    <a href="javascript:closeDialog_u()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 </div>
 </body>
 </html>

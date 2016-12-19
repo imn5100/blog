@@ -58,7 +58,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("refresh System success");
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -83,7 +83,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("refresh lucene index success");
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -97,7 +97,7 @@ public class SystemAdminController {
             JSONObject result = new JSONObject();
             result.put("success", false);
             logger.warn("resetSummary fail,warming length:" + length);
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
             return null;
         }
         for (Blog blog : blogs) {
@@ -113,7 +113,7 @@ public class SystemAdminController {
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("resetSummary success");
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -131,7 +131,7 @@ public class SystemAdminController {
             filename = (List<String>) redisClient.get(CacheKey.WEB_LOGS_NAME_LIST_KEY);
             if (CollectionUtils.isNotEmpty(filename)) {
                 result.put("data", filename);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
                 return null;
             }
         }
@@ -158,7 +158,7 @@ public class SystemAdminController {
         redisClient.set(CacheKey.WEB_LOGS_NAME_LIST_KEY, filename);
         redisClient.expire(CacheKey.WEB_LOGS_NAME_LIST_KEY, CacheKey.WEB_LOGS_NAME_LIST_EXPIRE);
         result.put("data", filename);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -175,7 +175,7 @@ public class SystemAdminController {
         if (redisClient.exists(key)) {  //是否缓存，缓存存在则直接返回缓存。
             String data = (String) redisClient.get(key);
             if (StringUtils.isNotBlank(data)) {
-                HttpResponseUtil.write(response, data);
+                HttpResponseUtil.writeJsonStr(response, data);
                 return null;
             }
         }
@@ -184,9 +184,9 @@ public class SystemAdminController {
         if (StringUtils.isNotBlank(data)) {
             redisClient.set(key, data);
             redisClient.expire(key, CacheKey.WEB_LOGS_HTML_EXPIRE);
-            HttpResponseUtil.write(response, data);
+            HttpResponseUtil.writeJsonStr(response, data);
         } else {
-            HttpResponseUtil.write(response, "File not exists!");
+            HttpResponseUtil.writeJsonStr(response, "File not exists!");
         }
         return null;
     }

@@ -55,7 +55,7 @@ public class BloggerAdminController {
             result.put("success", false);
         }
         logger.info("update blogger success");
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -65,7 +65,7 @@ public class BloggerAdminController {
     @RequestMapping("/find")
     public String find(HttpServletResponse response) throws Exception {
         Blogger blogger = bloggerService.find();
-        HttpResponseUtil.write(response, JSONObject.toJSONString(blogger));
+        HttpResponseUtil.writeJsonStr(response, JSONObject.toJSONString(blogger));
         return null;
     }
 
@@ -84,7 +84,7 @@ public class BloggerAdminController {
             result.put("success", false);
         }
         logger.info("modify password success,md5 newPassword:" + newPassword);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 

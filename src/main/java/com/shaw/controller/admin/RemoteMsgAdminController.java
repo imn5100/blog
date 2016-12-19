@@ -2,7 +2,6 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.RemoteMsg;
-import com.shaw.bo.UploadFile;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
 import com.shaw.constants.ResponseCode;
@@ -11,7 +10,6 @@ import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.vo.RemoteMsgQuery;
-import com.shaw.vo.WebFileQuery;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,18 +46,18 @@ public class RemoteMsgAdminController {
             result.put("rows", list);
             result.put("total", count);
         }
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
     }
 
     @RequestMapping("/addWhiteList")
     public void addWhiteList(String ip, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(ip)) {
             redisClient.sadd(CacheKey.WHITE_LIST_IP, ip);
-            HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
             logger.info("add white list: " + ip);
             return;
         } else {
-            HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
         }
     }
 
@@ -72,26 +70,54 @@ public class RemoteMsgAdminController {
             if (other != null)
                 remoteMsg.setOther(other);
             if (remoteMsgService.insert(remoteMsg) > 0) {
-                HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
             } else {
-                HttpResponseUtil.write(response, ResponseCode.FAIL.getCode());
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
             }
         } else {
-            HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
         }
     }
 
+    @RequestMapping("/batchDelete")
+    public void batchDelete(String ids, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        List<Integer> idList = StringUtil.parseToIntList(ids);
+        if (idList.size() == 0) {
+            result.put("success", true);
+            HttpResponseUtil.writeJsonStr(response, result);
+            return;
+        } else {
+            Integer count = remoteMsgService.batchDelete(idList);
+            result.put("count", count);
+            result.put("success", true);
+            HttpResponseUtil.writeJsonStr(response, result);
+        }
+    }
+
+    /////内部接口完毕，以下为对外接口///////////////////
+
+    /**
+     *
+     * */
     @RequestMapping("/consumerMsg")
     public void consumerMsg(String topic, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(topic)) {
-            RemoteMsg remoteMsg = remoteMsgService.consumerMsg(topic);
-            remoteMsg.setStatus(Constants.MSG_START);
-            remoteMsgService.updateByPrimaryKeySelective(remoteMsg);
-            String result = JSONObject.toJSONString(remoteMsg);
-            logger.info("consumerMsg:" + result);
-            HttpResponseUtil.write(response, result);
+            try {
+                RemoteMsg remoteMsg = remoteMsgService.consumerMsg(topic);
+                if (remoteMsg == null) {
+                    HttpResponseUtil.writeCode(response, ResponseCode.FIND_NULL);
+                } else {
+                    remoteMsg.setStatus(Constants.MSG_START);
+                    remoteMsgService.updateByPrimaryKeySelective(remoteMsg);
+                    logger.info("consumerMsg:" + remoteMsg);
+                    HttpResponseUtil.writeUseData(response, remoteMsg, ResponseCode.SUCCESS);
+                }
+            } catch (Exception e) {
+                HttpResponseUtil.writeCode(response,ResponseCode.FAIL);
+            }
         } else {
-            HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
         }
     }
 
@@ -124,36 +150,18 @@ public class RemoteMsgAdminController {
                     }
                     logger.info("consumerMsg id:" + id + " type:" + type);
                     if (remoteMsgService.updateByPrimaryKeySelective(remoteMsg) > 0) {
-                        HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+                        HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
                     } else {
-                        HttpResponseUtil.write(response, ResponseCode.FAIL.getCode());
+                        HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
                     }
                 } else {
-                    HttpResponseUtil.write(response, ResponseCode.MSG_OVER.getCode());
+                    HttpResponseUtil.writeCode(response, ResponseCode.MSG_OVER);
                 }
             } else {
-                HttpResponseUtil.write(response, ResponseCode.ID_WRONG.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.ID_WRONG);
             }
         } else {
-            HttpResponseUtil.write(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
         }
     }
-
-    @RequestMapping("/batchDelete")
-    public void batchDelete(String ids, HttpServletResponse response) throws Exception {
-        JSONObject result = new JSONObject();
-        List<Integer> idList = StringUtil.parseToIntList(ids);
-        if (idList.size() == 0) {
-            result.put("success", true);
-            HttpResponseUtil.write(response, result);
-            return;
-        } else {
-            Integer count = remoteMsgService.batchDelete(idList);
-            result.put("count", count);
-            result.put("success", true);
-            HttpResponseUtil.write(response, result);
-        }
-    }
-
-
 }

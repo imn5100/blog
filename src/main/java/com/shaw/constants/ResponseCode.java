@@ -5,6 +5,7 @@ package com.shaw.constants;
  */
 public enum ResponseCode {
     SUCCESS(200, "操作成功"),
+    FIND_NULL(201, "查询为空"),
     PARAM_NULL(400, "参数为空"),
     FAIL(600, "操作失败"),
     CODES_WRONG(601, "验证码错误"),

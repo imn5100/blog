@@ -1,6 +1,8 @@
 package com.shaw.bo;
 
-public class RemoteMsg {
+import java.io.Serializable;
+
+public class RemoteMsg implements Serializable {
     private Integer id;
 
     private String topic;
@@ -69,5 +71,18 @@ public class RemoteMsg {
 
     public void setOpTime(Long opTime) {
         this.opTime = opTime;
+    }
+
+    @Override
+    public String toString() {
+        return "RemoteMsg{" +
+                "id=" + id +
+                ", topic='" + topic + '\'' +
+                ", status=" + status +
+                ", contents='" + contents + '\'' +
+                ", other='" + other + '\'' +
+                ", createTime=" + createTime +
+                ", opTime=" + opTime +
+                '}';
     }
 }

@@ -36,7 +36,7 @@ public class LinkAdminController {
         JSONObject result = new JSONObject();
         result.put("rows", linkList);
         result.put("total", total);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -57,7 +57,7 @@ public class LinkAdminController {
         } else {
             result.put("success", false);
         }
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -72,7 +72,7 @@ public class LinkAdminController {
         }
         JSONObject result = new JSONObject();
         result.put("success", true);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 }

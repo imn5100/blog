@@ -49,7 +49,7 @@ public class WebFileAdminController {
         }
         result.put("rows", list);
         result.put("total", list.size());
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -65,10 +65,10 @@ public class WebFileAdminController {
                 result.put("success", true);
                 result.put("url", uploadFile.getUrl());
                 result.put("filename", filename);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             } else {
                 result.put("success", false);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             }
         }
     }
@@ -81,10 +81,10 @@ public class WebFileAdminController {
             if (uploadFile != null) {
                 result.put("success", true);
                 result.put("uploadFile", uploadFile);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             } else {
                 result.put("success", false);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             }
         }
     }
@@ -96,15 +96,15 @@ public class WebFileAdminController {
         if (idsStr.length > 0) {
             if (uploadFileService.batchDeleteQiniuFile(idsStr)) {
                 result.put("success", true);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             } else {
                 result.put("success", false);
-                HttpResponseUtil.write(response, result);
+                HttpResponseUtil.writeJsonStr(response, result);
             }
         } else {
             result.put("success", false);
             result.put("msg", "删除key传参错误");
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
         }
     }
 }

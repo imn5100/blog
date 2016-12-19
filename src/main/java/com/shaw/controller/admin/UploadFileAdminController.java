@@ -41,7 +41,7 @@ public class UploadFileAdminController {
             result.put("rows", list);
             result.put("total", count);
         }
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
     }
 
     /**
@@ -53,13 +53,13 @@ public class UploadFileAdminController {
         List<Integer> idList = StringUtil.parseToIntList(ids);
         if (idList.size() == 0) {
             result.put("success", true);
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
             return;
         } else {
             Integer count = uploadFileService.updateValid(idList, (valid == null || valid != 2) ? false : true);
             result.put("count", count);
             result.put("success", true);
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
         }
     }
 
@@ -69,13 +69,13 @@ public class UploadFileAdminController {
         List<Integer> idList = StringUtil.parseToIntList(ids);
         if (idList.size() == 0) {
             result.put("success", true);
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
             return;
         } else {
             Integer count = uploadFileService.batchDelete(idList);
             result.put("count", count);
             result.put("success", true);
-            HttpResponseUtil.write(response, result);
+            HttpResponseUtil.writeJsonStr(response, result);
         }
     }
 

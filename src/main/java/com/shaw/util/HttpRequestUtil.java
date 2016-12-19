@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by shaw on 2016/12/17 0017.
  */
-public class RequestUtil {
+public class HttpRequestUtil {
     public static String getHeader(HttpServletRequest request, String headName) {
         String value = request.getHeader(headName);
         return !StringUtils.isBlank(value) && !"unknown".equalsIgnoreCase(value) ? value : "";

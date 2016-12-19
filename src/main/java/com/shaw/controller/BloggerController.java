@@ -6,8 +6,7 @@ import com.shaw.constants.ResponseCode;
 import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
-import com.shaw.util.RequestUtil;
-import com.sun.tools.javac.util.List;
+import com.shaw.util.HttpRequestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -47,12 +46,12 @@ public class BloggerController {
     public String login(HttpSession session, HttpServletResponse response, String username, String password,
                         String vcode) throws Exception {
         if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(vcode)) {
-            HttpResponseUtil.write(response, ResponseCode.PARAM_NULL.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NULL.getCode());
         }
         String key = String.format(CacheKey.CODES_KEY, session.getId());
         String code = (String) redisClient.get(key);
         if (StringUtils.isBlank(code) || !vcode.equalsIgnoreCase(code)) {
-            HttpResponseUtil.write(response, ResponseCode.CODES_WRONG.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.CODES_WRONG.getCode());
             return null;
         } else {
             redisClient.del(key);
@@ -63,13 +62,13 @@ public class BloggerController {
                 Subject subject = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
                 subject.login(token); // 登录验证
-                logger.info("login success username:" + username + "->md5(password):" + password);
-                HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+                logger.info("login success username:" + username);
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
             } else {
-                HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
             }
         } catch (AuthenticationException e) {
-            HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
         }
         return null;
     }
@@ -77,7 +76,7 @@ public class BloggerController {
     @RequestMapping("/script/login")
     @ResponseBody
     public void scriptLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
-        String ip = RequestUtil.getIpAddr(request);
+        String ip = HttpRequestUtil.getIpAddr(request);
         Set<Object> ipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
         if (ipList != null && ipList.size() > 0 && ipList.contains(ip)) {
             try {
@@ -86,16 +85,16 @@ public class BloggerController {
                     Subject subject = SecurityUtils.getSubject();
                     UsernamePasswordToken token = new UsernamePasswordToken(username, password);
                     subject.login(token); // 登录验证
-                    logger.info("script login success username:" + username + "->md5(password):" + password);
-                    HttpResponseUtil.write(response, ResponseCode.SUCCESS.getCode());
+                    logger.info("script login success username:" + username);
+                    HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
                 } else {
-                    HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+                    HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
                 }
             } catch (AuthenticationException e) {
-                HttpResponseUtil.write(response, ResponseCode.LOGIN_WRONG.getCode());
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
             }
         } else {
-            HttpResponseUtil.write(response, ResponseCode.IP_WRONG.getCode());
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.IP_WRONG.getCode());
         }
     }
 

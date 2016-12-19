@@ -52,7 +52,7 @@ public class BlogAdminController {
         } else {
             result.put("success", false);
         }
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -71,7 +71,7 @@ public class BlogAdminController {
         JSONObject result = new JSONObject();
         result.put("rows", blogList);
         result.put("total", total);
-        HttpResponseUtil.write(response, result.toJSONString());
+        HttpResponseUtil.writeJsonStr(response, result.toJSONString());
         return null;
     }
 
@@ -87,7 +87,7 @@ public class BlogAdminController {
         }
         JSONObject result = new JSONObject();
         result.put("success", true);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -97,7 +97,7 @@ public class BlogAdminController {
     @RequestMapping("/findById")
     public String findById(@RequestParam(value = "id") String id, HttpServletResponse response) throws Exception {
         Blog blog = blogService.findById(Integer.parseInt(id));
-        HttpResponseUtil.write(response, JSONObject.toJSONString(blog));
+        HttpResponseUtil.writeJsonStr(response, JSONObject.toJSONString(blog));
         return null;
     }
 

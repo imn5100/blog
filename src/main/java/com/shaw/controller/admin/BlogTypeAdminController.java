@@ -41,7 +41,7 @@ public class BlogTypeAdminController {
         JSONObject result = new JSONObject();
         result.put("rows", blogTypeList);
         result.put("total", total);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -62,7 +62,7 @@ public class BlogTypeAdminController {
         } else {
             result.put("success", false);
         }
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 
@@ -81,7 +81,7 @@ public class BlogTypeAdminController {
             }
         }
         result.put("success", true);
-        HttpResponseUtil.write(response, result);
+        HttpResponseUtil.writeJsonStr(response, result);
         return null;
     }
 }

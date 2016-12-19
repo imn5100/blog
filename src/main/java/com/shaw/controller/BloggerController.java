@@ -77,8 +77,7 @@ public class BloggerController {
     @ResponseBody
     public void scriptLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
         String ip = HttpRequestUtil.getIpAddr(request);
-        Set<Object> ipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
-        if (ipList != null && ipList.size() > 0 && ipList.contains(ip)) {
+        if (redisClient.sismember(CacheKey.WHITE_LIST_IP, ip)) {
             try {
                 Blogger blogger = bloggerService.getByUserName(username);
                 if (blogger != null && blogger.getPassword().equals(password)) {
@@ -88,13 +87,13 @@ public class BloggerController {
                     logger.info("script login success username:" + username);
                     HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
                 } else {
-                    HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
+                    HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_WRONG);
                 }
             } catch (AuthenticationException e) {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.LOGIN_WRONG.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_WRONG);
             }
         } else {
-            HttpResponseUtil.writeJsonStr(response, ResponseCode.IP_WRONG.getCode());
+            HttpResponseUtil.writeCode(response, ResponseCode.IP_WRONG);
         }
     }
 

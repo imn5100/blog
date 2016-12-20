@@ -1,5 +1,6 @@
 package com.shaw.listener;
 
+import com.shaw.constants.CacheKey;
 import com.shaw.service.SystemService;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +27,7 @@ public class InitComponent implements ServletContextListener, ApplicationContext
         ServletContext application = servletContextEvent.getServletContext();
         SystemService systemService = (SystemService) applicationContext.getBean("systemService");
         systemService.initBlogData(application);
+        application.setAttribute(CacheKey.SYSTEM_REFRESH_TIME, System.currentTimeMillis());
     }
 
     @Override

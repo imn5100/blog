@@ -54,7 +54,10 @@ public class SystemAdminController {
     @RequestMapping("/refreshSystem")
     public String refreshSystem(HttpServletResponse response, HttpServletRequest request) throws Exception {
         ServletContext application = RequestContextUtils.findWebApplicationContext(request).getServletContext();
+        Long timestamp = new Long(System.currentTimeMillis());
+        redisClient.set(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
         systemService.initBlogData(application);
+        application.setAttribute(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
         JSONObject result = new JSONObject();
         result.put("success", true);
         logger.info("refresh System success");

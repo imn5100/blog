@@ -44,6 +44,14 @@ public class CacheKey {
      **/
     public static final Long WEB_LOGS_NAME_LIST_EXPIRE = 60 * 60L;
 
+    /**
+     * 远程任务消息白名单缓存
+     */
     public static final String WHITE_LIST_IP = "remoteMsg:White_list";
+
+    /**
+     * 刷新系统缓存时间戳
+     */
+    public static final String SYSTEM_REFRESH_TIME = "system:refresh_time";
 
 }

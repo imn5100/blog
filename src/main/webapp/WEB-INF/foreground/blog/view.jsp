@@ -3,16 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <meta name="keywords" content="${blog.keyWord}"/>
-<script type="text/javascript"
-        src="/static/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
-<%--<script type="text/javascript"--%>
-        <%--src="/static/ueditor/third-party/SyntaxHighlighter/brush.js"></script>--%>
-<link rel="stylesheet"
-      href="/static/ueditor/third-party/SyntaxHighlighter/shCoreRDark.css">
 <link rel="stylesheet" href="/static/css/embed.default.css">
+<script type="text/javascript" src="/static/ueditor/ueditor.parse.js"></script>
 <script type="text/javascript">
-    SyntaxHighlighter.config.bloggerMode = true;
-    SyntaxHighlighter.all();
+    setTimeout(function () {
+        uParse('.blog_content',
+                {
+                    'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
+                    'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreRDark.css'
+                })
+    }, 100);
     var duoshuoQuery = {short_name: "shawblog", theme: "none"};
     (function () {
         var ds = document.createElement('script');
@@ -101,4 +101,3 @@
         <div class="ds-share-aside-toggle">分享到</div>
     </div>
 </div>
-

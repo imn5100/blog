@@ -36,10 +36,10 @@ public class BloggerAdminController {
     @RequestMapping("/save")
     public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (imageFile != null && !imageFile.isEmpty()) {
+            //将头像上传至 七牛，并获取返回的url
             UploadFile uploadFile = uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
-//            String filePath = request.getServletContext().getRealPath("/");
-//            String imageName = TimeUtils.getCurrentDateStr() + "." + imageFile.getOriginalFilename().split("\\.")[1];
-//            imageFile.transferTo(new File(filePath + "/static/userImages/" + imageName));
+            //将头像上传至smms 图库，返回URL
+//            UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
             blogger.setImageName(uploadFile.getUrl());
         } else {
             if (StringUtil.isNotEmpty(imageUrl)) {

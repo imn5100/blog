@@ -73,7 +73,7 @@
         <tr>
             <td valign="top">博客内容：</td>
             <td>
-                <script id="editor" type="text/plain" style="width:650px;height:750px;"></script>
+                <script id="editor" type="text/plain" style="width:690px;height:750px;"></script>
             </td>
         </tr>
         <tr>

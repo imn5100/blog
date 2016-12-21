@@ -178,8 +178,6 @@
                data-options="plain:true,iconCls:'icon-writeblog'" style="width: 150px;">写博客</a>
             <a href="javascript:openTab('博客信息管理','blogManage.jsp','icon-bkgl')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-bkgl'" style="width: 150px;">博客信息管理</a>
-        </div>
-        <div title="博客类别管理" data-options="iconCls:'icon-bklb'" style="padding:10px">
             <a href="javascript:openTab('博客类别信息管理','blogTypeManage.jsp','icon-bklb')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">博客类别信息管理</a>
         </div>

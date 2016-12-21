@@ -1,5 +1,6 @@
 package com.shaw.controller;
 
+import com.shaw.annotation.IpPassport;
 import com.shaw.bo.Blogger;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.ResponseCode;
@@ -76,29 +77,25 @@ public class BloggerController {
 
     @RequestMapping("/script/login")
     @ResponseBody
+    @IpPassport
     public void scriptLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
         if (StringUtil.isEmpty(username) || StringUtil.isEmpty(password)) {
             HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NULL);
             return;
         }
-        String ip = HttpRequestUtil.getIpAddr(request);
-        if (redisClient.sismember(CacheKey.WHITE_LIST_IP, ip)) {
-            try {
-                Blogger blogger = bloggerService.getByUserName(username);
-                if (blogger != null && blogger.getPassword().equals(password)) {
-                    Subject subject = SecurityUtils.getSubject();
-                    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-                    subject.login(token); // 登录验证
-                    logger.info("script login success username:" + username);
-                    HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
-                } else {
-                    HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_WRONG);
-                }
-            } catch (AuthenticationException e) {
+        try {
+            Blogger blogger = bloggerService.getByUserName(username);
+            if (blogger != null && blogger.getPassword().equals(password)) {
+                Subject subject = SecurityUtils.getSubject();
+                UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+                subject.login(token); // 登录验证
+                logger.info("script login success username:" + username);
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+            } else {
                 HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_WRONG);
             }
-        } else {
-            HttpResponseUtil.writeCode(response, ResponseCode.IP_WRONG);
+        } catch (AuthenticationException e) {
+            HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_WRONG);
         }
     }
 

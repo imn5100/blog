@@ -31,6 +31,10 @@
             <!--分布式环境下查看application中的缓存数据过期处理-->
             <bean id="blogDataInterceptor" class="com.shaw.handler.BlogDataInterceptor"></bean>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/script/**"/>
+            <bean class="com.shaw.handler.IpPassportInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
     <!-- 使用注解的包，包括子集 -->
     <context:component-scan base-package="com.shaw.controller"/>

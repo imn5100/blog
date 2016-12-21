@@ -1,6 +1,7 @@
 package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shaw.annotation.IpPassport;
 import com.shaw.bo.RemoteMsg;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
@@ -132,7 +133,8 @@ public class RemoteMsgAdminController {
     /**
      *
      * */
-    @RequestMapping("/consumerMsg")
+    @IpPassport
+    @RequestMapping("/script/consumerMsg")
     public void consumerMsg(String topic, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(topic)) {
             try {
@@ -153,7 +155,8 @@ public class RemoteMsgAdminController {
         }
     }
 
-    @RequestMapping("/callBackMsg")
+    @IpPassport
+    @RequestMapping("/script/callbackMsg")
     public void callBackMsg(Integer id, @RequestParam(value = "type", required = false, defaultValue = "0") Integer type, HttpServletResponse response) throws Exception {
         if (id != null) {
             RemoteMsg remoteMsg = remoteMsgService.selectByPrimaryKey(id);

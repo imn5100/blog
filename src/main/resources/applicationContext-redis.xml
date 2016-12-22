@@ -37,7 +37,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
         <property name="timeout" value="${redis.timeout}"></property>
     </bean>
 
-    <!--针对对象的序redis 模板-->
+    <!--针对对象序列化的redis 操作模板-->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
         <property name="keySerializer">
@@ -48,7 +48,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
         </property>
     </bean>
 
-    <!--针对 原始数据的 redis 模板-->
+    <!--针对 原始数据（String）的 redis 模板-->
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
         <property name="keySerializer">

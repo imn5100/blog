@@ -19,11 +19,7 @@ public class CacheAop {
     /**
      * 对搜索业务进行aop处理，避免频繁搜索
      */
-    @Pointcut("execution(public * com.shaw.lucene.BlogIndex.searchBlog(..))")
-    public void actionMethod() {
-    }
-
-    @Around("actionMethod()")
+    @Around("execution(public * com.shaw.lucene.BlogIndex.searchBlog(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object value = null;
         String targetName = pjp.getTarget().getClass().getName();

@@ -1,17 +1,14 @@
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
-import java.nio.channels.Channel;
 import java.nio.channels.FileChannel;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -299,8 +296,9 @@ public class Downloader extends Observable {
 
     public static void main(String[] args) throws Exception {
         long start = System.currentTimeMillis();
-        String url = "http://i3.pixiv.net/img-original/img/2016/12/24/01/00/01/60514190_p0.png";
+        String url = "http://i2.pixiv.net/img-original/img/2016/12/26/12/33/55/60570189_p0.jpg";
         String savePath = "D:/";
+
         GetMethod method = new GetMethod(url);
         method.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36");
         method.setRequestHeader("Referer", "http://spapi.pixiv.net/");
@@ -309,21 +307,16 @@ public class Downloader extends Observable {
         clientParams.setConnectionManagerTimeout(5000);
         HttpClient client = new HttpClient(clientParams);
         client.executeMethod(method);
+        System.out.println("GetFile from web:" + (System.currentTimeMillis() - start));
         InputStream is = method.getResponseBodyAsStream();
         File file = new File(savePath);
         if (!file.exists()) file.mkdirs();
         savePath = file.getAbsolutePath() + "/" + url.substring(url.lastIndexOf("/"));
-        RandomAccessFile randomAccessFile = new RandomAccessFile(savePath, "rw");
-        FileChannel channel = randomAccessFile.getChannel();
-        MappedByteBuffer buffer = channel.map(FileChannel.MapMode.READ_WRITE, 0, method.getResponseContentLength());
-        byte[] bytes = new byte[4 * 1024];
-        int len;
-        while ((len = is.read(bytes)) != -1) {
-            buffer.put(bytes, 0, len);
-        }
-        buffer.force();
-        channel.close();
-        randomAccessFile.close();
-        System.out.println(System.currentTimeMillis() - start);
+        File saveFile = new File(savePath);
+        FileUtils.copyInputStreamToFile(is, saveFile);
+        System.out.println("Over:" + (System.currentTimeMillis() - start));
+
+
     }
+
 }

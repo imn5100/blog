@@ -10,7 +10,7 @@
         uParse('.blog_content',
                 {
                     'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
-                    'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreRDark.css'
+                    'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
                 })
     }, 100);
     var duoshuoQuery = {short_name: "shawblog", theme: "none"};

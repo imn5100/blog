@@ -26,7 +26,6 @@
     <jsp:include page="/WEB-INF/foreground/common/head.jsp"/>
     <div>
         <div class="col-md-12">
-
             <div class="panel panel panel-default">
                 <c:if test="${loginSuccess == null or loginSuccess == false}">
                     <div class="panel-heading">
@@ -49,7 +48,7 @@
                     远程任务发送
                 </div>
                 <div class="bs-docs-section" style="padding:10px 10px 10px;">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="sendTask">
                         <div class="form-group">
                             <label for="title" class="col-sm-2 control-label">主题</label>
                             <div class="col-sm-10">
@@ -64,6 +63,17 @@
                                         <option value="${item.value}">${item.name}</option>
                                     </c:forEach>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">客户端状态</label>
+                            <div class="col-sm-10">
+                                <c:if test="${socket_connect == true}">
+                                    已连接
+                                </c:if>
+                                <c:if test="${socket_connect != true}">
+                                    未连接
+                                </c:if>
                             </div>
                         </div>
                         <div class="form-group">
@@ -161,10 +171,33 @@
             "ak": ak,
             "as": as
         }
-        $.post("/remoteTask.html", data, function () {
+        $.post("/remoteTask/main.html", data, function () {
             location.reload()
         })
         return false;
+    })
+    $("#sendTask").submit(function () {
+        var title = $("#title").val();
+        var taskType = $("#taskType").val();
+        var contents = $("#contents").val();
+
+        if (title == null || title == "" || taskType == null || contents == null || contents == "") {
+            alert("请填写完整信息")
+            return false;
+        }
+        var data = {
+            "title": title,
+            "type": taskType,
+            "contents": contents,
+        }
+        $.post("/remoteTask/addTask.html", data, function (data) {
+            alert(data.msg);
+//            if (data.code == 200 || data.code == 605) {
+//                location.reload()
+//            }
+        }, "json")
+        return false;
+
     })
     $("#logout").click(function () {
         $.post("/remoteTask/logout.html", function () {

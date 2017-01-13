@@ -14,6 +14,14 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class RedisClient {
+    public RedisTemplate<String, Object> getRedisTemplate() {
+        return redisTemplate;
+    }
+
+    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 

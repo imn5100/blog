@@ -4,7 +4,7 @@ package com.shaw.vo;
  * Created by shaw on 2017/1/13 0013.
  */
 public enum RemoteTaskPermission {
-    DOWNLOAD("下载", 1),
+    DOWNLOAD("Download", 1),
     PYTHON("Python", 2);
 
     private String name;

@@ -8,7 +8,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="技术博客,后端,java">
+    <meta name="description" content="技术博客,后端,java,python">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/search.xml" title="shawblog">

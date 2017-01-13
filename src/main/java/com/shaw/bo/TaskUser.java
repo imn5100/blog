@@ -1,6 +1,11 @@
 package com.shaw.bo;
 
-public class TaskUser {
+import com.shaw.vo.RemoteTaskPermission;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class TaskUser implements Serializable {
     private String appkey;
 
     private String appsecret;
@@ -12,6 +17,10 @@ public class TaskUser {
     private String intr;
 
     private Long activeTime;
+
+    private String showActiveTime;
+
+    private List<RemoteTaskPermission> remoteTaskPermissionList;
 
     public String getAppkey() {
         return appkey;
@@ -59,5 +68,21 @@ public class TaskUser {
 
     public void setActiveTime(Long activeTime) {
         this.activeTime = activeTime;
+    }
+
+    public String getShowActiveTime() {
+        return showActiveTime;
+    }
+
+    public void setShowActiveTime(String showActiveTime) {
+        this.showActiveTime = showActiveTime;
+    }
+
+    public List<RemoteTaskPermission> getRemoteTaskPermissionList() {
+        return remoteTaskPermissionList;
+    }
+
+    public void setRemoteTaskPermissionList(List<RemoteTaskPermission> remoteTaskPermissionList) {
+        this.remoteTaskPermissionList = remoteTaskPermissionList;
     }
 }

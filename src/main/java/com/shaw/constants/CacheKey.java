@@ -54,4 +54,10 @@ public class CacheKey {
      */
     public static final String SYSTEM_REFRESH_TIME = "system:refresh_time";
 
+    /**
+     * 刷新系统缓存时间戳
+     */
+    public static final String TASK_USER_AUTH = "task_user";
+
+
 }

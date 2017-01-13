@@ -1,12 +1,15 @@
 package com.shaw.controller;
 
 import com.shaw.bo.Blog;
+import com.shaw.bo.TaskUser;
+import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
+import com.shaw.constants.ResponseCode;
 import com.shaw.service.BlogService;
-import com.shaw.util.PageBean;
-import com.shaw.util.PageUtil;
-import com.shaw.util.StringUtil;
-import com.shaw.util.TimeUtils;
+import com.shaw.service.TaskUserService;
+import com.shaw.util.*;
+import com.shaw.vo.RemoteTaskPermission;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +36,8 @@ public class IndexController {
 
     @Resource
     private BlogService blogService;
+    @Resource
+    private TaskUserService taskUserService;
 
 
     /**
@@ -111,6 +118,48 @@ public class IndexController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("WEB-INF/foreground/laboratory/rainy");
         return mav;
+    }
+
+
+    public static final String LOGIN_SUCCESS_FLAG = "loginSuccess";
+
+    @RequestMapping("/remoteTask")
+    public ModelAndView remoteTask(String ak, String as, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("WEB-INF/foreground/laboratory/remoteTask");
+        TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
+        request.setAttribute(LOGIN_SUCCESS_FLAG, false);
+        if (taskUser != null) {
+            request.setAttribute(LOGIN_SUCCESS_FLAG, true);
+        } else {
+            if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as) && ak.length() == 32 && as.length() == 32) {
+                taskUser = taskUserService.selectByPrimaryKey(ak);
+                if (taskUser != null && taskUser.getAppsecret().equals(as)) {
+                    taskUser.setActiveTime(System.currentTimeMillis());
+                    //  0000 0000   0位为1，下载权限 1位为1 python脚本执行权限
+                    List<RemoteTaskPermission> list = new ArrayList<>();
+                    if ((taskUser.getPermissions() & 0x1) == 0x1) {
+                        list.add(RemoteTaskPermission.DOWNLOAD);
+                    }
+                    if ((taskUser.getPermissions() & 0x2) == 0x2) {
+                        list.add(RemoteTaskPermission.PYTHON);
+                    }
+                    taskUser.setRemoteTaskPermissionList(list);
+                    taskUserService.updateByPrimaryKeySelective(taskUser);
+                    taskUser.setShowActiveTime(TimeUtils.getFormatTime(taskUser.getActiveTime()));
+                    request.getSession().setAttribute(CacheKey.TASK_USER_AUTH, taskUser);
+                    request.setAttribute(LOGIN_SUCCESS_FLAG, true);
+                }
+            }
+        }
+        return mav;
+    }
+
+    @RequestMapping("/remoteTask/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.getSession().removeAttribute(CacheKey.TASK_USER_AUTH);
+        request.removeAttribute(LOGIN_SUCCESS_FLAG);
+        HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
     }
 
 }

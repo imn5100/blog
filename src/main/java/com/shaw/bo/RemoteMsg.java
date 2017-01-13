@@ -1,6 +1,8 @@
 package com.shaw.bo;
 
-public class RemoteMsg {
+import java.io.Serializable;
+
+public class RemoteMsg implements Serializable {
     private Integer id;
 
     private String topic;

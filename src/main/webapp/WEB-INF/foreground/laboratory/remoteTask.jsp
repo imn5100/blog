@@ -192,9 +192,9 @@
         }
         $.post("/remoteTask/addTask.html", data, function (data) {
             alert(data.msg);
-//            if (data.code == 200 || data.code == 605) {
-//                location.reload()
-//            }
+            if (data.code == 200 || data.code == 605) {
+                location.reload()
+            }
         }, "json")
         return false;
 

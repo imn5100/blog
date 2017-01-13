@@ -9,16 +9,11 @@
         <result column="other" property="other" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="op_time" property="opTime" jdbcType="BIGINT"/>
+        <result column="appkey" property="appkey" jdbcType="CHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, topic, status, contents, other, create_time, op_time
+    id, topic, status, contents, other, create_time, op_time, appkey
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from t_remote_msg
-        where id = #{id,jdbcType=INTEGER}
-    </select>
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaw.vo.RemoteMsgQuery">
         SELECT
         <include refid="Base_Column_List"/>
@@ -62,6 +57,12 @@
             #{item}
         </foreach>
     </delete>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_remote_msg
+        where id = #{id,jdbcType=INTEGER}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_remote_msg
     where id = #{id,jdbcType=INTEGER}
@@ -69,10 +70,10 @@
     <insert id="insert" parameterType="com.shaw.bo.RemoteMsg">
     insert into t_remote_msg (id, topic, status, 
       contents, other, create_time, 
-      op_time)
+      op_time, appkey)
     values (#{id,jdbcType=INTEGER}, #{topic,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
       #{contents,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{opTime,jdbcType=BIGINT})
+      #{opTime,jdbcType=BIGINT}, #{appkey,jdbcType=CHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.RemoteMsg">
         insert into t_remote_msg
@@ -98,6 +99,9 @@
             <if test="opTime != null">
                 op_time,
             </if>
+            <if test="appkey != null">
+                appkey,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -120,6 +124,9 @@
             </if>
             <if test="opTime != null">
                 #{opTime,jdbcType=BIGINT},
+            </if>
+            <if test="appkey != null">
+                #{appkey,jdbcType=CHAR},
             </if>
         </trim>
     </insert>
@@ -144,6 +151,9 @@
             <if test="opTime != null">
                 op_time = #{opTime,jdbcType=BIGINT},
             </if>
+            <if test="appkey != null">
+                appkey = #{appkey,jdbcType=CHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -154,7 +164,8 @@
       contents = #{contents,jdbcType=VARCHAR},
       other = #{other,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
-      op_time = #{opTime,jdbcType=BIGINT}
+      op_time = #{opTime,jdbcType=BIGINT},
+      appkey = #{appkey,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

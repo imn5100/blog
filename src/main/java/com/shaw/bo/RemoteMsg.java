@@ -1,21 +1,21 @@
 package com.shaw.bo;
 
-import java.io.Serializable;
-
-public class RemoteMsg implements Serializable {
+public class RemoteMsg {
     private Integer id;
 
     private String topic;
 
     private Short status;
 
-    private String contents;
-
     private String other;
 
     private Long createTime;
 
     private Long opTime;
+
+    private String appkey;
+
+    private String contents;
 
     public Integer getId() {
         return id;
@@ -39,14 +39,6 @@ public class RemoteMsg implements Serializable {
 
     public void setStatus(Short status) {
         this.status = status;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents == null ? null : contents.trim();
     }
 
     public String getOther() {
@@ -73,16 +65,19 @@ public class RemoteMsg implements Serializable {
         this.opTime = opTime;
     }
 
-    @Override
-    public String toString() {
-        return "RemoteMsg{" +
-                "id=" + id +
-                ", topic='" + topic + '\'' +
-                ", status=" + status +
-                ", contents='" + contents + '\'' +
-                ", other='" + other + '\'' +
-                ", createTime=" + createTime +
-                ", opTime=" + opTime +
-                '}';
+    public String getAppkey() {
+        return appkey;
+    }
+
+    public void setAppkey(String appkey) {
+        this.appkey = appkey == null ? null : appkey.trim();
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents == null ? null : contents.trim();
     }
 }

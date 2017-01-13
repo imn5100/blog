@@ -122,14 +122,16 @@ public class RemoteTaskController {
                     } else {
                         remoteMsg.setTopic(RemoteTaskPermission.DOWNLOAD.getName());
                     }
-                }
-                if (type == RemoteTaskPermission.PYTHON.getValue()) {
+                } else if (type == RemoteTaskPermission.PYTHON.getValue()) {
                     if (!((taskUser.getPermissions() & 0x2) == 0x2)) {
                         HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
                         return;
                     } else {
                         remoteMsg.setTopic(RemoteTaskPermission.PYTHON.getName());
                     }
+                } else {
+                    HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
+                    return;
                 }
                 remoteMsg.setAppkey(taskUser.getAppkey());
                 remoteMsg.setContents(contents);

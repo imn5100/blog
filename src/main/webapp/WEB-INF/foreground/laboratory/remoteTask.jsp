@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-default">发射</button>
+                                <button type="submit" class="btn btn-default">发送~~＼(☆o☆)／</button>
                             </div>
                             <div class="col-sm-2">
                                 <a id="u_info" style="float:right">显示用户信息</a>

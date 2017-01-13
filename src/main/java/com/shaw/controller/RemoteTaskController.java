@@ -52,6 +52,8 @@ public class RemoteTaskController {
     public static final String SOCKET_CONNECT = "socket_connect";
     //web 登录状态
     public static final String USER_AUTH_KEY = "UserAuthKey:%s";
+    //redis 消息解析topic
+    public static final String TOPIC_TASK = "socketTask";
 
     @RequestMapping("/main")
     public ModelAndView remoteTask(String ak, String as, HttpServletRequest request) {
@@ -153,7 +155,6 @@ public class RemoteTaskController {
         return flag;
     }
 
-    public static final String TOPIC_TASK = "socketTask";
 
     //向redis发布 socket任务消息
     private void pubRedisMsg(RemoteMsg remoteMsg) {

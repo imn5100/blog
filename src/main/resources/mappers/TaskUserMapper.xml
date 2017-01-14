@@ -27,7 +27,7 @@
                 appkey=#{appkey}
             </if>
             <if test="name!=null">
-                and name like CONCAT("%",#{name})
+                and name like CONCAT(#{name},"%")
             </if>
         </where>
         ORDER BY active_time DESC

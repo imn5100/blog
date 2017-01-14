@@ -128,16 +128,16 @@
         }
         function resetSummary() {
             $.messager.confirm("系统提示", "确定要重置概述？", function (r) {
-                        if (r) {
-                            $.post("/admin/system/resetSummary.do?length=280", {}, function (result) {
-                                if (result.success) {
-                                    $.messager.alert("系统提示", "重置概述成功！");
-                                } else {
-                                    $.messager.alert("系统提示", "重置概述失败");
-                                }
-                            }, "json");
-                        }
+                    if (r) {
+                        $.post("/admin/system/resetSummary.do?length=280", {}, function (result) {
+                            if (result.success) {
+                                $.messager.alert("系统提示", "重置概述成功！");
+                            } else {
+                                $.messager.alert("系统提示", "重置概述失败");
+                            }
+                        }, "json");
                     }
+                }
             );
         }
 
@@ -198,6 +198,8 @@
         <div title="系统管理" data-options="iconCls:'icon-system'" style="padding:10px">
             <a href="javascript:openTab('远程任务管理','remoteMsgManage.jsp','icon-link')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px">远程任务管理</a>
+            <a href="javascript:openTab('任务用户管理','taskUserManage.jsp','icon-link')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px">任务用户管理</a>
             <a href="javascript:openTab('友情链接管理','linkManage.jsp','icon-link')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-link'" style="width: 150px">友情链接管理</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"

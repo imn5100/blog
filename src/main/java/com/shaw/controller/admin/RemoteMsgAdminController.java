@@ -158,20 +158,24 @@ public class RemoteMsgAdminController {
     public void addUser(TaskUser taskUser, String salt, HttpServletResponse response) throws Exception {
         if (taskUser != null) {
             if (StringUtil.isEmpty(taskUser.getName()) || StringUtil.isEmpty(salt) || taskUser.getPermissions() == null) {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
             } else {
                 String appkey = MD5Util.MD5(taskUser.getName() + salt);
+                if (taskUserService.selectByPrimaryKey(appkey) != null) {
+                    HttpResponseUtil.writeCode(response, ResponseCode.USER_REPEAT);
+                    return;
+                }
                 String appsecret = MD5Util.MD5(salt + appkey);
                 taskUser.setAppkey(appkey);
                 taskUser.setAppsecret(appsecret);
                 if (taskUserService.insert(taskUser) > 0) {
-                    HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+                    HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
                 } else {
-                    HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+                    HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
                 }
             }
         } else {
-            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
         }
     }
 
@@ -179,25 +183,27 @@ public class RemoteMsgAdminController {
     public void deleteUser(String appkey, HttpServletResponse response) throws Exception {
         if (!StringUtil.isEmpty(appkey)) {
             if (taskUserService.deleteByPrimaryKey(appkey) > 0) {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
             } else {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
             }
         } else {
-            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
         }
     }
 
     @RequestMapping("/updateUser")
     public void updateUser(TaskUser taskUser, HttpServletResponse response) throws Exception {
-        if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppkey()) && StringUtil.isNotEmpty(taskUser.getAppsecret()) && taskUser.getPermissions() != null) {
+        if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppkey()) &&
+                taskUser.getPermissions() != null &&
+                taskUser.getAppkey().length() == 32) {
             if (taskUserService.updateByPrimaryKeySelective(taskUser) > 0) {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
             } else {
-                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+                HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
             }
         } else {
-            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
         }
 
     }

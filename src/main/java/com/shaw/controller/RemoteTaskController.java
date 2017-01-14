@@ -42,17 +42,17 @@ public class RemoteTaskController {
     //保证socket 服务端的redis序列化工具和 本站相同
     @Resource(name = "stringRedisTemplate")
     private RedisTemplate<String, String> stringRedisTemplate;
-    //登录成功
+    //web登录成功
     public static final String LOGIN_SUCCESS_FLAG = "loginSuccess";
     //客户端连接 key
     public static final String USER_CLIENT_CONNECT = "user_client_connect";
     //socket task redis channel
     public static final String SOCKET_TASK_REDIS_CHANNEL = "task_message";
-    //socket连接状态
+    //socket连接状态key
     public static final String SOCKET_CONNECT = "socket_connect";
-    //web 登录状态
+    //web 登录状态key
     public static final String USER_AUTH_KEY = "UserAuthKey:%s";
-    //redis 消息解析topic
+    //接收socket推送任务消息的二层topic
     public static final String TOPIC_TASK = "socketTask";
 
     @RequestMapping("/main")
@@ -138,6 +138,40 @@ public class RemoteTaskController {
                 remoteMsgService.insert(remoteMsg);
                 pubRedisMsg(remoteMsg);
                 HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
+            }
+        }
+    }
+
+    @RequestMapping("/update")
+    public void updateTaskUser(@RequestParam(value = "name") String name, @RequestParam(value = "intr") String intr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
+        if (taskUser == null) {
+            HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_TIMEOUT);
+        } else {
+            if (StringUtils.isEmpty(name) || StringUtil.isEmpty(intr)) {
+                HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
+            } else {
+                //检查数据是否需要修改，如果不需要直接返回成功
+                boolean update = false;
+                if (!name.equals(taskUser.getName())) {
+                    taskUser.setName(name);
+                    update = true;
+                }
+                if (!intr.equals(taskUser.getIntr())) {
+                    taskUser.setIntr(intr);
+                    update = true;
+                }
+                if (update) {
+                    if (taskUserService.updateByPrimaryKeySelective(taskUser) > 0) {
+                        //更新session中的数据
+                        request.getSession().setAttribute(CacheKey.TASK_USER_AUTH, taskUser);
+                        HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
+                    } else {
+                        HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
+                    }
+                } else {
+                    HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
+                }
             }
         }
     }

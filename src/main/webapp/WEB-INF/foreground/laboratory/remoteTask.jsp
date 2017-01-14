@@ -47,102 +47,107 @@
                 <div class="panel-heading">
                     远程任务发送
                 </div>
-                <div class="bs-docs-section" style="padding:10px 10px 10px;">
-                    <form class="form-horizontal" id="sendTask">
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">主题</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" placeholder="">
+                <div style="padding:10px 10px 10px 10px;">
+                    <div class="bs-docs-section">
+                        <form class="form-horizontal" id="sendTask">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label">主题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="title" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskType" class="col-sm-2 control-label">任务类型</label>
-                            <div class="col-sm-10">
-                                <select id="taskType" class="form-control">
-                                    <c:forEach var="item" items="${task_user.remoteTaskPermissionList}">
-                                        <option value="${item.value}">${item.name}</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="form-group">
+                                <label for="taskType" class="col-sm-2 control-label">任务类型</label>
+                                <div class="col-sm-10">
+                                    <select id="taskType" class="form-control">
+                                        <c:forEach var="item" items="${task_user.remoteTaskPermissionList}">
+                                            <option value="${item.value}">${item.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">客户端状态</label>
-                            <div class="col-sm-10">
-                                <c:if test="${socket_connect == true}">
-                                    已连接
-                                </c:if>
-                                <c:if test="${socket_connect != true}">
-                                    未连接
-                                </c:if>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客户端状态</label>
+                                <div class="col-sm-10">
+                                    <c:if test="${socket_connect == true}">
+                                        已连接
+                                    </c:if>
+                                    <c:if test="${socket_connect != true}">
+                                        未连接
+                                    </c:if>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="contents" class="col-sm-2 control-label">内容</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" rows="10" id="contents"> </textarea>
+                            <div class="form-group">
+                                <label for="contents" class="col-sm-2 control-label">内容</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="10" id="contents"> </textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <button type="submit" class="btn btn-default">发送~~＼(☆o☆)／</button>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-8">
+                                    <button type="submit" class="btn btn-default">发送ヽ(╯▽╰)ﾉ</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a id="u_info" style="float:right">显示用户信息</a>
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <a id="u_info" style="float:right">显示用户信息</a>
+                        </form>
+                    </div>
+                    <div class="alert alert-success" role="alert" id="infoAlert"
+                         style="padding:10px 10px 10px 10px;display: None"></div>
+                    <hr>
+                    <div id="user_info" style="padding:10px 10px 10px;display: None">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">用户信息：</label>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <hr>
-                <div id="user_info" style="padding:10px 10px 10px;display: None">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">用户信息：</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="AK" class="col-sm-2 control-label">AK</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="AK" readonly="readonly"
-                                       value="${task_user.appkey}">
+                            <div class="form-group">
+                                <label for="AK" class="col-sm-2 control-label">AK</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="AK" readonly="readonly"
+                                           value="${task_user.appkey}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="as" class="col-sm-2 control-label">AS</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="as" readonly="readonly"
-                                       value="${task_user.appsecret}">
+                            <div class="form-group">
+                                <label for="as" class="col-sm-2 control-label">AS</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="as" readonly="readonly"
+                                           value="${task_user.appsecret}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tuac" class="col-sm-2 control-label">活跃时间</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="tuac" readonly="readonly"
-                                       value="${task_user.showActiveTime}">
+                            <div class="form-group">
+                                <label for="tuac" class="col-sm-2 control-label">活跃时间</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="tuac" readonly="readonly"
+                                           value="${task_user.showActiveTime}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tun" class="col-sm-2 control-label">名字</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="tun" readonly="readonly"
-                                       value="${task_user.name}">
+                            <div class="form-group">
+                                <label for="tun" class="col-sm-2 control-label">名字</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="tun" required="true"
+                                           value="${task_user.name}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tui" class="col-sm-2 control-label">介绍</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="tui" readonly="readonly"
-                                       value="${task_user.intr}">
+                            <div class="form-group">
+                                <label for="tui" class="col-sm-2 control-label">介绍</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="tui" required="true"
+                                           value="${task_user.intr}">
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                    <table class="table">
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <button id="logout" style="float:right">退出</button>
-                            </td>
-                        </tr>
-                    </table>
+                        </form>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <button id="update" class="btn btn-primary">保存</button>
+                                    <button id="logout" class="btn btn-danger" style="float:right">退出</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     </c:if>
                 </div>
             </div>
@@ -180,9 +185,8 @@
         var title = $("#title").val();
         var taskType = $("#taskType").val();
         var contents = $("#contents").val();
-
         if (title == null || title == "" || taskType == null || contents == null || contents == "") {
-            alert("请填写完整信息")
+            divAlert(2, "请填写完整信息")
             return false;
         }
         var data = {
@@ -191,13 +195,20 @@
             "contents": contents,
         }
         $.post("/remoteTask/addTask.html", data, function (data) {
-            alert(data.msg);
-            if (data.code == 200 || data.code == 605) {
+            if (data.code == 605) {
+                alert(data.msg);
                 location.reload()
+            } else {
+                if (data.code == 200) {
+                    $("#title").val("");
+                    $("#contents").val("");
+                    divAlert(1, data.msg)
+                } else {
+                    divAlert(2, data.msg)
+                }
             }
         }, "json")
         return false;
-
     })
     $("#logout").click(function () {
         $.post("/remoteTask/logout.html", function () {
@@ -209,5 +220,45 @@
         $("#u_info").hide();
         $("#user_info").show();
     })
+    $("#update").click(function () {
+        var name = $("#tun").val();
+        var intr = $("#tui").val();
+        if (name == "" || intr == "") {
+            divAlert(2, "请填写完整信息")
+            return;
+        }
+        $.post("/remoteTask/update.do", {"name": name, "intr": intr}, function (data) {
+            divAlertForData(data)
+        }, "json")
+    })
+    function divAlert(type, msg) {
+        var alertDiv = $("#infoAlert")
+        if (type == 1) {
+            alertDiv.attr("class", "alert alert-success")
+        } else if (type == 2) {
+            alertDiv.attr("class", "alert alert-warning")
+        } else if (type == 3) {
+            alertDiv.attr("class", "alert alert-danger")
+        }
+        alertDiv.html(msg)
+        alertDiv.show();
+    }
+    function divAlertForData(data) {
+        if (data.code == 200) {
+            //成功
+            divAlert(1, data.msg)
+        } else if (data.code == 605) {
+            //登录超时
+            alert(data.msg);
+            location.reload()
+        } else if (data.code == 600) {
+            //执行出错
+            divAlert(3, data.msg)
+        } else {
+            //业务错误
+            divAlert(2, data.msg)
+        }
+    }
+
 </script>
 </html>

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
     <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+    <script src="/static/js/rt.js"></script>
     <style type="text/css">
         body {
             padding-top: 100px;
@@ -163,7 +164,7 @@
     </div>
 </div>
 </body>
-<script type="application/javascript">
+<script>
     $("#auth").submit(function () {
         var ak = $("#AppKey").val();
         var as = $("#AppSecret").val();

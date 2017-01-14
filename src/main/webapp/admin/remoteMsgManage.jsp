@@ -235,6 +235,7 @@
         <th field="cb" checkbox="true" align="center"></th>
         <th field="id" align="center">编号</th>
         <th field="topic" align="center">主题</th>
+        <th field="appkey" align="center">appkey</th>
         <th field="status" formatter="formatStatus" align="center">状态</th>
         <th field="contents" formatter="formatDetail" align="center">执行内容</th>
         <th field="createTime" align="center" formatter="formatTime">创建时间</th>

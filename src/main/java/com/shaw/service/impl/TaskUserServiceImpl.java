@@ -3,9 +3,11 @@ package com.shaw.service.impl;
 import com.shaw.bo.TaskUser;
 import com.shaw.mapper.TaskUserMapper;
 import com.shaw.service.TaskUserService;
+import com.shaw.vo.TaskUserQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by shaw 2017/1/13 0013.
@@ -43,5 +45,15 @@ public class TaskUserServiceImpl implements TaskUserService {
     @Override
     public int updateByPrimaryKey(TaskUser record) {
         return taskUserMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<TaskUser> queryList(TaskUserQuery query) {
+        return taskUserMapper.queryList(query);
+    }
+
+    @Override
+    public Integer queryCount(TaskUserQuery query) {
+        return taskUserMapper.queryCount(query);
     }
 }

@@ -3,14 +3,18 @@ package com.shaw.controller.admin;
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.annotation.IpPassport;
 import com.shaw.bo.RemoteMsg;
+import com.shaw.bo.TaskUser;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
 import com.shaw.constants.ResponseCode;
 import com.shaw.service.RemoteMsgService;
+import com.shaw.service.TaskUserService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
+import com.shaw.util.MD5Util;
 import com.shaw.util.StringUtil;
 import com.shaw.vo.RemoteMsgQuery;
+import com.shaw.vo.TaskUserQuery;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +37,8 @@ public class RemoteMsgAdminController {
     private RemoteMsgService remoteMsgService;
     @Autowired
     private RedisClient redisClient;
+    @Autowired
+    private TaskUserService taskUserService;
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     @RequestMapping("/listMsg")
@@ -127,6 +133,75 @@ public class RemoteMsgAdminController {
             HttpResponseUtil.writeJsonStr(response, result);
         }
     }
+
+    //////////////////////////////////////////////////////////远程任务用户维护接口
+    @RequestMapping("/listUser")
+    public void listMsg(TaskUserQuery query, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        if (query != null) {
+            if (StringUtil.isEmpty(query.getAppkey())) {
+                query.setAppkey(null);
+            }
+            if (StringUtil.isEmpty(query.getName())) {
+                query.setName(null);
+            }
+            List<TaskUser> list = taskUserService.queryList(query);
+            Integer count = taskUserService.queryCount(query);
+            result.put("success", true);
+            result.put("rows", list);
+            result.put("total", count);
+        }
+        HttpResponseUtil.writeJsonStr(response, result);
+    }
+
+    @RequestMapping("/addUser")
+    public void addUser(TaskUser taskUser, String salt, HttpServletResponse response) throws Exception {
+        if (taskUser != null) {
+            if (StringUtil.isEmpty(taskUser.getName()) || StringUtil.isEmpty(salt) || taskUser.getPermissions() == null) {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+            } else {
+                String appkey = MD5Util.MD5(taskUser.getName() + salt);
+                String appsecret = MD5Util.MD5(salt + appkey);
+                taskUser.setAppkey(appkey);
+                taskUser.setAppsecret(appsecret);
+                if (taskUserService.insert(taskUser) > 0) {
+                    HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+                } else {
+                    HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+                }
+            }
+        } else {
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+        }
+    }
+
+    @RequestMapping("/deleteUser")
+    public void deleteUser(String appkey, HttpServletResponse response) throws Exception {
+        if (!StringUtil.isEmpty(appkey)) {
+            if (taskUserService.deleteByPrimaryKey(appkey) > 0) {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+            } else {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+            }
+        } else {
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+        }
+    }
+
+    @RequestMapping("/updateUser")
+    public void updateUser(TaskUser taskUser, HttpServletResponse response) throws Exception {
+        if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppkey()) && StringUtil.isNotEmpty(taskUser.getAppsecret()) && taskUser.getPermissions() != null) {
+            if (taskUserService.updateByPrimaryKeySelective(taskUser) > 0) {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
+            } else {
+                HttpResponseUtil.writeJsonStr(response, ResponseCode.FAIL.getCode());
+            }
+        } else {
+            HttpResponseUtil.writeJsonStr(response, ResponseCode.PARAM_NOT_FORMAT.getCode());
+        }
+
+    }
+
 
     /////内部接口完毕，以下为对外接口///////////////////
 

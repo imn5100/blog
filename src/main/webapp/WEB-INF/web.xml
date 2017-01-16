@@ -34,6 +34,8 @@
     <listener>
         <listener-class>com.shaw.listener.InitComponent</listener-class>
     </listener>
+
+
     <servlet>
         <servlet-name>springMVC</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -53,7 +55,6 @@
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 
-
     <filter>
         <filter-name>springSessionRepositoryFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -69,6 +70,11 @@
     <filter-mapping>
         <filter-name>springSessionRepositoryFilter</filter-name>
         <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <!--对druid添加spring-session过滤，否则会出现无法登录的情况-->
+    <filter-mapping>
+        <filter-name>springSessionRepositoryFilter</filter-name>
+        <url-pattern>/druid/*</url-pattern>
     </filter-mapping>
 
     <!--登录状态基于session存储，需要将spring-session的过滤器在 shiro之前执行-->
@@ -92,6 +98,28 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
+
+    <!--添加druid连接池数据监控页面-->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>resetEnable</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>shaw</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>*</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <error-code>400</error-code>

@@ -6,7 +6,11 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <!--shiro 权限控制-->
     <!-- 自定义Realm -->
-    <bean id="myRealm" class="com.shaw.realm.MyRealm"/>
+    <bean id="myRealm" class="com.shaw.realm.MyRealm">
+        <property name="cachingEnabled">
+            <value>false</value>
+        </property>
+    </bean>
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myRealm"/>

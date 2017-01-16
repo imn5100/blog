@@ -56,6 +56,7 @@ public class SystemAdminController {
         ServletContext application = RequestContextUtils.findWebApplicationContext(request).getServletContext();
         Long timestamp = new Long(System.currentTimeMillis());
         redisClient.set(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
+        redisClient.expire(CacheKey.SYSTEM_REFRESH_TIME, CacheKey.SYSTEM_REFRESH_TIME_EXPIRE);
         systemService.initBlogData(application);
         application.setAttribute(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
         JSONObject result = new JSONObject();

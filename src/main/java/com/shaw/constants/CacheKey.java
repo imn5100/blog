@@ -53,6 +53,7 @@ public class CacheKey {
      * 刷新系统缓存时间戳
      */
     public static final String SYSTEM_REFRESH_TIME = "system:refresh_time";
+    public static final Long SYSTEM_REFRESH_TIME_EXPIRE = 60 * 60 * 2L;
 
     /**
      * 刷新系统缓存时间戳

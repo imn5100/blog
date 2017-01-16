@@ -109,7 +109,7 @@
         </init-param>
         <init-param>
             <param-name>loginUsername</param-name>
-            <param-value>shaw</param-value>
+            <param-value>*</param-value>
         </init-param>
         <init-param>
             <param-name>loginPassword</param-name>

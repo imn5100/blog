@@ -67,7 +67,7 @@
     delete from t_remote_msg
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.shaw.bo.RemoteMsg">
+    <insert id="insert" parameterType="com.shaw.bo.RemoteMsg" useGeneratedKeys="true" keyProperty="id">
     insert into t_remote_msg (id, topic, status, 
       contents, other, create_time, 
       op_time, appkey)
@@ -75,7 +75,7 @@
       #{contents,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
       #{opTime,jdbcType=BIGINT}, #{appkey,jdbcType=CHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.shaw.bo.RemoteMsg">
+    <insert id="insertSelective" parameterType="com.shaw.bo.RemoteMsg" useGeneratedKeys="true" keyProperty="id">
         insert into t_remote_msg
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

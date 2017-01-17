@@ -100,6 +100,8 @@ public class RemoteTaskController {
         HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
     }
 
+    public static final String QUIT = "quit";
+
     @RequestMapping("/addTask")
     public void addTask(@RequestParam(value = "title") String title, @RequestParam(value = "contents") String contents, @RequestParam(value = "type") Integer type, HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
@@ -135,7 +137,9 @@ public class RemoteTaskController {
                 }
                 remoteMsg.setAppkey(taskUser.getAppkey());
                 remoteMsg.setContents(contents);
-                remoteMsgService.insert(remoteMsg);
+                //对于退出命令等操作，不记录在数据库中
+                if (!contents.equalsIgnoreCase(QUIT))
+                    remoteMsgService.insert(remoteMsg);
                 pubRedisMsg(remoteMsg);
                 HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
             }

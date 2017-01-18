@@ -25,7 +25,7 @@ public class InitComponent implements ServletContextListener, ApplicationContext
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext application = servletContextEvent.getServletContext();
-        SystemService systemService = (SystemService) applicationContext.getBean("systemService");
+        SystemService systemService = applicationContext.getBean(SystemService.class);
         systemService.initBlogData(application);
         application.setAttribute(CacheKey.SYSTEM_REFRESH_TIME, System.currentTimeMillis());
     }

@@ -35,7 +35,7 @@ public class SystemServiceImpl implements SystemService {
     @Resource(name = "stringRedisTemplate")
     private RedisTemplate<String, String> stringRedisTemplate;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(SystemServiceImpl.class);
 
     /**
      * 刷新系统缓存。

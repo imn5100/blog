@@ -28,7 +28,7 @@ public class BloggerAdminController {
     private BloggerService bloggerService;
     @Autowired
     private UploadFileService uploadFileService;
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(BloggerAdminController.class);
 
     /**
      * 修改博主信息

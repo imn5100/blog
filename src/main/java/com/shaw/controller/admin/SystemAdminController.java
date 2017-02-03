@@ -46,7 +46,7 @@ public class SystemAdminController {
     private BlogIndex blogIndex;
     @Autowired
     private RedisClient redisClient;
-    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    Logger logger = LoggerFactory.getLogger(SystemAdminController.class);
 
     /**
      * 刷新系统缓存

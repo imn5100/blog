@@ -39,7 +39,7 @@ public class RemoteMsgAdminController {
     private RedisClient redisClient;
     @Autowired
     private TaskUserService taskUserService;
-    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    Logger logger = LoggerFactory.getLogger(RemoteMsgAdminController.class);
 
     @RequestMapping("/listMsg")
     public void listMsg(RemoteMsgQuery query, HttpServletResponse response) throws Exception {

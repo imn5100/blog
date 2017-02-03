@@ -27,7 +27,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Resource
     private UploadFileMapper uploadFileMapper;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(UploadFileServiceImpl.class);
 
 
     @Override

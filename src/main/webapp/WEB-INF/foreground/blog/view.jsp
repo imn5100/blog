@@ -6,13 +6,11 @@
 <link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript" src="/static/ueditor/ueditor.parse.js"></script>
 <script type="text/javascript">
-    setTimeout(function () {
-        uParse('.blog_content',
-                {
-                    'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
-                    'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
-                })
-    }, 100);
+    uParse('.blog_content',
+        {
+            'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
+            'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
+        })
     var duoshuoQuery = {short_name: "shawblog", theme: "none"};
     (function () {
         var ds = document.createElement('script');

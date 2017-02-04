@@ -18,7 +18,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <property name="username" value="shaw"/>
         <property name="password"
                   value="NfTXNktomxhq3xJN4y3mdg+oHkP2IY452RP5xanmMHYkCxWn1tQBQhBzjJgFN+u44szy+65FVdXFhQmTshBwYA=="/>
-        <property name="filters" value="config,stat"/>
+        <property name="filters" value="config"/>
         <property name="connectionProperties" value="config.decrypt=true"/>
     </bean>
 

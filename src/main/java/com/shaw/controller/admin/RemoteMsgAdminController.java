@@ -136,11 +136,11 @@ public class RemoteMsgAdminController {
 
     //////////////////////////////////////////////////////////远程任务用户维护接口
     @RequestMapping("/listUser")
-    public void listMsg(TaskUserQuery query, HttpServletResponse response) throws Exception {
+    public void listUser(TaskUserQuery query, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
         if (query != null) {
-            if (StringUtil.isEmpty(query.getAppkey())) {
-                query.setAppkey(null);
+            if (StringUtil.isEmpty(query.getAppKey())) {
+                query.setAppKey(null);
             }
             if (StringUtil.isEmpty(query.getName())) {
                 query.setName(null);
@@ -166,8 +166,8 @@ public class RemoteMsgAdminController {
                     return;
                 }
                 String appsecret = MD5Util.MD5(salt + appkey);
-                taskUser.setAppkey(appkey);
-                taskUser.setAppsecret(appsecret);
+                taskUser.setAppKey(appkey);
+                taskUser.setAppSecret(appsecret);
                 if (taskUserService.insert(taskUser) > 0) {
                     HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
                 } else {
@@ -194,9 +194,9 @@ public class RemoteMsgAdminController {
 
     @RequestMapping("/updateUser")
     public void updateUser(TaskUser taskUser, HttpServletResponse response) throws Exception {
-        if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppkey()) &&
+        if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppKey()) &&
                 taskUser.getPermissions() != null &&
-                taskUser.getAppkey().length() == 32) {
+                taskUser.getAppKey().length() == 32) {
             if (taskUserService.updateByPrimaryKeySelective(taskUser) > 0) {
                 HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
             } else {

@@ -7,7 +7,7 @@ import com.shaw.util.PageBean;
  */
 public class TaskUserQuery extends PageBean {
     private String name;
-    private String appkey;
+    private String appKey;
 
     public String getName() {
         return name;
@@ -17,11 +17,11 @@ public class TaskUserQuery extends PageBean {
         this.name = name;
     }
 
-    public String getAppkey() {
-        return appkey;
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setAppkey(String appkey) {
-        this.appkey = appkey;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 }

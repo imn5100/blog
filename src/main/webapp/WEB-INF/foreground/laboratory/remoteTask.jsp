@@ -105,14 +105,14 @@
                                 <label for="AK" class="col-sm-2 control-label">AK</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="AK" readonly="readonly"
-                                           value="${task_user.appkey}">
+                                           value="${task_user.appKey}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="as" class="col-sm-2 control-label">AS</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="as" readonly="readonly"
-                                           value="${task_user.appsecret}">
+                                           value="${task_user.appSecret}">
                                 </div>
                             </div>
                             <div class="form-group">

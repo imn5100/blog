@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class TaskUser implements Serializable {
-    private String appkey;
+    private String appKey;
 
-    private String appsecret;
+    private String appSecret;
 
     private Byte permissions;
 
@@ -21,22 +21,6 @@ public class TaskUser implements Serializable {
     private String showActiveTime;
 
     private List<RemoteTaskPermission> remoteTaskPermissionList;
-
-    public String getAppkey() {
-        return appkey;
-    }
-
-    public void setAppkey(String appkey) {
-        this.appkey = appkey == null ? null : appkey.trim();
-    }
-
-    public String getAppsecret() {
-        return appsecret;
-    }
-
-    public void setAppsecret(String appsecret) {
-        this.appsecret = appsecret == null ? null : appsecret.trim();
-    }
 
     public Byte getPermissions() {
         return permissions;
@@ -84,5 +68,21 @@ public class TaskUser implements Serializable {
 
     public void setRemoteTaskPermissionList(List<RemoteTaskPermission> remoteTaskPermissionList) {
         this.remoteTaskPermissionList = remoteTaskPermissionList;
+    }
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getAppSecret() {
+        return appSecret;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
     }
 }

@@ -63,11 +63,11 @@ public class RemoteTaskController {
         request.setAttribute(LOGIN_SUCCESS_FLAG, false);
         if (taskUser != null) {
             request.setAttribute(LOGIN_SUCCESS_FLAG, true);
-            setSocketStatus(request, taskUser.getAppkey());
+            setSocketStatus(request, taskUser.getAppKey());
         } else {
             if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as) && ak.length() == 32 && as.length() == 32) {
                 taskUser = taskUserService.selectByPrimaryKey(ak);
-                if (taskUser != null && taskUser.getAppsecret().equals(as)) {
+                if (taskUser != null && taskUser.getAppSecret().equals(as)) {
                     setWebLoginStatus(taskUser);
                     taskUser.setActiveTime(System.currentTimeMillis());
                     //  0000 0000   0位为1，下载权限 1位为1 python脚本执行权限
@@ -80,7 +80,7 @@ public class RemoteTaskController {
                     }
                     taskUser.setRemoteTaskPermissionList(list);
                     taskUserService.updateByPrimaryKeySelective(taskUser);
-                    setSocketStatus(request, taskUser.getAppkey());
+                    setSocketStatus(request, taskUser.getAppKey());
                     taskUser.setShowActiveTime(TimeUtils.getFormatTime(taskUser.getActiveTime()));
                     request.getSession().setAttribute(CacheKey.TASK_USER_AUTH, taskUser);
                     request.setAttribute(LOGIN_SUCCESS_FLAG, true);
@@ -93,8 +93,8 @@ public class RemoteTaskController {
     @RequestMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
-        if (taskUser != null && !StringUtils.isEmpty(taskUser.getAppkey()))
-            stringRedisTemplate.delete(String.format(USER_AUTH_KEY, taskUser.getAppkey()));
+        if (taskUser != null && !StringUtils.isEmpty(taskUser.getAppKey()))
+            stringRedisTemplate.delete(String.format(USER_AUTH_KEY, taskUser.getAppKey()));
         request.getSession().removeAttribute(CacheKey.TASK_USER_AUTH);
         request.removeAttribute(LOGIN_SUCCESS_FLAG);
         HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
@@ -112,7 +112,7 @@ public class RemoteTaskController {
                 HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
             } else {
                 //客户端未连接
-                if (!stringRedisTemplate.opsForSet().isMember(USER_CLIENT_CONNECT, taskUser.getAppkey())) {
+                if (!stringRedisTemplate.opsForSet().isMember(USER_CLIENT_CONNECT, taskUser.getAppKey())) {
                     HttpResponseUtil.writeCode(response, ResponseCode.SOCKET_NOT_CONNECT);
                     return;
                 }
@@ -135,7 +135,7 @@ public class RemoteTaskController {
                     HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
                     return;
                 }
-                remoteMsg.setAppkey(taskUser.getAppkey());
+                remoteMsg.setAppKey(taskUser.getAppKey());
                 remoteMsg.setContents(contents);
                 //对于退出命令等操作，不记录在数据库中
                 if (!contents.equalsIgnoreCase(QUIT))
@@ -183,8 +183,8 @@ public class RemoteTaskController {
 
     //设置 web站登录标示
     private void setWebLoginStatus(TaskUser taskUser) {
-        stringRedisTemplate.opsForValue().set(String.format(USER_AUTH_KEY, taskUser.getAppkey()), JSONObject.toJSONString(taskUser));
-        stringRedisTemplate.expire(String.format(USER_AUTH_KEY, taskUser.getAppkey()), 20L, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(String.format(USER_AUTH_KEY, taskUser.getAppKey()), JSONObject.toJSONString(taskUser));
+        stringRedisTemplate.expire(String.format(USER_AUTH_KEY, taskUser.getAppKey()), 20L, TimeUnit.MINUTES);
     }
 
 
@@ -201,7 +201,7 @@ public class RemoteTaskController {
         Map<String, Object> map = new HashMap<>();
         map.put("topic", TOPIC_TASK);
         SocketMessage socketMessage = new SocketMessage();
-        socketMessage.setAppKey(remoteMsg.getAppkey());
+        socketMessage.setAppKey(remoteMsg.getAppKey());
         socketMessage.setContents(JSONObject.toJSONString(remoteMsg));
         socketMessage.setType(2);
         map.put("content", socketMessage);

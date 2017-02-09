@@ -15,7 +15,7 @@ public class RemoteMsg implements Serializable {
 
     private Long opTime;
 
-    private String appkey;
+    private String appKey;
 
     private String contents;
 
@@ -67,19 +67,19 @@ public class RemoteMsg implements Serializable {
         this.opTime = opTime;
     }
 
-    public String getAppkey() {
-        return appkey;
-    }
-
-    public void setAppkey(String appkey) {
-        this.appkey = appkey == null ? null : appkey.trim();
-    }
-
     public String getContents() {
         return contents;
     }
 
     public void setContents(String contents) {
         this.contents = contents == null ? null : contents.trim();
+    }
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 }

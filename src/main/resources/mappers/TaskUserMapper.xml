@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.shaw.mapper.TaskUserMapper">
     <resultMap id="BaseResultMap" type="com.shaw.bo.TaskUser">
-        <id column="appkey" property="appkey" jdbcType="CHAR"/>
-        <result column="appsecret" property="appsecret" jdbcType="CHAR"/>
+        <id column="appkey" property="appKey" jdbcType="CHAR"/>
+        <result column="appsecret" property="appSecret" jdbcType="CHAR"/>
         <result column="permissions" property="permissions" jdbcType="TINYINT"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="intr" property="intr" jdbcType="VARCHAR"/>
@@ -16,15 +16,15 @@
         select
         <include refid="Base_Column_List"/>
         from t_task_user
-        where appkey = #{appkey,jdbcType=CHAR}
+        where appkey = #{appKey,jdbcType=CHAR}
     </select>
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaw.vo.TaskUserQuery">
         select
         <include refid="Base_Column_List"/>
         from t_task_user
         <where>
-            <if test="appkey!=null">
-                appkey=#{appkey}
+            <if test="appKey!=null">
+                appkey=#{appKey}
             </if>
             <if test="name!=null">
                 and name like CONCAT(#{name},"%")
@@ -38,8 +38,8 @@
         count(1)
         from t_task_user
         <where>
-            <if test="appkey!=null">
-                appkey=#{appkey}
+            <if test="appKey!=null">
+                appkey=#{appKey}
             </if>
             <if test="name!=null">
                 and name like CONCAT("%",#{name})
@@ -48,23 +48,23 @@
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_task_user
-    where appkey = #{appkey,jdbcType=CHAR}
+    where appkey = #{appKey,jdbcType=CHAR}
   </delete>
     <insert id="insert" parameterType="com.shaw.bo.TaskUser">
     insert into t_task_user (appkey, appsecret, permissions, 
       name, intr, active_time
       )
-    values (#{appkey,jdbcType=CHAR}, #{appsecret,jdbcType=CHAR}, #{permissions,jdbcType=TINYINT}, 
+    values (#{appKey,jdbcType=CHAR}, #{appSecret,jdbcType=CHAR}, #{permissions,jdbcType=TINYINT},
       #{name,jdbcType=VARCHAR}, #{intr,jdbcType=VARCHAR}, #{activeTime,jdbcType=BIGINT}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.TaskUser">
         insert into t_task_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="appkey != null">
+            <if test="appKey != null">
                 appkey,
             </if>
-            <if test="appsecret != null">
+            <if test="appSecret != null">
                 appsecret,
             </if>
             <if test="permissions != null">
@@ -81,11 +81,11 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="appkey != null">
-                #{appkey,jdbcType=CHAR},
+            <if test="appKey != null">
+                #{appKey,jdbcType=CHAR},
             </if>
-            <if test="appsecret != null">
-                #{appsecret,jdbcType=CHAR},
+            <if test="appSecret != null">
+                #{appSecret,jdbcType=CHAR},
             </if>
             <if test="permissions != null">
                 #{permissions,jdbcType=TINYINT},
@@ -104,8 +104,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.shaw.bo.TaskUser">
         update t_task_user
         <set>
-            <if test="appsecret != null">
-                appsecret = #{appsecret,jdbcType=CHAR},
+            <if test="appSecret != null">
+                appsecret = #{appSecret,jdbcType=CHAR},
             </if>
             <if test="permissions != null">
                 permissions = #{permissions,jdbcType=TINYINT},
@@ -120,15 +120,15 @@
                 active_time = #{activeTime,jdbcType=BIGINT},
             </if>
         </set>
-        where appkey = #{appkey,jdbcType=CHAR}
+        where appkey = #{appKey,jdbcType=CHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.shaw.bo.TaskUser">
     update t_task_user
-    set appsecret = #{appsecret,jdbcType=CHAR},
+    set appsecret = #{appSecret,jdbcType=CHAR},
       permissions = #{permissions,jdbcType=TINYINT},
       name = #{name,jdbcType=VARCHAR},
       intr = #{intr,jdbcType=VARCHAR},
       active_time = #{activeTime,jdbcType=BIGINT}
-    where appkey = #{appkey,jdbcType=CHAR}
+    where appkey = #{appKey,jdbcType=CHAR}
   </update>
 </mapper>

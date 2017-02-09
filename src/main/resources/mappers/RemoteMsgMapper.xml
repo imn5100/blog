@@ -9,7 +9,7 @@
         <result column="other" property="other" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="op_time" property="opTime" jdbcType="BIGINT"/>
-        <result column="appkey" property="appkey" jdbcType="CHAR"/>
+        <result column="appkey" property="appKey" jdbcType="CHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, topic, status, contents, other, create_time, op_time, appkey
@@ -73,7 +73,7 @@
       op_time, appkey)
     values (#{id,jdbcType=INTEGER}, #{topic,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
       #{contents,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{opTime,jdbcType=BIGINT}, #{appkey,jdbcType=CHAR})
+      #{opTime,jdbcType=BIGINT}, #{appKey,jdbcType=CHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.RemoteMsg" useGeneratedKeys="true" keyProperty="id">
         insert into t_remote_msg
@@ -99,7 +99,7 @@
             <if test="opTime != null">
                 op_time,
             </if>
-            <if test="appkey != null">
+            <if test="appKey != null">
                 appkey,
             </if>
         </trim>
@@ -125,8 +125,8 @@
             <if test="opTime != null">
                 #{opTime,jdbcType=BIGINT},
             </if>
-            <if test="appkey != null">
-                #{appkey,jdbcType=CHAR},
+            <if test="appKey != null">
+                #{appKey,jdbcType=CHAR},
             </if>
         </trim>
     </insert>
@@ -151,8 +151,8 @@
             <if test="opTime != null">
                 op_time = #{opTime,jdbcType=BIGINT},
             </if>
-            <if test="appkey != null">
-                appkey = #{appkey,jdbcType=CHAR},
+            <if test="appKey != null">
+                appkey = #{appKey,jdbcType=CHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -165,7 +165,7 @@
       other = #{other,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       op_time = #{opTime,jdbcType=BIGINT},
-      appkey = #{appkey,jdbcType=CHAR}
+      appkey = #{appKey,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

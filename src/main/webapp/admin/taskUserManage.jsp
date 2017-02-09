@@ -18,15 +18,15 @@
                 $.messager.alert("系统提示", "请选择1条要删除的数据！");
                 return;
             }
-            var appkey = selectedRows[0].appkey
+            var appKey = selectedRows[0].appKey
             $.messager.confirm("系统提示", "您确定要删除这这条数据吗？", function (r) {
                 if (r) {
-                    $.post("/admin/remote/deleteUser.do", {appkey: appkey}, function (result) {
+                    $.post("/admin/remote/deleteUser.do", {'appkey': appKey}, function (result) {
                         if (result.code == 200) {
-                            $.messager.alert("系统提示", "删除任务成功！");
+                            $.messager.alert("系统提示", "删除用户成功！");
                             $("#dg").datagrid("reload");
                         } else {
-                            $.messager.alert("系统提示", "删除任务失败！");
+                            $.messager.alert("系统提示", result.msg);
                         }
                     }, "json").error(function () {
                         $.messager.alert("系统提示", "系统异常或登录超时，请刷新重试！");
@@ -90,7 +90,7 @@
                 return;
             }
             params = {
-                "appkey": appkey,
+                "appKey": appkey,
                 "intr": intr,
                 "name": name,
                 "permissions": permissions,
@@ -159,8 +159,8 @@
     <thead>
     <tr>
         <th field="cb" checkbox="true" align="center"></th>
-        <th field="appkey" align="center">AppKey</th>
-        <th field="appsecret" align="center">AppSecret</th>
+        <th field="appKey" align="center">AppKey</th>
+        <th field="appSecret" align="center">AppSecret</th>
         <th field="permissions" align="center">执行权限</th>
         <th field="name" align="center">名字</th>
         <th field="intr" align="center">介绍</th>
@@ -214,12 +214,12 @@
         <table cellspacing="8px">
             <tr>
                 <td>AppKey：</td>
-                <td><input type="text" id="modifyAppkey" name="appkey" class="easyui-validatebox" required="true"
+                <td><input type="text" id="modifyAppkey" name="appKey" class="easyui-validatebox" required="true"
                            readonly="readonly"/></td>
             </tr>
             <tr>
                 <td>AppSecret：</td>
-                <td><input type="text" id="modifyAppsercet" name="appsecret" class="easyui-validatebox" required="true"
+                <td><input type="text" id="modifyAppsercet" name="appSecret" class="easyui-validatebox" required="true"
                            readonly="readonly"/>
                 </td>
             </tr>

@@ -60,24 +60,10 @@ public class RemoteTaskController {
     public ModelAndView remoteTask(String ak, String as, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("WEB-INF/foreground/laboratory/remoteTask");
-        TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
         request.setAttribute(LOGIN_SUCCESS_FLAG, false);
-        if (taskUser != null) {
-            String userRedisKey = String.format(USER_AUTH_KEY, taskUser.getAppKey());
-            // 2.6 超时时间  -1 不超时 -2 不存在 >0 存在且有超时时间
-            long expireTime = stringRedisTemplate.getExpire(userRedisKey, TimeUnit.SECONDS);
-            if (expireTime > 0) {
-                request.setAttribute(LOGIN_SUCCESS_FLAG, true);
-                setSocketStatus(request, taskUser.getAppKey());
-                //即将超时时刷新页面，重设超时时间,最后10分钟时刷新页面将重设缓存
-                if (expireTime < 60 * 10) {
-                    //刷新页面时 重设登录超时时间
-                    stringRedisTemplate.expire(userRedisKey, Constants.SESSION_TIME, TimeUnit.SECONDS);
-                }
-            }
-        } else {
+        if (!checkLogin(request)) {
             if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as)) {
-                taskUser = taskUserService.selectByPrimaryKey(ak);
+                TaskUser taskUser = taskUserService.selectByPrimaryKey(ak);
                 if (taskUser != null && taskUser.getAppSecret().equals(as)) {
                     setWebLoginStatus(taskUser);
                     taskUser.setActiveTime(System.currentTimeMillis());
@@ -116,7 +102,7 @@ public class RemoteTaskController {
     @RequestMapping("/addTask")
     public void addTask(@RequestParam(value = "title") String title, @RequestParam(value = "contents") String contents, @RequestParam(value = "type") Integer type, HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
-        if (taskUser == null) {
+        if (taskUser == null || !checkLogin(request)) {
             HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_TIMEOUT);
         } else {
             if (StringUtils.isEmpty(title) || StringUtil.isEmpty(contents) || type == null) {
@@ -149,8 +135,9 @@ public class RemoteTaskController {
                 remoteMsg.setAppKey(taskUser.getAppKey());
                 remoteMsg.setContents(contents);
                 //对于退出命令等操作，不记录在数据库中
-                if (!contents.equalsIgnoreCase(QUIT))
+                if (!remoteMsg.getContents().equalsIgnoreCase(QUIT)) {
                     remoteMsgService.insert(remoteMsg);
+                }
                 pubRedisMsg(remoteMsg);
                 HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
             }
@@ -160,7 +147,7 @@ public class RemoteTaskController {
     @RequestMapping("/update")
     public void updateTaskUser(@RequestParam(value = "name") String name, @RequestParam(value = "intr") String intr, HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
-        if (taskUser == null) {
+        if (taskUser == null || !checkLogin(request)) {
             HttpResponseUtil.writeCode(response, ResponseCode.LOGIN_TIMEOUT);
         } else {
             if (StringUtils.isEmpty(name) || StringUtil.isEmpty(intr)) {
@@ -191,6 +178,26 @@ public class RemoteTaskController {
         }
     }
 
+    //检查登录状态，并更新超时时间
+    private boolean checkLogin(HttpServletRequest request) {
+        TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
+        if (taskUser == null) {
+            return false;
+        } else {
+            String userRedisKey = String.format(USER_AUTH_KEY, taskUser.getAppKey());
+            long expireTime = stringRedisTemplate.getExpire(userRedisKey, TimeUnit.SECONDS);
+            if (expireTime > 0) {
+                request.setAttribute(LOGIN_SUCCESS_FLAG, true);
+                setSocketStatus(request, taskUser.getAppKey());
+                if (expireTime < 60 * 10) {
+                    stringRedisTemplate.expire(userRedisKey, Constants.SESSION_TIME, TimeUnit.SECONDS);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
     //设置 web站登录标示
     private void setWebLoginStatus(TaskUser taskUser) {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.RemoteMsg;
 import com.shaw.bo.TaskUser;
 import com.shaw.constants.CacheKey;
+import com.shaw.constants.Constants;
 import com.shaw.constants.ResponseCode;
 import com.shaw.service.RemoteMsgService;
 import com.shaw.service.TaskUserService;
@@ -64,12 +65,15 @@ public class RemoteTaskController {
         if (taskUser != null) {
             String userRedisKey = String.format(USER_AUTH_KEY, taskUser.getAppKey());
             // 2.6 超时时间  -1 不超时 -2 不存在 >0 存在且有超时时间
-            long expireTime = stringRedisTemplate.getExpire(userRedisKey, TimeUnit.MINUTES);
+            long expireTime = stringRedisTemplate.getExpire(userRedisKey, TimeUnit.SECONDS);
             if (expireTime > 0) {
-                //刷新页面时 重设登录超时时间
-                stringRedisTemplate.expire(userRedisKey, 20L, TimeUnit.MINUTES);
                 request.setAttribute(LOGIN_SUCCESS_FLAG, true);
                 setSocketStatus(request, taskUser.getAppKey());
+                //即将超时时刷新页面，重设超时时间,最后10分钟时刷新页面将重设缓存
+                if (expireTime < 60 * 10) {
+                    //刷新页面时 重设登录超时时间
+                    stringRedisTemplate.expire(userRedisKey, Constants.SESSION_TIME, TimeUnit.SECONDS);
+                }
             }
         } else {
             if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as)) {
@@ -191,7 +195,7 @@ public class RemoteTaskController {
     //设置 web站登录标示
     private void setWebLoginStatus(TaskUser taskUser) {
         stringRedisTemplate.opsForValue().set(String.format(USER_AUTH_KEY, taskUser.getAppKey()), JSONObject.toJSONString(taskUser));
-        stringRedisTemplate.expire(String.format(USER_AUTH_KEY, taskUser.getAppKey()), 20L, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(String.format(USER_AUTH_KEY, taskUser.getAppKey()), Constants.SESSION_TIME, TimeUnit.SECONDS);
     }
 
 

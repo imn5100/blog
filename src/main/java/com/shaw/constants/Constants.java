@@ -21,5 +21,5 @@ public class Constants {
     public static final Short MSG_START = 2;
     public static final Short MSG_OVER = 3;
     public static final Short MSG_FAIL = 4;
-
+    public static final Integer SESSION_TIME = 1800;
 }

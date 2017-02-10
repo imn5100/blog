@@ -56,7 +56,7 @@ public class CacheKey {
     public static final Long SYSTEM_REFRESH_TIME_EXPIRE = 60 * 60 * 2L;
 
     /**
-     * 刷新系统缓存时间戳
+     * 任务用户登录 key
      */
     public static final String TASK_USER_AUTH = "task_user";
 

@@ -62,10 +62,17 @@ public class RemoteTaskController {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
         request.setAttribute(LOGIN_SUCCESS_FLAG, false);
         if (taskUser != null) {
-            request.setAttribute(LOGIN_SUCCESS_FLAG, true);
-            setSocketStatus(request, taskUser.getAppKey());
+            String userRedisKey = String.format(USER_AUTH_KEY, taskUser.getAppKey());
+            // 2.6 超时时间  -1 不超时 -2 不存在 >0 存在且有超时时间
+            long expireTime = stringRedisTemplate.getExpire(userRedisKey, TimeUnit.MINUTES);
+            if (expireTime > 0) {
+                //刷新页面时 重设登录超时时间
+                stringRedisTemplate.expire(userRedisKey, 20L, TimeUnit.MINUTES);
+                request.setAttribute(LOGIN_SUCCESS_FLAG, true);
+                setSocketStatus(request, taskUser.getAppKey());
+            }
         } else {
-            if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as) && ak.length() == 32 && as.length() == 32) {
+            if (!StringUtils.isEmpty(ak) && !StringUtils.isEmpty(as)) {
                 taskUser = taskUserService.selectByPrimaryKey(ak);
                 if (taskUser != null && taskUser.getAppSecret().equals(as)) {
                     setWebLoginStatus(taskUser);

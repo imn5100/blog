@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- * 博客相关
+ * 博客内容相关控制器
  */
 @Controller
 @RequestMapping("/blog")
@@ -39,7 +39,7 @@ public class BlogController {
     private RedisClient redisClient;
 
     /**
-     * 博客详情
+     * 跳转 博客详情页
      */
     @RequestMapping("/{id}")
     public ModelAndView details(@PathVariable("id") Integer id, HttpServletRequest request) throws Exception {
@@ -76,7 +76,7 @@ public class BlogController {
     }
 
     /**
-     * *搜索入口
+     * 搜索博客
      */
     @RequestMapping("/search")
     public ModelAndView search(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
@@ -105,20 +105,6 @@ public class BlogController {
         mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + keyword);
         mav.setViewName("WEB-INF/mainPage");
         return mav;
-    }
-
-    /**
-     * 获取验证码接口，
-     * 分布式服务时需要 spring-session 支持
-     */
-    @RequestMapping("/codesImg")
-    public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String codes = CodesImgUtil.getCodesImg(response, request);
-        String sessionId = request.getSession().getId();
-        String key = String.format(CacheKey.CODES_KEY, sessionId);
-        redisClient.set(key, codes);
-        redisClient.expire(key, CacheKey.CODES_EXPIRE);
-        return;
     }
 
 }

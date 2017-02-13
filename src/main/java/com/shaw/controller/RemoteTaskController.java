@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by shaw on 2017/1/13 0013.
+ * 远程任务发送
  */
 @Controller
 @RequestMapping("/remoteTask")
@@ -43,6 +44,10 @@ public class RemoteTaskController {
     //保证socket 服务端的redis序列化工具和 本站相同
     @Resource(name = "stringRedisTemplate")
     private RedisTemplate<String, String> stringRedisTemplate;
+
+    /**
+     * 和socket server 相关的常量。
+     */
     //web登录成功
     public static final String LOGIN_SUCCESS_FLAG = "loginSuccess";
     //客户端连接 key
@@ -56,6 +61,9 @@ public class RemoteTaskController {
     //接收socket推送任务消息的二层topic
     public static final String TOPIC_TASK = "socketTask";
 
+    /**
+     * 主页及登录。如果是登录状态访问，则进入任务发送界面否则进入登录页面
+     */
     @RequestMapping("/main")
     public ModelAndView remoteTask(String ak, String as, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -87,6 +95,9 @@ public class RemoteTaskController {
         return mav;
     }
 
+    /**
+     * 退出登录
+     */
     @RequestMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
@@ -97,8 +108,12 @@ public class RemoteTaskController {
         HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
     }
 
+    //quit表示退出，不进行记录入数据库
     public static final String QUIT = "quit";
 
+    /**
+     * 添加任务
+     */
     @RequestMapping("/addTask")
     public void addTask(@RequestParam(value = "title") String title, @RequestParam(value = "contents") String contents, @RequestParam(value = "type") Integer type, HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
@@ -144,6 +159,9 @@ public class RemoteTaskController {
         }
     }
 
+    /**
+     * 更新远程任务用户基本信息 ，只允许更新名字和描述
+     */
     @RequestMapping("/update")
     public void updateTaskUser(@RequestParam(value = "name") String name, @RequestParam(value = "intr") String intr, HttpServletRequest request, HttpServletResponse response) throws Exception {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
@@ -178,7 +196,9 @@ public class RemoteTaskController {
         }
     }
 
-    //检查登录状态，并更新超时时间
+    /**
+     * 检查登录状态，并更新超时时间
+     */
     private boolean checkLogin(HttpServletRequest request) {
         TaskUser taskUser = (TaskUser) request.getSession().getAttribute(CacheKey.TASK_USER_AUTH);
         if (taskUser == null) {
@@ -199,14 +219,18 @@ public class RemoteTaskController {
         }
     }
 
-    //设置 web站登录标示
+    /**
+     * 设置 web站登录标示
+     */
     private void setWebLoginStatus(TaskUser taskUser) {
         stringRedisTemplate.opsForValue().set(String.format(USER_AUTH_KEY, taskUser.getAppKey()), JSONObject.toJSONString(taskUser));
         stringRedisTemplate.expire(String.format(USER_AUTH_KEY, taskUser.getAppKey()), Constants.SESSION_TIME, TimeUnit.SECONDS);
     }
 
 
-    //获取socket客户端连接状态
+    /**
+     * 获取socket客户端连接状态
+     */
     private boolean setSocketStatus(HttpServletRequest request, String appkey) {
         boolean flag = stringRedisTemplate.opsForSet().isMember(USER_CLIENT_CONNECT, appkey);
         request.setAttribute(SOCKET_CONNECT, flag);
@@ -214,7 +238,9 @@ public class RemoteTaskController {
     }
 
 
-    //向redis发布 socket任务消息
+    /**
+     * 向redis发布 socket任务消息
+     */
     private void pubRedisMsg(RemoteMsg remoteMsg) {
         Map<String, Object> map = new HashMap<>();
         map.put("topic", TOPIC_TASK);

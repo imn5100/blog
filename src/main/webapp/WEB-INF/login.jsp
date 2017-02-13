@@ -66,7 +66,7 @@
 
         });
         function loadimage() {
-            document.getElementById("randImage").src = "/blog/codesImg.do?" + Math.random();
+            document.getElementById("randImage").src = "/blogger/codesImg.do?" + Math.random();
         }
     </SCRIPT>
 </head>
@@ -100,14 +100,15 @@
                 <SPAN class="v_logo"></SPAN>
                 <input id="vcode" name="vcode" class="ipt2" type="text" placeholder="验证码" maxlength="4" value=""
                        required/>
-                <img onclick="javascript:loadimage();" title="换一张试试" name="randImage" id="randImage"  align="absmiddle" class="vcode" src="/blog/codesImg.do">
+                <img onclick="javascript:loadimage();" title="换一张试试" name="randImage" id="randImage" align="absmiddle"
+                     class="vcode" src="/blogger/codesImg.do">
             </P>
         </div>
         <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
             <P style="margin: 0px 35px 20px 45px;">
                 <SPAN style="float: left;">最後のハードル</SPAN>
                 <span><font color="red" id="error"></font></span>
-	        <SPAN style="float: right;">
+                <SPAN style="float: right;">
 	              <input type="submit"
                          style="background: rgb(0, 142, 173); padding: 8px 12px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
                          value="登录"/>

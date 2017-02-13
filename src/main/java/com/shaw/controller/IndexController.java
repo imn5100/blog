@@ -29,6 +29,7 @@ import java.util.Map;
 
 /**
  * 主页跳转控制器
+ * 包含 顶部菜单连接跳转
  */
 @Controller
 @RequestMapping("/")
@@ -92,7 +93,7 @@ public class IndexController {
      * 关于本站跳转
      */
     @RequestMapping("/about")
-    public ModelAndView download() throws Exception {
+    public ModelAndView aboutSite() throws Exception {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/system/aboutSite.jsp");
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
@@ -111,6 +112,9 @@ public class IndexController {
         return mav;
     }
 
+    /**
+     * rainy room 跳转
+     */
     @RequestMapping("/rainyRoom")
     public ModelAndView rainyRoom() {
         ModelAndView mav = new ModelAndView();

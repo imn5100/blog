@@ -6,6 +6,7 @@ import com.shaw.constants.CacheKey;
 import com.shaw.constants.ResponseCode;
 import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
+import com.shaw.util.CodesImgUtil;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.HttpRequestUtil;
 import com.shaw.util.StringUtil;
@@ -41,7 +42,7 @@ public class BloggerController {
     Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /**
-     * 用户登录
+     * 登录
      */
     @RequestMapping("/login")
     @ResponseBody
@@ -110,5 +111,18 @@ public class BloggerController {
         mav.setViewName("WEB-INF/mainPage");
         mav.addObject("aboutBloggerActive", true);
         return mav;
+    }
+
+    /**
+     * 获取验证码接口
+     */
+    @RequestMapping("/codesImg")
+    public void getCodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String codes = CodesImgUtil.getCodesImg(response, request);
+        String sessionId = request.getSession().getId();
+        String key = String.format(CacheKey.CODES_KEY, sessionId);
+        redisClient.set(key, codes);
+        redisClient.expire(key, CacheKey.CODES_EXPIRE);
+        return;
     }
 }

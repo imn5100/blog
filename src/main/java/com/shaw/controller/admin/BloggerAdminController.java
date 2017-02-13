@@ -90,9 +90,6 @@ public class BloggerAdminController {
 
     /**
      * 注销
-     *
-     * @return
-     * @throws Exception
      */
     @RequestMapping("/logout")
     public String logout() throws Exception {

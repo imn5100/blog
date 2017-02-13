@@ -41,6 +41,9 @@ public class RemoteMsgAdminController {
     private TaskUserService taskUserService;
     Logger logger = LoggerFactory.getLogger(RemoteMsgAdminController.class);
 
+    /**
+     * 列出远程任务 (管理员页面使用 easyUi格式)
+     */
     @RequestMapping("/listMsg")
     public void listMsg(RemoteMsgQuery query, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -57,6 +60,9 @@ public class RemoteMsgAdminController {
         HttpResponseUtil.writeJsonStr(response, result);
     }
 
+    /**
+     * 添加任务调用白名单
+     */
     @RequestMapping("/addWhiteList")
     public void addWhiteList(String ip, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(ip)) {
@@ -69,6 +75,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 移除任务调用白名单
+     */
     @RequestMapping("/removeWhiteList")
     public void removeWhiteList(String ip, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(ip)) {
@@ -81,12 +90,18 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 白名单列表
+     */
     @RequestMapping("/whiteList")
     public void getWhiteList(HttpServletResponse response) throws Exception {
         Set<Object> wipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
         HttpResponseUtil.writeUseData(response, wipList, ResponseCode.SUCCESS);
     }
 
+    /**
+     * 推送|插入消息
+     */
     @RequestMapping("/pushMsg")
     public void pushMsg(String contents, String topic, String other, HttpServletResponse response) throws Exception {
         if (!StringUtils.isBlank(contents) && !StringUtils.isBlank(topic)) {
@@ -105,6 +120,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 更新消息
+     */
     @RequestMapping("/updateMsg")
     public void updateMsg(RemoteMsg remoteMsg, HttpServletResponse response) throws Exception {
         if (remoteMsg != null && remoteMsg.getId() != null && StringUtil.isNotEmpty(remoteMsg.getContents()) && StringUtil.isNotEmpty(remoteMsg.getTopic())) {
@@ -118,6 +136,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 批量删除消息
+     */
     @RequestMapping("/batchDelete")
     public void batchDelete(String ids, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -134,7 +155,11 @@ public class RemoteMsgAdminController {
         }
     }
 
-    //////////////////////////////////////////////////////////远程任务用户维护接口
+    //////////////////////////////////////////////////////////socket远程任务用户维护接口
+
+    /**
+     * socket 远程任务 ，列出用户
+     */
     @RequestMapping("/listUser")
     public void listUser(TaskUserQuery query, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -154,6 +179,9 @@ public class RemoteMsgAdminController {
         HttpResponseUtil.writeJsonStr(response, result);
     }
 
+    /**
+     * 添加用户，并生成相关ak as
+     */
     @RequestMapping("/addUser")
     public void addUser(TaskUser taskUser, String salt, HttpServletResponse response) throws Exception {
         if (taskUser != null) {
@@ -179,6 +207,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 删除socket远程任务用户
+     */
     @RequestMapping("/deleteUser")
     public void deleteUser(String appkey, HttpServletResponse response) throws Exception {
         if (!StringUtil.isEmpty(appkey)) {
@@ -192,6 +223,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 更新远程任务用户
+     */
     @RequestMapping("/updateUser")
     public void updateUser(TaskUser taskUser, HttpServletResponse response) throws Exception {
         if (taskUser != null && StringUtil.isNotEmpty(taskUser.getAppKey()) &&
@@ -212,8 +246,8 @@ public class RemoteMsgAdminController {
     /////内部接口完毕，以下为对外接口///////////////////
 
     /**
-     *
-     * */
+     * 拉取任务消息接口，需要登录且验证ip
+     */
     @IpPassport
     @RequestMapping("/script/consumerMsg")
     public void consumerMsg(String topic, HttpServletResponse response) throws Exception {
@@ -236,6 +270,9 @@ public class RemoteMsgAdminController {
         }
     }
 
+    /**
+     * 任务执行后的回调，用于更新任务状态
+     */
     @IpPassport
     @RequestMapping("/script/callbackMsg")
     public void callBackMsg(Integer id, @RequestParam(value = "type", required = false, defaultValue = "0") Integer type, HttpServletResponse response) throws Exception {

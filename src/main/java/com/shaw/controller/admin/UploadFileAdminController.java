@@ -63,6 +63,9 @@ public class UploadFileAdminController {
         }
     }
 
+    /**
+     * 批量删除存储的外链文件信息
+     */
     @RequestMapping("/batchDelete")
     public void batchDelete(String ids, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();

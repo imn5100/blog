@@ -27,7 +27,7 @@ public class WebFileAdminController {
     private UploadFileService uploadFileService;
 
     /**
-     * 列出七牛文件
+     * 列出七牛文件 （从七牛http获取的数据）
      * easyUI 格式
      */
     @RequestMapping("/list")
@@ -53,6 +53,9 @@ public class WebFileAdminController {
         return null;
     }
 
+    /**
+     * 将文件上传至七牛服务器
+     */
     @RequestMapping("/upload")
     public void upload(@RequestParam(value = "filename", required = false) String filename, @RequestParam("file") MultipartFile file, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -73,6 +76,9 @@ public class WebFileAdminController {
         }
     }
 
+    /**
+     * 将文件上传至SMMS服务器
+     */
     @RequestMapping("/SMMSUpload")
     public void uploadToSMMS(@RequestParam("file") MultipartFile file, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
@@ -89,6 +95,10 @@ public class WebFileAdminController {
         }
     }
 
+    /**
+     * 删除七牛文件
+     * SMMS 的文件直接请求delete url就能完成不需要接口
+     */
     @RequestMapping("/delete")
     public void delete(@RequestParam(value = "ids") String ids, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();

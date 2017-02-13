@@ -82,7 +82,7 @@ public class RemoteMsgAdminController {
     }
 
     @RequestMapping("/whiteList")
-    public void addWhiteList(HttpServletResponse response) throws Exception {
+    public void getWhiteList(HttpServletResponse response) throws Exception {
         Set<Object> wipList = redisClient.smembers(CacheKey.WHITE_LIST_IP);
         HttpResponseUtil.writeUseData(response, wipList, ResponseCode.SUCCESS);
     }

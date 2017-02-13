@@ -192,7 +192,7 @@
         function openDialog4() {
             $.post("/admin/remote/whiteList.do", function (result, textstatus, xhr) {
                 if (result.code == 200) {
-                    ip_list = String(result.data).split(",")
+                    ip_list = result.data
                     str = ""
                     ip_list.forEach(function (element, index) {
                         str += "<tr><td>" + String(index + 1) + "</td><td>"

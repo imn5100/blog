@@ -53,7 +53,6 @@
                         if (data == "200") {
                             location = "/admin/main.jsp"
                         } else if (data == "601") {
-                            $("#password").val("");
                             $("#error").text("验证码错误！");
                         } else {
                             $("#error").text("用户名或密码错误");

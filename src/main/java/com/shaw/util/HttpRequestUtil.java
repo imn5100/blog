@@ -18,6 +18,9 @@ public class HttpRequestUtil {
         return !StringUtils.isBlank(value) && !"unknown".equalsIgnoreCase(value) ? value : "";
     }
 
+    /**
+     * nginx 代理下 从请求头中获取ip地址
+     * */
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = getHeader(request, "X-Real-IP");
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {

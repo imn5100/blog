@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+/**
+ * 時間操作類
+ * */
 public class TimeUtils {
     public static final String HOUR_FORMAT = "HH:mm";
     public static final String DAY_FORMAT = "MM/dd";

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by shaw  on 2016/12/20 0020.
+ * ip验证拦截器
  */
 public class IpPassportInterceptor extends HandlerInterceptorAdapter {
     @Autowired

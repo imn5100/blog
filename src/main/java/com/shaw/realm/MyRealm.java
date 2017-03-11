@@ -12,7 +12,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Resource;
-
+/**
+ * shiro realm
+ * 验证身份信息
+ * */
 public class MyRealm extends AuthorizingRealm {
 
     @Resource

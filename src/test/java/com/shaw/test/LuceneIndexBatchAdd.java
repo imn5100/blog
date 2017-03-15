@@ -17,31 +17,31 @@ import java.util.List;
  * 如果手动修改了数据库的t_blog表也需要重新导入搜索索引，或者手动删除|更新修改的blog 否则会出现搜索查询能查到数据，却拿不到数据的问题。
  */
 public class LuceneIndexBatchAdd extends SpringTestCase {
-	@Autowired
-	private BlogService blogService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private BlogIndex blogIndex;
 
-	@Test
-	public void setAllIndex() throws Exception {
-		BlogIndex blogIndex = new BlogIndex();
-		List<Blog> blogs = blogService.list(null);
-		IndexWriter writer = blogIndex.getWriter();
+    @Test
+    public void setAllIndex() throws Exception {
+        List<Blog> blogs = blogService.list(null);
+        IndexWriter writer = blogIndex.getWriter();
 
-		for (Blog blog : blogs) {
-			Document doc = new Document();
-			doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
-			doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
-			doc.add(new TextField("content", Jsoup.parse(blog.getContent()).text(), Field.Store.YES));
-			doc.add(new LongField("time", blog.getReleaseDate().getTime(), BlogIndex.TIME_TYPE));
-			writer.addDocument(doc);
-		}
-		writer.close();
-	}
+        for (Blog blog : blogs) {
+            Document doc = new Document();
+            doc.add(new StringField("id", String.valueOf(blog.getId()), Field.Store.YES));
+            doc.add(new TextField("title", blog.getTitle(), Field.Store.YES));
+            doc.add(new TextField("content", Jsoup.parse(blog.getContent()).text(), Field.Store.YES));
+            doc.add(new LongField("time", blog.getReleaseDate().getTime(), BlogIndex.TIME_TYPE));
+            writer.addDocument(doc);
+        }
+        writer.close();
+    }
 
-	@Test
-	public void deleteAll() throws Exception {
-		BlogIndex blogIndex = new BlogIndex();
-		IndexWriter writer = blogIndex.getWriter();
-		writer.deleteAll();
-	}
+    @Test
+    public void deleteAll() throws Exception {
+        IndexWriter writer = blogIndex.getWriter();
+        writer.deleteAll();
+    }
 
 }

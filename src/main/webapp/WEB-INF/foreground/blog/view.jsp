@@ -11,16 +11,6 @@
             'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
             'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
         })
-    var duoshuoQuery = {short_name: "shawblog", theme: "none"};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + "//shawblog.me/static/embed.js";//(document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
 </script>
 <style>
     .blog_info {
@@ -88,14 +78,13 @@
         </div>
     </div>
 </div>
-<div class="ds-thread" data-thread-key="${blog.id}" data-title="${blog.title}"
-     data-url="${rootSite}/blog/${blog.id}.html"></div>
-<div class="ds-share" data-thread-key="${blog.id}" data-title="${blog.title}"
-     data-images="${blogger.imageName}" data-content=""
-     data-url="${rootSite}/blog/${blog.id}.html">
-    <div class="ds-share-aside-right">
-        <div class="ds-share-aside-inner">
-        </div>
-        <div class="ds-share-aside-toggle">分享到</div>
-    </div>
-</div>
+<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+    var cloudTieConfig = {
+        url: document.location.href,
+        sourceId: "",
+        productKey: "5639cd71ae684a908044fc1325d4dcd3",
+        target: "cloud-tie-wrapper"
+    };
+</script>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>

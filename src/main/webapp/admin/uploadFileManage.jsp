@@ -13,6 +13,20 @@
     <script type="text/javascript" src="/static/ajaxfileupload.js"></script>
     <script type="text/javascript">
         var url;
+        function copy(c) {
+            var inp = document.querySelector(c);
+            console.log(inp.select)
+            if (inp && inp.select) {
+                inp.select();
+                try {
+                    document.execCommand('copy');
+                    inp.blur();
+                }
+                catch (err) {
+                    alert('please press Ctrl/Cmd+C to copy');
+                }
+            }
+        }
         function deleteFile() {
             var selectedRows = $("#dg").datagrid("getSelections");
             if (selectedRows.length == 0) {
@@ -103,7 +117,7 @@
             });
         }
         function formatUrl(val, row) {
-            return '<a target="_blank" href="' + val + '">' + val + '</a>'
+            return '<input readonly="readonly" style="width: 350px" id="' + 'url_' + row.id + '" type="text" value="' + val + '"  >' + '<button onclick=\'javascript:copy("' + '#url_' + row.id + '")\'>Copy</button>'
         }
         function formatTime(val, row) {
             return new Date(val).toLocaleString();
@@ -148,13 +162,11 @@
         <th field="id" align="center">编号</th>
         <th field="filename" align="center">文件名</th>
         <th field="mimetype" align="center">文件类型</th>
-        <th field="storename" align="center">外部名</th>
         <th field="type" align="center" formatter="formatType">来源</th>
         <th field="size" align="center" formatter="formatSize">大小</th>
-        <th field="uploadTime" align="center" formatter="formatTime">存储时间</th>
-        <th field="url" align="center" formatter="formatUrl">访问链接</th>
         <th field="path" align="center">路径</th>
-        <th field="hash" align="center">hash</th>
+        <th field="url" align="center" formatter="formatUrl" width="180" >访问链接</th>
+        <th field="uploadTime" align="center" formatter="formatTime">存储时间</th>
         <th field="isValid" align="center" formatter="isValid">是否有效</th>
         <th field="detail" align="center" formatter="formatDetail">其他信息</th>
     </tr>
@@ -184,4 +196,10 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    (function () {
+
+
+    })();
+</script>
 </html>

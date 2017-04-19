@@ -117,7 +117,7 @@
             });
         }
         function formatUrl(val, row) {
-            return '<input readonly="readonly" style="width: 350px" id="' + 'url_' + row.id + '" type="text" value="' + val + '"  >' + '<button onclick=\'javascript:copy("' + '#url_' + row.id + '")\'>Copy</button>'
+            return '<a target="_blank" href="' + val + '">' + '<input readonly="readonly" style="width: 350px" id="' + 'url_' + row.id + '" type="text" value="' + val + '"  >' + '</a>' + '<button onclick=\'javascript:copy("' + '#url_' + row.id + '")\'>Copy</button>'
         }
         function formatTime(val, row) {
             return new Date(val).toLocaleString();
@@ -165,7 +165,7 @@
         <th field="type" align="center" formatter="formatType">来源</th>
         <th field="size" align="center" formatter="formatSize">大小</th>
         <th field="path" align="center">路径</th>
-        <th field="url" align="center" formatter="formatUrl" width="180" >访问链接</th>
+        <th field="url" align="center" formatter="formatUrl" width="180">访问链接</th>
         <th field="uploadTime" align="center" formatter="formatTime">存储时间</th>
         <th field="isValid" align="center" formatter="isValid">是否有效</th>
         <th field="detail" align="center" formatter="formatDetail">其他信息</th>

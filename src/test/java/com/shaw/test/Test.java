@@ -36,4 +36,8 @@ public class Test {
         System.out.println(encodeStr);
         System.out.println(decodeId);
     }
+
+    public static void testBit() {
+
+    }
 }

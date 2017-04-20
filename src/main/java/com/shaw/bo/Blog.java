@@ -151,7 +151,7 @@ public class Blog implements Serializable {
         return blogType == null ? null : blogType.getTypeName();
     }
 
-    public String getEncodeId() {
+    public String getEncodeId() throws Exception {
         return CodecUtils.getEncodeId(id);
     }
 

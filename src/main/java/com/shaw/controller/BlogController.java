@@ -74,14 +74,11 @@ public class BlogController {
 //        blogService.update(blog);
         String key = String.format(CacheKey.BLOG_CLICK_KEY, blog.getId());
         redisClient.incr(key);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("blogId", blog.getId());
-        map.put("state", 1); // 查询审核通过的评论
-        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
-                request.getServletContext().getContextPath()));
+//        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id), null));
+        mav.addObject("lastBlog", blogService.getLastBlog(id));
+        mav.addObject("nextBlog", blogService.getNextBlog(id));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/view.jsp");
-        mav.addObject("sideNotLoad", true);
         mav.addObject("pageTitle", blog.getTitle());
         mav.setViewName("WEB-INF/mainPage");
         return mav;

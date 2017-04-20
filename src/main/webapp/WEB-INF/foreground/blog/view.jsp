@@ -74,7 +74,22 @@
         </div>
         <hr>
         <div class="blog_lastAndNextPage">
-            ${pageCode }
+            <c:choose>
+                <c:when test="${lastBlog!=null && lastBlog.id!=null}">
+                    <p>上一篇：<a href="/blog/${lastBlog.encodeId}.html">${lastBlog.title}</a></p>
+                </c:when>
+                <c:otherwise>
+                    <p>上一篇：没有了 XD</p>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${nextBlog!=null && nextBlog.id!=null}">
+                    <p>下一篇：<a href="/blog/${nextBlog.encodeId}.html">${nextBlog.title}</a></p>
+                </c:when>
+                <c:otherwise>
+                    <p>下一篇：没有了 XD</p>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>

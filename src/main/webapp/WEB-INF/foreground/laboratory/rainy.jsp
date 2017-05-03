@@ -4,7 +4,7 @@
     <title>Rainy Room</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="雨天房间,失眠时的小窝">
+    <meta name="description" content="雨天房间">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">

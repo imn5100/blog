@@ -51,7 +51,7 @@ public class DesUtils {
         return decryptCipher.doFinal(arrB);
     }
 
-    public static String byteArr2HexStr(byte[] arrB) throws Exception {
+    private static String byteArr2HexStr(byte[] arrB) throws Exception {
         int iLen = arrB.length;
         StringBuffer sb = new StringBuffer(iLen * 2);
         for (int i = 0; i < iLen; i++) {
@@ -67,7 +67,7 @@ public class DesUtils {
         return sb.toString();
     }
 
-    public static byte[] hexStr2ByteArr(String strIn) throws Exception {
+    private static byte[] hexStr2ByteArr(String strIn) throws Exception {
         byte[] arrB = strIn.getBytes();
         int iLen = arrB.length;
         byte[] arrOut = new byte[iLen / 2];

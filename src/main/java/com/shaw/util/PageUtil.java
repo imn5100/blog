@@ -1,7 +1,5 @@
 package com.shaw.util;
 
-import com.shaw.bo.Blog;
-
 /**
  * 分页工具类
  *
@@ -48,26 +46,6 @@ public class PageUtil {
             pageCode.append("<li><a href='" + targetUrl + "?page=" + totalPage + "&" + param + "'>尾页</a></li>");
             return pageCode.toString();
         }
-    }
-
-    /**
-     * 构建上下博客跳转
-     */
-    public static String genUpAndDownPageCode(Blog lastBlog, Blog nextBlog, String projectContext) {
-        StringBuffer pageCode = new StringBuffer();
-        if (lastBlog == null || lastBlog.getId() == null) {
-//            pageCode.append("<p>上一篇：没有了</p>");
-        } else {
-            pageCode.append("<p>上一篇：<a href='" + projectContext + "/blog/" + lastBlog.getId() + ".html'>"
-                    + lastBlog.getTitle() + "</a></p>");
-        }
-        if (nextBlog == null || nextBlog.getId() == null) {
-//            pageCode.append("<p>下一篇：没有了</p>");
-        } else {
-            pageCode.append("<p>下一篇：<a href='" + projectContext + "/blog/" + nextBlog.getId() + ".html'>"
-                    + nextBlog.getTitle() + "</a></p>");
-        }
-        return pageCode.toString();
     }
 
     /**

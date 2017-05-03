@@ -10,7 +10,7 @@
                 <c:forEach var="blog" items="${blogList}">
                     <div class="bs-callout bs-callout-info" id="callout-helper-bg-specificity">
                         <h4><a class="title"
-                               href="/blog/${blog.id}.html">${blog.title }</a>
+                               href="/blog/${blog.encodeId}.html">${blog.title }</a>
                         </h4>
                         &nbsp;&nbsp;
                         <small class="smallClass">${blog.summary }...</small>

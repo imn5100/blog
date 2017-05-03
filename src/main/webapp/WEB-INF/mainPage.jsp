@@ -57,6 +57,11 @@
             });
         })
     </script>
+    <style type="text/css">
+        body {
+        <c:if test="${blogger.backgroundImage !=null}"> background-image: url("${blogger.backgroundImage}"); </c:if>
+        }
+    </style>
 </head>
 <body>
 <div class="container None">

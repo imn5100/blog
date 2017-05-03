@@ -12,6 +12,7 @@ public class Blogger implements Serializable {
     private String sign;
     private String proFile;
     private String imageName;
+    private String backgroundImage;
 
     public Integer getId() {
         return id;
@@ -70,4 +71,11 @@ public class Blogger implements Serializable {
     }
 
 
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
 }

@@ -34,10 +34,10 @@ public class BloggerAdminController {
      * 修改博主信息
      */
     @RequestMapping("/save")
-    public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, Blogger blogger, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, @RequestParam("backgroundUrl") String backgroundUrl, Blogger blogger, HttpServletResponse response) throws Exception {
         if (imageFile != null && !imageFile.isEmpty()) {
             //将头像上传至 七牛，并获取返回的url
-            UploadFile uploadFile = uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
+            UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
             //将头像上传至smms 图库，返回URL
 //            UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
             blogger.setImageName(uploadFile.getUrl());
@@ -45,6 +45,9 @@ public class BloggerAdminController {
             if (StringUtil.isNotEmpty(imageUrl)) {
                 blogger.setImageName(imageUrl.trim());
             }
+        }
+        if (StringUtil.isNotEmpty(backgroundUrl)) {
+            blogger.setBackgroundImage(backgroundUrl);
         }
         int resultTotal = bloggerService.update(blogger);
         JSONObject result = new JSONObject();

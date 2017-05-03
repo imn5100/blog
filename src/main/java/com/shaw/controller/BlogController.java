@@ -6,10 +6,7 @@ import com.shaw.constants.Constants;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.service.impl.RedisClient;
-import com.shaw.util.CodesImgUtil;
-import com.shaw.util.PageUtil;
-import com.shaw.util.PropertiesUtil;
-import com.shaw.util.StringUtil;
+import com.shaw.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -42,8 +38,24 @@ public class BlogController {
      * 跳转 博客详情页
      */
     @RequestMapping("/{id}")
-    public ModelAndView details(@PathVariable("id") Integer id, HttpServletRequest request) throws Exception {
+    public ModelAndView details(@PathVariable("id") String encodeId, HttpServletRequest request) throws Exception {
+        int id = 0;
         ModelAndView mav = new ModelAndView();
+        if (NumberUtils.is(encodeId)) {
+            id = NumberUtils.parseIntQuietly(encodeId);
+            if (id != 0) {
+                mav.setViewName("redirect:/blog/" + CodecUtils.getEncodeId(id) + ".html");
+            } else {
+                mav.setViewName("redirect:/");
+            }
+            return mav;
+        } else {
+            id = CodecUtils.getDecodeId(encodeId);
+        }
+        if (id == 0) {
+            mav.setViewName("redirect:/");
+            return mav;
+        }
         Blog blog = blogService.findById(id);
         if (blog == null) {
             mav.setViewName("redirect:/");
@@ -62,14 +74,11 @@ public class BlogController {
 //        blogService.update(blog);
         String key = String.format(CacheKey.BLOG_CLICK_KEY, blog.getId());
         redisClient.incr(key);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("blogId", blog.getId());
-        map.put("state", 1); // 查询审核通过的评论
-        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id),
-                request.getServletContext().getContextPath()));
+//        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id), null));
+        mav.addObject("lastBlog", blogService.getLastBlog(id));
+        mav.addObject("nextBlog", blogService.getNextBlog(id));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/view.jsp");
-        mav.addObject("sideNotLoad", true);
         mav.addObject("pageTitle", blog.getTitle());
         mav.setViewName("WEB-INF/mainPage");
         return mav;

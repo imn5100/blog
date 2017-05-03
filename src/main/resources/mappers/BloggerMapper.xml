@@ -6,16 +6,17 @@
 
     <resultMap type="Blogger" id="BloggerResult">
         <result property="id" column="id"/>
-        <result property="userName" column="userName"/>
+        <result property="userName" column="username"/>
         <result property="password" column="password"/>
-        <result property="nickName" column="nickName"/>
+        <result property="nickName" column="nickname"/>
         <result property="sign" column="sign"/>
-        <result property="proFile" column="proFile"/>
-        <result property="imageName" column="imageName"/>
+        <result property="proFile" column="profile"/>
+        <result property="imageName" column="image_name"/>
+        <result property="backgroundImage" column="background_image"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,userName, password, nickName, sign, proFile, imageName
+		id,username, password, nickname, sign, profile, image_name,background_image
 	</sql>
 
     <select id="find" resultMap="BloggerResult">
@@ -27,7 +28,7 @@
     <select id="getByUserName" parameterType="String" resultMap="BloggerResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blogger where userName=#{userName}
+        from t_blogger where username=#{userName}
     </select>
 
     <update id="update" parameterType="Blogger">
@@ -37,16 +38,19 @@
                 password=#{password},
             </if>
             <if test="nickName!=null and nickName!='' ">
-                nickName=#{nickName},
+                nickname=#{nickName},
             </if>
             <if test="sign!=null and sign!='' ">
                 sign=#{sign},
             </if>
             <if test="proFile!=null and proFile!='' ">
-                proFile=#{proFile},
+                profile=#{proFile},
             </if>
             <if test="imageName!=null and imageName!='' ">
-                imageName=#{imageName},
+                image_name=#{imageName},
+            </if>
+            <if test="backgroundImage!=null and backgroundImage!='' ">
+                background_image=#{backgroundImage},
             </if>
         </set>
         where id=1

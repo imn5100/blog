@@ -18,11 +18,11 @@
                     <c:forEach var="blog" items="${blogList}">
                         <div class="bs-callout bs-callout-info">
                             <h4><a class="title"
-                                   href="/blog/${blog.id}.html"
+                                   href="/blog/${blog.encodeId}.html"
                                    target="_blank">${blog.title }</a></h4>
                             <small style="color: grey">${blog.content}...</small>
                             <br>
-                            <a href="/blog/${blog.id}.html">${rootSite}/blog/${blog.id}.html</a>
+                            <a href="/blog/${blog.encodeId}.html">${rootSite}/blog/${blog.encodeId}.html</a>
                             <span class="info">&nbsp;&nbsp;&nbsp;&nbsp;发布日期：${blog.releaseDateStr }</span>
                         </div>
                     </c:forEach>

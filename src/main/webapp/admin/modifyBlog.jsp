@@ -80,7 +80,7 @@
             <td></td>
             <td>
                 <a href="javascript:submitData()" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-submit'">发布博客</a>
+                   data-options="iconCls:'icon-submit'">修改博客</a>
             </td>
         </tr>
     </table>

@@ -1,6 +1,7 @@
 package com.shaw.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.shaw.util.CodecUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Blog implements Serializable{
+public class Blog implements Serializable {
 
     private static final long serialVersionUID = 4186161649311309864L;
     private Integer id;
@@ -27,6 +28,8 @@ public class Blog implements Serializable{
     private String keyWord;
     private List<String> keywordList;
     private List<String> imagesList = new LinkedList<String>();
+
+    private String encodeId;
 
     public List<String> getKeywordList() {
         if (StringUtils.isNotEmpty(keyWord) && keywordList == null) {
@@ -146,5 +149,13 @@ public class Blog implements Serializable{
 
     public String getBlogTypeName() {
         return blogType == null ? null : blogType.getTypeName();
+    }
+
+    public String getEncodeId() throws Exception {
+        return CodecUtils.getEncodeId(id);
+    }
+
+    public void setEncodeId(String encodeId) {
+        this.encodeId = encodeId;
     }
 }

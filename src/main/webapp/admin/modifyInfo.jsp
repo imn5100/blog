@@ -22,6 +22,7 @@
             var nickName = $("#nickName").val();
             var sign = $("#sign").val();
             var imageUrl = $("#imageUrl").val();
+            var backgroundUrl = $("#backgroundUrl").val();
             var proFile = UE.getEditor('proFile').getContent();
             var params = {
                 "id": id,
@@ -29,7 +30,8 @@
                 "nickName": nickName,
                 "sign": sign,
                 "proFile": proFile,
-                "imageUrl": imageUrl
+                "imageUrl": imageUrl,
+                "backgroundUrl": backgroundUrl
             }
             $.ajaxFileUpload({
                 type: 'POST',
@@ -85,6 +87,10 @@
                 <td><input type="text" id="imageUrl" name="imageUrl" style="width: 400px;"/></td>
             </tr>
             <tr>
+                <td>背景URL</td>
+                <td><input type="text" id="backgroundUrl" name="backgroundUrl" style="width: 400px;"/></td>
+            </tr>
+            <tr>
                 <td valign="top">简介：</td>
                 <td>
                     <script id="proFile" type="text/plain" style="width:100%;height:500px;"></script>
@@ -121,6 +127,7 @@
                         $("#sign").val(result.sign);
                         $("#nickName").val(result.nickName);
                         $("#imageUrl").val(result.imageName);
+                        $("#backgroundUrl").val(result.backgroundImage);
                         UE.getEditor('proFile').setContent(result.proFile);
                     }
                 }

@@ -16,11 +16,11 @@
 	</sql>
 
     <insert id="add" parameterType="Link">
-		insert into t_link values(null,#{linkName},#{linkUrl},#{orderNo})
+		insert into link values(null,#{linkName},#{linkUrl},#{orderNo})
 	</insert>
 
     <update id="update" parameterType="Link">
-        update t_link
+        update link
         <set>
             <if test="linkName!=null and linkName!='' ">
                 linkName=#{linkName},
@@ -38,18 +38,18 @@
     <select id="list" parameterType="Map" resultMap="LinkResult">
         select
         <include refid="Base_Column_List"/>
-        from t_link order by orderNo
+        from link order by orderNo
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
     </select>
 
     <select id="getTotal" parameterType="Map" resultType="Long">
-		select count(1) from t_link
+		select count(1) from link
 	</select>
 
 
     <delete id="delete" parameterType="Integer">
-		delete from t_link where id=#{id}
+		delete from link where id=#{id}
 	</delete>
 </mapper> 

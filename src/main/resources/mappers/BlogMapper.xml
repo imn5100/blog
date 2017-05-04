@@ -24,13 +24,13 @@
 	</sql>
 
     <select id="countList" resultMap="BlogResult">
-		SELECT DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(1) AS blogCount  FROM t_blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
+		SELECT DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(1) AS blogCount  FROM blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
 	</select>
 
     <select id="list" parameterType="Map" resultMap="BlogResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blog
+        from blog
         <where>
             <if test="title!=null and title!='' ">
                 and title like #{title}
@@ -51,7 +51,7 @@
     <select id="listSimple" parameterType="Map" resultMap="BlogResult">
         select
         <include refid="Simple_Base_Column_List"/>
-        from t_blog
+        from blog
         <where>
             <if test="title!=null and title!='' ">
                 and title like #{title}
@@ -70,7 +70,7 @@
     </select>
 
     <select id="getTotal" parameterType="Map" resultType="Long">
-        select count(1) from t_blog
+        select count(1) from blog
         <where>
             <if test="title!=null and title!='' ">
                 and title like #{title}
@@ -87,11 +87,11 @@
     <select id="findById" parameterType="Integer" resultMap="BlogResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blog where id=#{id}
+        from blog where id=#{id}
     </select>
 
     <update id="update" parameterType="Blog">
-        update t_blog
+        update blog
         <set>
             <if test="title!=null and title!='' ">
                 title=#{title},
@@ -116,28 +116,28 @@
     </update>
 
     <select id="getLastBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT 	id,title  FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
+		SELECT 	id,title  FROM blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
 	</select>
 
     <select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
-		SELECT 	id,title  FROM t_blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
+		SELECT 	id,title  FROM blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
 	</select>
 
 
     <insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="Blog">
-		insert into t_blog values(null,#{title},#{summary},now(),0,#{content},#{blogType.id},#{keyWord})
+		insert into blog values(null,#{title},#{summary},now(),0,#{content},#{blogType.id},#{keyWord})
 	</insert>
 
     <delete id="delete" parameterType="Integer">
-		delete from t_blog where id=#{id}
+		delete from blog where id=#{id}
 	</delete>
 
     <select id="getBlogByTypeId" parameterType="Integer" resultType="Integer">
-		select count(1) from t_blog where typeId=#{typeId}
+		select count(1) from blog where typeId=#{typeId}
 	</select>
 
     <update id="updateBatchForClickHit" parameterType="java.util.List">
-        update t_blog set
+        update blog set
         clickHit=
         <foreach collection="list" item="item" index="index" separator=" " open="case id" close="end">
             when #{item.id} then #{item.clickHit}
@@ -153,7 +153,7 @@
     </update>
 
     <update id="updateBatchForSummary" parameterType="java.util.List">
-        update t_blog set
+        update blog set
         summary=
         <foreach collection="list" item="item" index="index" separator=" " open="case id" close="end">
             when #{item.id} then #{item.summary}

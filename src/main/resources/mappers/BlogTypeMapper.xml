@@ -16,34 +16,34 @@
 	</sql>
 
     <select id="countList" resultMap="BlogTypeResult">
-		SELECT t2.id,t2.typeName,COUNT(t1.id) AS blogCount FROM t_blog t1 RIGHT JOIN t_blogtype t2 ON t1.typeId=t2.id GROUP BY t2.typeName order by t2.orderNo;
+		SELECT t2.id,t2.typeName,COUNT(t1.id) AS blogCount FROM blog t1 RIGHT JOIN blog_type t2 ON t1.typeId=t2.id GROUP BY t2.typeName order by t2.orderNo;
 	</select>
 
     <select id="findById" parameterType="Integer" resultMap="BlogTypeResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blogtype where id=#{id}
+        from blog_type where id=#{id}
     </select>
 
     <select id="list" parameterType="Map" resultMap="BlogTypeResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blogtype
+        from blog_type
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
     </select>
 
     <select id="getTotal" parameterType="Map" resultType="Long">
-		select count(1) from t_blogtype
+		select count(1) from blog_type
 	</select>
 
     <insert id="add" parameterType="BlogType">
-		insert into t_blogtype values(null,#{typeName},#{orderNo});
+		insert into blog_type values(null,#{typeName},#{orderNo});
 	</insert>
 
     <update id="update" parameterType="BlogType">
-        update t_blogtype
+        update blog_type
         <set>
             <if test="typeName!=null and typeName!='' ">
                 typeName=#{typeName},
@@ -56,6 +56,6 @@
     </update>
 
     <delete id="delete" parameterType="Integer">
-		delete from t_blogtype where id=#{id}
+		delete from blog_type where id=#{id}
 	</delete>
 </mapper> 

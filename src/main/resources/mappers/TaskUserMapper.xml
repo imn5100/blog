@@ -15,13 +15,13 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from t_task_user
+        from task_user
         where appkey = #{appKey,jdbcType=CHAR}
     </select>
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaw.vo.TaskUserQuery">
         select
         <include refid="Base_Column_List"/>
-        from t_task_user
+        from task_user
         <where>
             <if test="appKey!=null">
                 appkey=#{appKey}
@@ -36,7 +36,7 @@
     <select id="queryCount" resultType="Integer" parameterType="com.shaw.vo.TaskUserQuery">
         select
         count(1)
-        from t_task_user
+        from task_user
         <where>
             <if test="appKey!=null">
                 appkey=#{appKey}
@@ -47,11 +47,11 @@
         </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_task_user
+    delete from task_user
     where appkey = #{appKey,jdbcType=CHAR}
   </delete>
     <insert id="insert" parameterType="com.shaw.bo.TaskUser">
-    insert into t_task_user (appkey, appsecret, permissions, 
+    insert into task_user (appkey, appsecret, permissions,
       name, intr, active_time
       )
     values (#{appKey,jdbcType=CHAR}, #{appSecret,jdbcType=CHAR}, #{permissions,jdbcType=TINYINT},
@@ -59,7 +59,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.TaskUser">
-        insert into t_task_user
+        insert into task_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="appKey != null">
                 appkey,
@@ -102,7 +102,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.shaw.bo.TaskUser">
-        update t_task_user
+        update task_user
         <set>
             <if test="appSecret != null">
                 appsecret = #{appSecret,jdbcType=CHAR},
@@ -123,7 +123,7 @@
         where appkey = #{appKey,jdbcType=CHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.shaw.bo.TaskUser">
-    update t_task_user
+    update task_user
     set appsecret = #{appSecret,jdbcType=CHAR},
       permissions = #{permissions,jdbcType=TINYINT},
       name = #{name,jdbcType=VARCHAR},

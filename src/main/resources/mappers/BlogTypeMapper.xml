@@ -6,17 +6,17 @@
 
     <resultMap type="BlogType" id="BlogTypeResult">
         <result property="id" column="id"/>
-        <result property="typeName" column="typeName"/>
-        <result property="blogCount" column="blogCount"/>
-        <result property="orderNo" column="orderNo"/>
+        <result property="typeName" column="type_name"/>
+        <result property="blogCount" column="blog_count"/>
+        <result property="orderNo" column="order_no"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,typeName,orderNo
+		id,type_name,order_no
 	</sql>
 
     <select id="countList" resultMap="BlogTypeResult">
-		SELECT t2.id,t2.typeName,COUNT(t1.id) AS blogCount FROM blog t1 RIGHT JOIN blog_type t2 ON t1.typeId=t2.id GROUP BY t2.typeName order by t2.orderNo;
+		SELECT t2.id,t2.type_name,COUNT(t1.id) AS blog_count FROM blog t1 RIGHT JOIN blog_type t2 ON t1.type_id=t2.id GROUP BY t2.id order by t2.order_no;
 	</select>
 
     <select id="findById" parameterType="Integer" resultMap="BlogTypeResult">
@@ -46,10 +46,10 @@
         update blog_type
         <set>
             <if test="typeName!=null and typeName!='' ">
-                typeName=#{typeName},
+                type_name=#{typeName},
             </if>
             <if test="orderNo!=null ">
-                orderNo=#{orderNo},
+                order_no=#{orderNo},
             </if>
         </set>
         where id=#{id}

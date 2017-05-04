@@ -11,12 +11,12 @@
         <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="upload_time" property="uploadTime" jdbcType="BIGINT"/>
         <result column="hash" property="hash" jdbcType="VARCHAR"/>
-        <result column="mimeType" property="mimetype" jdbcType="VARCHAR"/>
+        <result column="mimetype" property="mimetype" jdbcType="VARCHAR"/>
         <result column="detail" property="detail" jdbcType="VARCHAR"/>
         <result column="is_valid" property="isValid" jdbcType="TINYINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, filename, url, type, size, storename, path, upload_time, hash, mimeType, detail, 
+    id, filename, url, type, size, storename, path, upload_time, hash, mimetype, detail,
     is_valid
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -33,7 +33,7 @@
     insert into upload_file (id, filename, url,
       type, size, storename, 
       path, upload_time, hash, 
-      mimeType, detail, is_valid
+      mimetype, detail, is_valid
       )
     values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{type,jdbcType=TINYINT}, #{size,jdbcType=BIGINT}, #{storename,jdbcType=VARCHAR}, 
@@ -72,7 +72,7 @@
                 hash,
             </if>
             <if test="mimetype != null">
-                mimeType,
+                mimetype,
             </if>
             <if test="detail != null">
                 detail,
@@ -148,7 +148,7 @@
                 hash = #{hash,jdbcType=VARCHAR},
             </if>
             <if test="mimetype != null">
-                mimeType = #{mimetype,jdbcType=VARCHAR},
+                mimetype = #{mimetype,jdbcType=VARCHAR},
             </if>
             <if test="detail != null">
                 detail = #{detail,jdbcType=VARCHAR},
@@ -169,7 +169,7 @@
       path = #{path,jdbcType=VARCHAR},
       upload_time = #{uploadTime,jdbcType=BIGINT},
       hash = #{hash,jdbcType=VARCHAR},
-      mimeType = #{mimetype,jdbcType=VARCHAR},
+      mimetype = #{mimetype,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
       is_valid = #{isValid,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
@@ -194,7 +194,7 @@
                 and filename like CONCAT(#{filename},"%")
             </if>
             <if test="mimetype!=null">
-                and mimeType=#{mimetype}
+                and mimetype=#{mimetype}
             </if>
         </where>
         ORDER BY upload_time DESC
@@ -212,7 +212,7 @@
                 and filename=#{filename}
             </if>
             <if test="mimetype!=null">
-                and mimeType=#{mimetype}
+                and mimetype=#{mimetype}
             </if>
         </where>
     </select>

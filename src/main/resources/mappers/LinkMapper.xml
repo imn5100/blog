@@ -6,13 +6,13 @@
 
     <resultMap type="Link" id="LinkResult">
         <result property="id" column="id"/>
-        <result property="linkName" column="linkName"/>
-        <result property="linkUrl" column="linkUrl"/>
-        <result property="orderNo" column="orderNo"/>
+        <result property="linkName" column="link_name"/>
+        <result property="linkUrl" column="link_url"/>
+        <result property="orderNo" column="order_no"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,linkName, linkUrl, orderNo
+		id,link_name, link_url, order_no
 	</sql>
 
     <insert id="add" parameterType="Link">
@@ -23,13 +23,13 @@
         update link
         <set>
             <if test="linkName!=null and linkName!='' ">
-                linkName=#{linkName},
+                link_name=#{linkName},
             </if>
             <if test="linkUrl!=null and linkUrl!='' ">
-                linkUrl=#{linkUrl},
+                link_url=#{linkUrl},
             </if>
             <if test="orderNo!=null">
-                orderNo=#{orderNo},
+                order_no=#{orderNo},
             </if>
         </set>
         where id=#{id}
@@ -38,7 +38,7 @@
     <select id="list" parameterType="Map" resultMap="LinkResult">
         select
         <include refid="Base_Column_List"/>
-        from link order by orderNo
+        from link order by order_no
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>

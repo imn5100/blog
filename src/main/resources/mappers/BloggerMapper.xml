@@ -22,17 +22,17 @@
     <select id="find" resultMap="BloggerResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blogger where id=1;
+        from blogger where id=1;
     </select>
 
     <select id="getByUserName" parameterType="String" resultMap="BloggerResult">
         select
         <include refid="Base_Column_List"/>
-        from t_blogger where username=#{userName}
+        from blogger where username=#{userName}
     </select>
 
     <update id="update" parameterType="Blogger">
-        update t_blogger
+        update blogger
         <set>
             <if test="password!=null and password!='' ">
                 password=#{password},

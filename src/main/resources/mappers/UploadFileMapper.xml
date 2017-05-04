@@ -22,15 +22,15 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_upload
+        from upload_file
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_upload
+    delete from upload_file
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.shaw.bo.UploadFile">
-    insert into t_upload (id, filename, url, 
+    insert into upload_file (id, filename, url,
       type, size, storename, 
       path, upload_time, hash, 
       mimeType, detail, is_valid
@@ -42,7 +42,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.UploadFile">
-        insert into t_upload
+        insert into upload_file
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -121,7 +121,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.shaw.bo.UploadFile">
-        update t_upload
+        update upload_file
         <set>
             <if test="filename != null">
                 filename = #{filename,jdbcType=VARCHAR},
@@ -160,7 +160,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.shaw.bo.UploadFile">
-    update t_upload
+    update upload_file
     set filename = #{filename,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},
@@ -175,7 +175,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
     <delete id="deleteQiniuByKey" parameterType="List">
-        delete from t_upload WHERE
+        delete from upload_file WHERE
         type = 1
         AND storename in
         <foreach collection="list" open="(" close=")" item="item" separator=",">
@@ -185,7 +185,7 @@
     <select id="queryList" parameterType="com.shaw.vo.WebFileQuery" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from t_upload
+        from upload_file
         <where>
             <if test="type!=null">
                 type=#{type}
@@ -203,7 +203,7 @@
     <select id="countList" parameterType="com.shaw.vo.WebFileQuery" resultType="Integer">
         SELECT
         count(1)
-        from t_upload
+        from upload_file
         <where>
             <if test="type!=null">
                 type=#{type}
@@ -217,14 +217,14 @@
         </where>
     </select>
     <delete id="batchDelete" parameterType="List">
-        delete from t_upload WHERE
+        delete from upload_file WHERE
         id in
         <foreach collection="list" open="(" close=")" item="item" separator=",">
             #{item}
         </foreach>
     </delete>
     <update id="updateValid">
-        UPDATE t_upload
+        UPDATE upload_file
         <choose>
             <when test="valid ==true">
                 set is_valid= 1

@@ -17,7 +17,7 @@
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.shaw.vo.RemoteMsgQuery">
         SELECT
         <include refid="Base_Column_List"/>
-        from t_remote_msg
+        from remote_msg
         <where>
             <if test="status!=null">
                 status=#{status}
@@ -32,7 +32,7 @@
     <select id="queryCount" resultType="Integer" parameterType="com.shaw.vo.RemoteMsgQuery">
         SELECT
         count(1)
-        from t_remote_msg
+        from remote_msg
         <where>
             <if test="status!=null">
                 status=#{status}
@@ -45,13 +45,13 @@
     <select id="consumerMsg" resultMap="BaseResultMap" parameterType="String">
         SELECT
         <include refid="Base_Column_List"/>
-        from t_remote_msg
+        from remote_msg
         WHERE status=1 and topic=#{topic}
         ORDER BY create_time
         limit 1
     </select>
     <delete id="batchDelete" parameterType="List">
-        delete from t_remote_msg WHERE
+        delete from remote_msg WHERE
         id in
         <foreach collection="list" open="(" close=")" item="item" separator=",">
             #{item}
@@ -60,15 +60,15 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_remote_msg
+        from remote_msg
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_remote_msg
+    delete from remote_msg
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.shaw.bo.RemoteMsg" useGeneratedKeys="true" keyProperty="id">
-    insert into t_remote_msg (id, topic, status, 
+    insert into remote_msg (id, topic, status,
       contents, other, create_time, 
       op_time, appkey)
     values (#{id,jdbcType=INTEGER}, #{topic,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
@@ -76,7 +76,7 @@
       #{opTime,jdbcType=BIGINT}, #{appKey,jdbcType=CHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.shaw.bo.RemoteMsg" useGeneratedKeys="true" keyProperty="id">
-        insert into t_remote_msg
+        insert into remote_msg
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -131,7 +131,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.shaw.bo.RemoteMsg">
-        update t_remote_msg
+        update remote_msg
         <set>
             <if test="topic != null">
                 topic = #{topic,jdbcType=VARCHAR},
@@ -158,7 +158,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.shaw.bo.RemoteMsg">
-    update t_remote_msg
+    update remote_msg
     set topic = #{topic,jdbcType=VARCHAR},
       status = #{status,jdbcType=SMALLINT},
       contents = #{contents,jdbcType=VARCHAR},

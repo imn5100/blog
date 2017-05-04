@@ -8,23 +8,23 @@
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>
-        <result property="releaseDate" column="releaseDate"/>
-        <result property="clickHit" column="clickHit"/>
+        <result property="releaseDate" column="release_date"/>
+        <result property="clickHit" column="click_hit"/>
         <result property="content" column="content"/>
-        <result property="keyWord" column="keyWord"/>
-        <association property="blogType" column="typeId" select="com.shaw.mapper.BlogTypeMapper.findById"></association>
+        <result property="keyWord" column="key_word"/>
+        <association property="blogType" column="type_id" select="com.shaw.mapper.BlogTypeMapper.findById"></association>
     </resultMap>
 
     <sql id="Base_Column_List">
-		id,title, summary, releaseDate, clickHit, content, typeId,
-		keyWord
+		id,title, summary, release_date, click_hit, content, type_id,
+		key_word
 	</sql>
     <sql id="Simple_Base_Column_List">
-		id,title,releaseDate, typeId
+		id,title,release_date, type_id
 	</sql>
 
     <select id="countList" resultMap="BlogResult">
-		SELECT DATE_FORMAT(releaseDate,'%Y年%m月') AS releaseDateStr ,COUNT(1) AS blogCount  FROM blog GROUP BY DATE_FORMAT(releaseDate,'%Y年%m月') ORDER BY DATE_FORMAT(releaseDate,'%Y年%m月') DESC;
+		SELECT DATE_FORMAT(release_date,'%Y年%m月') AS releaseDateStr ,COUNT(1) AS blogCount  FROM blog GROUP BY DATE_FORMAT(release_date,'%Y年%m月') ORDER BY DATE_FORMAT(release_date,'%Y年%m月') DESC;
 	</select>
 
     <select id="list" parameterType="Map" resultMap="BlogResult">
@@ -36,13 +36,13 @@
                 and title like #{title}
             </if>
             <if test="typeId!=null and typeId!='' ">
-                and typeId = #{typeId}
+                and type_id = #{typeId}
             </if>
             <if test="releaseDateStr!=null and releaseDateStr!='' ">
-                and DATE_FORMAT(releaseDate,'%Y年%m月') = #{releaseDateStr}
+                and DATE_FORMAT(release_date,'%Y年%m月') = #{releaseDateStr}
             </if>
         </where>
-        order by releaseDate desc
+        order by release_date desc
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
@@ -57,13 +57,13 @@
                 and title like #{title}
             </if>
             <if test="typeId!=null and typeId!='' ">
-                and typeId = #{typeId}
+                and type_id = #{typeId}
             </if>
             <if test="releaseDateStr!=null and releaseDateStr!='' ">
-                and DATE_FORMAT(releaseDate,'%Y年%m月') = #{releaseDateStr}
+                and DATE_FORMAT(release_date,'%Y年%m月') = #{releaseDateStr}
             </if>
         </where>
-        order by releaseDate desc
+        order by release_date desc
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
@@ -76,10 +76,10 @@
                 and title like #{title}
             </if>
             <if test="typeId!=null and typeId!='' ">
-                and typeId = #{typeId}
+                and type_id = #{typeId}
             </if>
             <if test="releaseDateStr!=null and releaseDateStr!='' ">
-                and DATE_FORMAT(releaseDate,'%Y年%m月') = #{releaseDateStr}
+                and DATE_FORMAT(release_date,'%Y年%m月') = #{releaseDateStr}
             </if>
         </where>
     </select>
@@ -103,13 +103,13 @@
                 content=#{content},
             </if>
             <if test="blogType.id!=null ">
-                typeId=#{blogType.id},
+                type_id=#{blogType.id},
             </if>
             <if test="clickHit!=null ">
-                clickHit=#{clickHit},
+                click_hit=#{clickHit},
             </if>
             <if test="keyWord!=null and keyWord!='' ">
-                keyWord=#{keyWord},
+                key_word=#{keyWord},
             </if>
         </set>
         where id=#{id}
@@ -133,12 +133,12 @@
 	</delete>
 
     <select id="getBlogByTypeId" parameterType="Integer" resultType="Integer">
-		select count(1) from blog where typeId=#{typeId}
+		select count(1) from blog where type_id=#{typeId}
 	</select>
 
     <update id="updateBatchForClickHit" parameterType="java.util.List">
         update blog set
-        clickHit=
+        click_hit=
         <foreach collection="list" item="item" index="index" separator=" " open="case id" close="end">
             when #{item.id} then #{item.clickHit}
         </foreach>

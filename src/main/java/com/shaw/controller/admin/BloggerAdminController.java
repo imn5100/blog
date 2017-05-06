@@ -37,7 +37,7 @@ public class BloggerAdminController {
     public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, @RequestParam("backgroundUrl") String backgroundUrl, Blogger blogger, HttpServletResponse response) throws Exception {
         if (imageFile != null && !imageFile.isEmpty()) {
             //将头像上传至 七牛，并获取返回的url
-            UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
+            UploadFile uploadFile =  uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
             //将头像上传至smms 图库，返回URL
 //            UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
             blogger.setImageName(uploadFile.getUrl());

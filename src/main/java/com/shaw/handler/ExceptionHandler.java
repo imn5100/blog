@@ -22,13 +22,18 @@ public class ExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         logger.error("Blog System Exception：", ex);
-        String[] emails = EMAIL_SUBSCRIBER.split(",");
-        String msg = org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace(ex);
-        if (emails != null)
-            for (String email : emails) {
-                if (email != null && email.indexOf('@') > 0)
-                    EmailUtils.sendEmail("Blog system exception", msg, email);
-            }
+        //邮件发送业务不影响正常 错误处理
+        try {
+            String[] emails = EMAIL_SUBSCRIBER.split(",");
+            String msg = org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace(ex);
+            if (emails != null)
+                for (String email : emails) {
+                    if (email != null && email.indexOf('@') > 0)
+                        EmailUtils.sendEmail("Blog system exception", msg, email);
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new ModelAndView("WEB-INF/error");
     }
 }

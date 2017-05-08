@@ -49,7 +49,7 @@
             <if test="imageName!=null and imageName!='' ">
                 image_name=#{imageName},
             </if>
-            <if test="backgroundImage!=null and backgroundImage!='' ">
+            <if test="backgroundImage!=null">
                 background_image=#{backgroundImage},
             </if>
         </set>

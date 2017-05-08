@@ -74,7 +74,6 @@ public class BlogController {
 //        blogService.update(blog);
         String key = String.format(CacheKey.BLOG_CLICK_KEY, blog.getId());
         redisClient.incr(key);
-//        mav.addObject("pageCode", PageUtil.genUpAndDownPageCode(blogService.getLastBlog(id), blogService.getNextBlog(id), null));
         mav.addObject("lastBlog", blogService.getLastBlog(id));
         mav.addObject("nextBlog", blogService.getNextBlog(id));
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));

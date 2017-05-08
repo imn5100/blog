@@ -42,14 +42,14 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog findById(Integer id) {
         Blog blog = blogMapper.findById(id);
-        BoUtils.updateClickHit(blog, stringRedisTemplate);
+        BoUtils.setClickHitFromRedis(blog, stringRedisTemplate);
         return blog;
     }
 
     @Override
     public Integer update(Blog blog) {
         //每次更新blog的时候将 blog点击量更新到 数据库
-        BoUtils.updateClickHit(blog, stringRedisTemplate);
+        BoUtils.setClickHitFromRedis(blog, stringRedisTemplate);
         return blogMapper.update(blog);
     }
 

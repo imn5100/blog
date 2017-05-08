@@ -56,7 +56,7 @@ public class SystemServiceImpl implements SystemService {
             int count = 0;
             List<Blog> updateBlog = new ArrayList<Blog>();
             for (Blog blog : blogs) {
-                if (BoUtils.updateClickHit(blog, stringRedisTemplate)) {
+                if (BoUtils.setClickHitFromRedis(blog, stringRedisTemplate)) {
                     updateBlog.add(blog);
                     count++;
                 }

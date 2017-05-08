@@ -14,8 +14,7 @@ public class EmailUtils {
     private static final String MAIL_USERNAME = PropertiesUtil.getConfiguration().getString("email.username");
     private static final String MAIL_PASSWORD = PropertiesUtil.getConfiguration().getString("email.password");
 
-
-    public static String sendEmail(String subject, String msg, String to) {
+    public static String sendEmail(String subject, String msg, String... tos) {
         try {
             Email email = new SimpleEmail();
             email.setHostName("smtp.163.com");
@@ -25,7 +24,7 @@ public class EmailUtils {
             email.setFrom(MAIL_USERNAME + "@163.com");
             email.setSubject(subject);
             email.setMsg(msg);
-            email.addTo(to);
+            email.addTo(tos);
             return email.send();
         } catch (Exception e) {
             logger.error("Send Email Fail:", e);

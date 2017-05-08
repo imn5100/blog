@@ -3,6 +3,7 @@ package com.shaw.handler;
 import com.shaw.constants.Constants;
 import com.shaw.util.EmailUtils;
 import com.shaw.util.PropertiesUtil;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
     Logger logger = LoggerFactory.getLogger(Constants.LOG_EXCEPTION);
-    public static final String EMAIL_SUBSCRIBER = PropertiesUtil.getConfiguration().getString("email.subscriber");
+    public static final String[] EMAIL_SUBSCRIBER = PropertiesUtil.getConfiguration().getStringArray("email.subscriber");
 
 
     @Override
@@ -24,13 +25,8 @@ public class ExceptionHandler implements HandlerExceptionResolver {
         logger.error("Blog System Exception：", ex);
         //邮件发送业务不影响正常 错误处理
         try {
-            String[] emails = EMAIL_SUBSCRIBER.split(",");
-            String msg = org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace(ex);
-            if (emails != null)
-                for (String email : emails) {
-                    if (email != null && email.indexOf('@') > 0)
-                        EmailUtils.sendEmail("Blog system exception", msg, email);
-                }
+            if (EMAIL_SUBSCRIBER != null && EMAIL_SUBSCRIBER.length > 0)
+                EmailUtils.sendEmail("Blog system exception", ExceptionUtils.getFullStackTrace(ex), EMAIL_SUBSCRIBER);
         } catch (Exception e) {
             e.printStackTrace();
         }

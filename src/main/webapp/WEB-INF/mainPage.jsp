@@ -59,7 +59,8 @@
     </script>
     <style type="text/css">
         body {
-        <c:if test="${blogger.backgroundImage !=null}"> background-image: url("${blogger.backgroundImage}"); </c:if>
+        <c:if test="${blogger.backgroundImage !=null && blogger.backgroundImage !=''}"> background-image: url("${blogger.backgroundImage}");
+        </c:if>
         }
     </style>
 </head>

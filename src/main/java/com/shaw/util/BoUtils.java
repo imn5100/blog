@@ -13,7 +13,7 @@ public class BoUtils {
     /**
      * 从缓存 获取点击数据 更新 blog, 返回值表示 blog是否改变
      */
-    public static Boolean updateClickHit(Blog blog, RedisTemplate<String, String> redisTemplate) {
+    public static Boolean setClickHitFromRedis(Blog blog, RedisTemplate<String, String> redisTemplate) {
         if (blog != null && redisTemplate != null) {
             String clickHit = redisTemplate.opsForValue().get(String.format(CacheKey.BLOG_CLICK_KEY, blog.getId()));
             if (StringUtils.isNotBlank(clickHit)) {

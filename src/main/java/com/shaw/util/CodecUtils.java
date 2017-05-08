@@ -9,8 +9,12 @@ public class CodecUtils {
 
     public static int getDecodeId(String encodeId) throws Exception {
         String decodeId = new String(org.apache.commons.codec.binary.Base64.decodeBase64(encodeId));
-        decodeId = DesUtils.getDefaultInstance().decrypt(decodeId);
-        if (decodeId.length() > PRE_ID_ENCODE_SALT.length() && decodeId.length() > SUF_ID_ENCODE_SALT.length()) {
+        try {
+            decodeId = DesUtils.getDefaultInstance().decrypt(decodeId);
+        } catch (Exception e) {
+            return 0;
+        }
+        if (decodeId.length() > PRE_ID_ENCODE_SALT.length() && decodeId.length() > SUF_ID_ENCODE_SALT.length() && decodeId.startsWith(PRE_ID_ENCODE_SALT) && decodeId.endsWith(SUF_ID_ENCODE_SALT)) {
             return NumberUtils.parseIntQuietly(decodeId.substring(PRE_ID_ENCODE_SALT.length(), decodeId.length() - SUF_ID_ENCODE_SALT.length()), 0);
         } else {
             return 0;

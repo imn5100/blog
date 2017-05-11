@@ -69,10 +69,10 @@ public class QiNiuUtils {
 
     public static String upload(byte[] file, String filename) throws IOException {
         try {
-            String fileKey = new Long(System.currentTimeMillis()).toString();
+            String fileKey = String.valueOf(System.currentTimeMillis()) + StringUtil.randomNumbers(3);
             //以后缀的形式 设置key ，七牛可以通过前缀 查询文件
             if (filename != null && filename.length() > 0 && !filename.trim().equals("")) {
-                fileKey = filename + "_" + fileKey;
+                fileKey = fileKey + filename;
             }
             Response res = uploadManager.put(file, fileKey, getUpToken());
             String bodyString = res == null ? null : res.bodyString();

@@ -2,6 +2,7 @@ package com.shaw.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,5 +121,21 @@ public class StringUtil {
             }
         }
         return idList;
+    }
+
+    private static Random RANDOM = new Random(System.currentTimeMillis());
+
+    public static String randomNumbers(int length) {
+        if (length <= 1) {
+            return "";
+        } else {
+            char[] buff = new char[length];
+
+            for (int i = 0; i < buff.length; ++i) {
+                buff[i] = (char) (48 + RANDOM.nextInt(10));
+            }
+
+            return new String(buff);
+        }
     }
 }

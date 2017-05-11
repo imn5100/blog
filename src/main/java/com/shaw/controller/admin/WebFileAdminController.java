@@ -61,7 +61,7 @@ public class WebFileAdminController {
         JSONObject result = new JSONObject();
         if (file != null && !file.isEmpty()) {
             if (StringUtil.isEmpty(filename)) {
-                filename = StringUtil.getFileName(file.getOriginalFilename()).toLowerCase();
+                filename = file.getOriginalFilename();
             }
             UploadFile uploadFile = uploadFileService.uploadToQiniu(file, filename.trim());
             if (uploadFile != null) {

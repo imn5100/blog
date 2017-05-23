@@ -19,7 +19,10 @@
             var blogTypeId = $("#blogTypeId").combobox("getValue");
             var content = UE.getEditor('editor').getContent().replace(/<img src=/g, "<img class='img-responsive' src=");
             var keyWord = $("#keyWord").val();
-
+            if (content.length > 65535) {
+                alert("文章内容超过Text限制,你可能需要改变表字段了,或是缩减文章");
+                return
+            }
             if (title == null || title == '') {
                 alert("请输入标题！");
             } else if (blogTypeId == null || blogTypeId == '') {
@@ -39,7 +42,7 @@
                         alert("博客发布成功！");
                         resetValue();
                     } else {
-                        alert("博客发布失败！");
+                        alert("博客发布失败！" + result.msg);
                     }
                 }, "json");
             }
@@ -82,60 +85,159 @@
             <td valign="top">博客内容：</td>
             <td>
                 <script id="editor" type="text/plain" style="width:650px;height:750px;"></script>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <a href="javascript:submitData()" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-submit'">发布博客</a>
-            </td>
-        </tr>
-    </table>
-</div>
-<style type="text/css">
-    .cd-top {
-        height: 40px;
-        width: 40px;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-        background: url(/static/images/cd-top-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
-        opacity: 1;
-        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-        -moz-transition: opacity .3s 0s, visibility 0s .3s;
-        transition: opacity .3s 0s, visibility 0s .3s;
-    }
+                </
+                td >
+                < / tr >
+                < tr >
+                < td > < / td >
+                < td >
+                < a
+                href = "javascript:submitData()"
+                class
+                = "easyui-linkbutton"
+                data - options = "iconCls:'icon-submit'" > 发布博客 < / a >
+                    < / td >
+                    < / tr >
+                    < / table >
+                    < / div >
+                    < style
+                type = "text/css" >
+                .cd - top
+                {
+                    height: 40
+                    px;
+                    width: 40
+                    px;
+                    position: fixed;
+                    bottom: 10
+                    px;
+                    right: 10
+                    px;
+                    box - shadow
+                :
+                    0
+                    0
+                    10
+                    px
+                    rgba(0, 0, 0, .05);
+                    background: url(/static/im
+                    ages / cd - top - arrow.svg
+                )
+                    center
+                    50 % no - repeat
+                    rgba(52, 73, 94, .8);
+                    opacity: 1;
+                    -webkit - transition
+                :
+                    opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                    -moz - transition
+                :
+                    opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                    transition: opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                }
 
-    .cd-bottom {
-        height: 40px;
-        width: 40px;
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-        background: url(/static/images/cd-bottom-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
-        opacity: 1;
-        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-        -moz-transition: opacity .3s 0s, visibility 0s .3s;
-        transition: opacity .3s 0s, visibility 0s .3s;
-    }
-</style>
-<a class="cd-top"></a>
-<a class="cd-bottom"></a>
-<script type="text/javascript">
-    var ue = UE.getEditor('editor');
-    $(function () {
-        $(".cd-top").eq(0).click(function () {
-            $("html,body").animate({scrollTop: 0}, 500);
-            return false;
-        });
-        $(".cd-bottom").eq(0).click(function () {
-            $("html,body").animate({scrollTop: 10000}, 500);
-            return false;
-        });
-    })
-</script>
+                .cd - bottom
+                {
+                    height: 40
+                    px;
+                    width: 40
+                    px;
+                    position: fixed;
+                    top: 10
+                    px;
+                    right: 10
+                    px;
+                    box - shadow
+                :
+                    0
+                    0
+                    10
+                    px
+                    rgba(0, 0, 0, .05);
+                    background: url(/static/im
+                    ages / cd - bottom - arrow.svg
+                )
+                    center
+                    50 % no - repeat
+                    rgba(52, 73, 94, .8);
+                    opacity: 1;
+                    -webkit - transition
+                :
+                    opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                    -moz - transition
+                :
+                    opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                    transition: opacity
+                    .3
+                    s
+                    0
+                    s, visibility
+                    0
+                    s
+                    .3
+                    s;
+                }
+                </
+                style >
+                < a
+                class
+                = "cd-top" > < / a >
+                    < a
+                class
+                = "cd-bottom" > < / a >
+                    < script
+                type = "text/javascript" >
+                var ue = UE.getEditor('editor');
+                $(function () {
+                    $(".cd-top").eq(0).click(function () {
+                        $("html,body").animate({scrollTop: 0}, 500);
+                        return false;
+                    });
+                    $(".cd-bottom").eq(0).click(function () {
+                        $("html,body").animate({scrollTop: 10000}, 500);
+                        return false;
+                    });
+                })
+                </script>
 </body>
 </html>

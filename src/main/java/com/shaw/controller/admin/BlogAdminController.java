@@ -36,6 +36,13 @@ public class BlogAdminController {
      */
     @RequestMapping("/save")
     public String save(Blog blog, HttpServletResponse response) throws Exception {
+        JSONObject result = new JSONObject();
+        if (blog.getContent().length() > 65535) {
+            result.put("success", false);
+            result.put("msg", "文章内容超过Text限制,你可能需要改变表字段了,或是缩减文章");
+            HttpResponseUtil.writeJsonStr(response, result);
+            return null;
+        }
         int resultTotal = 0; // 操作的记录条数
         if (blog.getId() == null) {
             blog.setReleaseDate(new Date());
@@ -46,7 +53,6 @@ public class BlogAdminController {
             resultTotal = blogService.update(blog);
             blogIndex.updateIndex(blog); // 更新博客索引
         }
-        JSONObject result = new JSONObject();
         if (resultTotal > 0) {
             result.put("success", true);
         } else {

@@ -1,15 +1,13 @@
 package com.shaw.controller;
 
 import com.shaw.bo.Blog;
-import com.shaw.bo.TaskUser;
-import com.shaw.constants.CacheKey;
+import com.shaw.bo.Blogger;
 import com.shaw.constants.Constants;
-import com.shaw.constants.ResponseCode;
 import com.shaw.service.BlogService;
-import com.shaw.service.TaskUserService;
-import com.shaw.util.*;
-import com.shaw.vo.RemoteTaskPermission;
-import org.apache.commons.lang3.StringUtils;
+import com.shaw.util.PageBean;
+import com.shaw.util.PageUtil;
+import com.shaw.util.StringUtil;
+import com.shaw.util.TimeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,10 +103,16 @@ public class IndexController {
      * 后台登陆页面跳转
      */
     @RequestMapping("/login")
-    public ModelAndView loginPage() throws Exception {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("WEB-INF/login");
-        return mav;
+    public ModelAndView loginPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Blogger blogger = (Blogger) request.getSession().getAttribute("currentUser");
+        if (blogger != null && blogger.getId() != null) {
+            response.sendRedirect("/admin/main.jsp");
+            return null;
+        } else {
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("WEB-INF/login");
+            return mav;
+        }
     }
 
     /**

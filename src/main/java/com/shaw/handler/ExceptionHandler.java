@@ -18,18 +18,21 @@ import javax.servlet.http.HttpServletResponse;
 public class ExceptionHandler implements HandlerExceptionResolver {
     Logger logger = LoggerFactory.getLogger(Constants.LOG_EXCEPTION);
     public static final String[] EMAIL_SUBSCRIBER = PropertiesUtil.getConfiguration().getStringArray("email.subscriber");
+    public static final String SERVER = PropertiesUtil.getConfiguration().getString("server");
 
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         logger.error("Blog System Exception：", ex);
         //邮件发送业务不影响正常 错误处理
-        try {
-            if (EMAIL_SUBSCRIBER != null && EMAIL_SUBSCRIBER.length > 0)
-                EmailUtils.sendEmail("Blog system exception", ExceptionUtils.getFullStackTrace(ex), EMAIL_SUBSCRIBER);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //只有生产环境才发送邮件
+        if ("PRO".equalsIgnoreCase(SERVER))
+            try {
+                if (EMAIL_SUBSCRIBER != null && EMAIL_SUBSCRIBER.length > 0)
+                    EmailUtils.sendEmail("Blog system exception", ExceptionUtils.getFullStackTrace(ex), EMAIL_SUBSCRIBER);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         return new ModelAndView("WEB-INF/error");
     }
 }

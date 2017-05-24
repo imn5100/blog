@@ -3,16 +3,13 @@ package com.shaw.handler;
 import com.shaw.annotation.IpPassport;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.ResponseCode;
-import com.shaw.service.SystemService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpRequestUtil;
 import com.shaw.util.HttpResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

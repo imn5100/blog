@@ -93,7 +93,7 @@
             <tr>
                 <td valign="top">简介：</td>
                 <td>
-                    <script id="proFile" type="text/plain" style="width:100%;height:500px;"></script>
+                    <div id="proFile" type="text/plain" style="width:100%;height:500px;"></div>
                     <input type="hidden" id="pF" name="proFile"/>
                 </td>
             </tr>

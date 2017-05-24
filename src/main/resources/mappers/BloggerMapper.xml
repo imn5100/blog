@@ -34,19 +34,19 @@
     <update id="update" parameterType="Blogger">
         update blogger
         <set>
-            <if test="password!=null and password!='' ">
+            <if test="password!=null ">
                 password=#{password},
             </if>
-            <if test="nickName!=null and nickName!='' ">
+            <if test="nickName!=null ">
                 nickname=#{nickName},
             </if>
-            <if test="sign!=null and sign!='' ">
+            <if test="sign!=null">
                 sign=#{sign},
             </if>
-            <if test="proFile!=null and proFile!='' ">
+            <if test="proFile!=null ">
                 profile=#{proFile},
             </if>
-            <if test="imageName!=null and imageName!='' ">
+            <if test="imageName!=null">
                 image_name=#{imageName},
             </if>
             <if test="backgroundImage!=null">

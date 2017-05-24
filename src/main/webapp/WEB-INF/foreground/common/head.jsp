@@ -31,7 +31,7 @@
                     <li <c:if test="${aboutActive!=null}"> class="active" </c:if> ><a
                             href="/about.html">关于本站</a></li>
                     <li <c:if test="${aboutBloggerActive !=null}"> class="active" </c:if> ><a
-                            href="/blogger/about.html">关于站长</a></li>
+                            href="/blogger/about.html">歌单</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室<b class="caret"></b></a>
                         <ul class="dropdown-menu">

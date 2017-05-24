@@ -45,7 +45,46 @@
                 }, "json");
             }
         }
+        $(function () {
+            $(".cd-top").eq(0).click(function () {
+                $("html,body").animate({scrollTop: 0}, 500);
+                return false;
+            });
+            $(".cd-bottom").eq(0).click(function () {
+                $("html,body").animate({scrollTop: 10000}, 500);
+                return false;
+            });
+        })
     </script>
+    <style type="text/css">
+        .cd-top {
+            height: 40px;
+            width: 40px;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+            background: url(/static/images/cd-top-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
+            opacity: 1;
+            -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+            -moz-transition: opacity .3s 0s, visibility 0s .3s;
+            transition: opacity .3s 0s, visibility 0s .3s;
+        }
+
+        .cd-bottom {
+            height: 40px;
+            width: 40px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+            background: url(/static/images/cd-bottom-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
+            opacity: 1;
+            -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+            -moz-transition: opacity .3s 0s, visibility 0s .3s;
+            transition: opacity .3s 0s, visibility 0s .3s;
+        }
+    </style>
 </head>
 <body style="margin: 10px">
 <div id="p" class="easyui-panel" title="修改博客" style="padding: 10px">
@@ -73,7 +112,7 @@
         <tr>
             <td valign="top">博客内容：</td>
             <td>
-                <script id="editor" type="text/plain" style="width:690px;height:750px;"></script>
+                <div id="editor" type="text/plain" style="width:690px;height:750px;"></div>
             </td>
         </tr>
         <tr>
@@ -85,70 +124,29 @@
         </tr>
     </table>
 </div>
-<style type="text/css">
-    .cd-top {
-        height: 40px;
-        width: 40px;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-        background: url(/static/images/cd-top-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
-        opacity: 1;
-        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-        -moz-transition: opacity .3s 0s, visibility 0s .3s;
-        transition: opacity .3s 0s, visibility 0s .3s;
-    }
-
-    .cd-bottom {
-        height: 40px;
-        width: 40px;
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-        background: url(/static/images/cd-bottom-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
-        opacity: 1;
-        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-        -moz-transition: opacity .3s 0s, visibility 0s .3s;
-        transition: opacity .3s 0s, visibility 0s .3s;
-    }
-</style>
 <a class="cd-top"></a>
 <a class="cd-bottom"></a>
 <script type="text/javascript">
-
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     var ue = UE.getEditor('editor');
-
     ue.addListener("ready", function () {
         //通过ajax请求数据
         UE.ajax.request("/admin/blog/findById.do",
-                {
-                    method: "post",
-                    async: false,
-                    data: {"id": "${param.id}"},
-                    onsuccess: function (result) {
-                        result = eval("(" + result.responseText + ")");
-                        $("#title").val(result.title);
-                        $("#keyWord").val(result.keyWord);
-                        $("#blogTypeId").combobox("setValue", result.blogType.id);
-                        UE.getEditor('editor').setContent(result.content);
-                    }
+            {
+                method: "post",
+                async: false,
+                data: {"id": "${param.id}"},
+                onsuccess: function (result) {
+                    result = eval("(" + result.responseText + ")");
+                    $("#title").val(result.title);
+                    $("#keyWord").val(result.keyWord);
+                    $("#blogTypeId").combobox("setValue", result.blogType.id);
+                    UE.getEditor('editor').setContent(result.content);
                 }
+            }
         );
     });
-    $(function () {
-        $(".cd-top").eq(0).click(function () {
-            $("html,body").animate({scrollTop: 0}, 500);
-            return false;
-        });
-        $(".cd-bottom").eq(0).click(function () {
-            $("html,body").animate({scrollTop: 10000}, 500);
-            return false;
-        });
-    })
 </script>
 </body>
 </html>

@@ -105,7 +105,7 @@ public class BloggerController {
     public ModelAndView aboutMe() throws Exception {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/blogger/info.jsp");
-        mav.addObject("pageTitle", "Master");
+        mav.addObject("pageTitle", "Music");
         mav.setViewName("WEB-INF/mainPage");
         mav.addObject("aboutBloggerActive", true);
         return mav;

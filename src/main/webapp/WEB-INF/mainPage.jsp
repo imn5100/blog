@@ -119,7 +119,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-link"></span>
-                    友链
+                    Links
                 </div>
                 <div class="panel-body">
                     <ul>

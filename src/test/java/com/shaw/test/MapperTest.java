@@ -1,12 +1,9 @@
 package com.shaw.test;
 
 import com.shaw.bo.Blog;
-import com.shaw.bo.UploadFile;
 import com.shaw.mapper.UploadFileMapper;
 import com.shaw.service.BlogService;
-import com.shaw.service.UploadFileService;
 import org.jsoup.Jsoup;
-import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

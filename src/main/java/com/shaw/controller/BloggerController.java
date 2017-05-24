@@ -8,7 +8,6 @@ import com.shaw.service.BloggerService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.CodesImgUtil;
 import com.shaw.util.HttpResponseUtil;
-import com.shaw.util.HttpRequestUtil;
 import com.shaw.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -26,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Set;
 
 /**
  * 站长相关

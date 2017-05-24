@@ -3,7 +3,6 @@ package com.shaw.service.impl;
 import com.shaw.bo.RemoteMsg;
 import com.shaw.mapper.RemoteMsgMapper;
 import com.shaw.service.RemoteMsgService;
-import com.shaw.service.SystemService;
 import com.shaw.vo.RemoteMsgQuery;
 import org.springframework.stereotype.Service;
 

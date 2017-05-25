@@ -99,7 +99,7 @@
 
     <error-page>
         <error-code>400</error-code>
-        <location>/WEB-INF/400.jsp</location>
+        <location>/WEB-INF/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
@@ -107,20 +107,20 @@
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/error.jsp</location>
+        <location>/WEB-INF/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>503</error-code>
-        <location>/WEB-INF/error.jsp</location>
+        <location>/WEB-INF/404.jsp</location>
     </error-page>
 
     <error-page>
         <exception-type>java.io.IOException</exception-type>
-        <location>/WEB-INF/error.jsp</location>
+        <location>/WEB-INF/404.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/WEB-INF/error.jsp</location>
+        <location>/WEB-INF/404.jsp</location>
     </error-page>
 
     <welcome-file-list>

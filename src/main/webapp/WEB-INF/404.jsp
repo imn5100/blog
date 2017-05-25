@@ -1,25 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>X.X~Page Not Found</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/inner.css">
+    <title>404 Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link href="/static/css/404_style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/static/css/font-awesome.css" rel="stylesheet"> <!-- font-awesome icons -->
 </head>
 <body>
-<DIV class="top_div">
-</DIV>
-<DIV style=" margin: -100px auto auto; border-image: none; width: 400px; height: 200px; text-align: center;">
-    <DIV style="width: 165px; height: 96px; position: absolute;">
-        <DIV class="tou">
-        </DIV>
-        <DIV class="initial_left_hand" id="left_hand">
-        </DIV>
-        <DIV class="initial_right_hand" id="right_hand">
-        </DIV>
-    </DIV>
-    <div align="center"><img alt="logo" src="${pageContext.request.contextPath}/static/images/404.png"></div>
-</DIV>
-<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
+<!-- main -->
+<div class="agileits-main">
+    <div class="agileinfo-row">
+        <div class="w3top-nav">
+            <div class="w3top-nav-left">
+                <h1><a style="color:grey;" href="/">El Psy Congroo</a></h1>
+            </div>
+            <div class="w3top-nav-right">
+                <h6 style="color:grey;">Contact Me: imn5100_chu2@163.com </h6>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="w3layouts-errortext">
+            <h2><span>4</span> <span>0</span> <span>4</span></h2>
+            <h3 style="color: #000000;">Sorry! The page you are looking could not be found <br><a href="/">Go to Home
+                Page</a></h3>
+        </div>
+    </div>
+</div>
+<!-- //main -->
+<!-- copyright -->
+<div class="copyright w3-agile">
+    <p style="color: #000000;">Power by <a style="color: #777777;" href="https://github.com/imn5100"
+                                           target="_blank">imn5100</a>
+    </p>
+</div>
+<!-- //copyright -->
 </body>
 </html>

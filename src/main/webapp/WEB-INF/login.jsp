@@ -1,44 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Blogger Login</title>
+    <title>Login</title>
+    <link href="/static/css/login_style.css" rel="stylesheet" type="text/css" media="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script src="/static/bootstrap3/js/jquery.js"></script>
     <script src="/static/bootstrap3/js/jquery.md5.js"></script>
-    <link rel="stylesheet" href="/static/css/inner.css">
     <SCRIPT type="text/javascript">
         $(function () {
-            //得到焦点
-            $("#password").focus(function () {
-                $("#left_hand").animate({
-                    left: "150",
-                    top: " -38"
-                }, {
-                    step: function () {
-                        if (parseInt($("#left_hand").css("left")) > 140) {
-                            $("#left_hand").attr("class", "left_hand");
-                        }
-                    }
-                }, 2000);
-                $("#right_hand").animate({
-                    right: "-64",
-                    top: "-38px"
-                }, {
-                    step: function () {
-                        if (parseInt($("#right_hand").css("right")) > -70) {
-                            $("#right_hand").attr("class", "right_hand");
-                        }
-                    }
-                }, 2000);
-            });
-            //失去焦点
-            $("#password").blur(function () {
-                $("#left_hand").attr("class", "initial_left_hand");
-                $("#left_hand").attr("style", "left:100px;top:-12px;");
-                $("#right_hand").attr("class", "initial_right_hand");
-                $("#right_hand").attr("style", "right:-112px;top:-12px");
-            });
             $("#login_form").submit(function () {
                 var userName = $("#userName").val();
                 var password = $("#password").val();
@@ -69,53 +41,31 @@
         }
     </SCRIPT>
 </head>
+
 <body>
-<DIV class="top_div">
-</DIV>
-<form action="/login.html" method="post" id="login_form">
-    <DIV style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 250px; text-align: center;">
-        <DIV style="width: 165px; height: 96px; position: absolute;">
-            <DIV class="tou">
-            </DIV>
-            <DIV class="initial_left_hand" id="left_hand">
-            </DIV>
-            <DIV class="initial_right_hand" id="right_hand">
-            </DIV>
-        </DIV>
-        <div>
-            <P style="padding: 30px 0px 10px; position: relative;">
-                <SPAN class="u_logo"></SPAN>
-                <input id="userName" name="userName" class="ipt" type="text" placeholder="请输入用户名" maxlength="20"
-                       required/>
-            </P>
+<div class="header-w3l">
+    <h1>最後のハードル</h1>
+</div>
+<div class="main-content-agile">
+    <div class="sub-main-w3">
+        <form action="#" method="post" id="login_form">
+            <input placeholder="Username" name="Name" class="user" type="text" required="" id="userName"><br>
+            <input placeholder="Password" name="Password" class="pass" type="password" required="" id="password"><br>
+            <input id="vcode" name="vcode" type="text" placeholder="Verification code" maxlength="4" value=""
+                   required=""><br>
+            <img onclick="javascript:loadimage();" name="randImage" id="randImage"
+                 src="/blogger/codesImg.do"><br>
+            <span><font color="#d3d3d3" id="error"></font></span><br>
+            <input type="submit" value="">
+        </form>
 
-            <P style="position: relative;">
-                <SPAN class="p_logo"></SPAN>
-                <input id="password" name="password" class="ipt" type="password" placeholder="请输入密码" maxlength="20"
-                       value="" required/>
-            </P>
+    </div>
+</div>
 
-            <P style="position: relative;">
-                <SPAN class="v_logo"></SPAN>
-                <input id="vcode" name="vcode" class="ipt2" type="text" placeholder="验证码" maxlength="4" value=""
-                       required/>
-                <img onclick="javascript:loadimage();" title="换一张试试" name="randImage" id="randImage" align="absmiddle"
-                     class="vcode" src="/blogger/codesImg.do">
-            </P>
-        </div>
-        <DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-            <P style="margin: 0px 35px 20px 45px;">
-                <SPAN style="float: left;">最後のハードル</SPAN>
-                <span><font color="red" id="error"></font></span>
-                <SPAN style="float: right;">
-	              <input type="submit"
-                         style="background: rgb(0, 142, 173); padding: 8px 12px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;"
-                         value="登录"/>
-	         </SPAN>
-            </P>
-        </DIV>
-    </DIV>
-</form>
-<jsp:include page="/WEB-INF/foreground/common/foot.jsp"/>
+<div class="footer">
+    <p>Power by <a style="color: #777777;" href="https://github.com/imn5100"
+                   target="_blank">imn5100</a>
+    </p>
+</div>
 </body>
 </html>

@@ -14,7 +14,6 @@
     <link href="/static/css/font-awesome.css" rel="stylesheet"> <!-- font-awesome icons -->
 </head>
 <body>
-<!-- main -->
 <div class="agileits-main">
     <div class="agileinfo-row">
         <div class="w3top-nav">
@@ -33,13 +32,10 @@
         </div>
     </div>
 </div>
-<!-- //main -->
-<!-- copyright -->
 <div class="copyright w3-agile">
     <p style="color: #000000;">Power by <a style="color: #777777;" href="https://github.com/imn5100"
                                            target="_blank">imn5100</a>
     </p>
 </div>
-<!-- //copyright -->
 </body>
 </html>

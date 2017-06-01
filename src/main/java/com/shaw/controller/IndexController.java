@@ -82,7 +82,7 @@ public class IndexController {
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/index");
         return mav;
     }
 

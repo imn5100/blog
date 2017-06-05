@@ -289,8 +289,8 @@ button:focus { outline: none; }
 .tm-news-text {	line-height: 1.8; }
 
 .tm-news-link {	
-    margin-right: 0;
-    margin-left: auto;
+    margin-right: auto;
+    margin-left: 0;
     -ms-flex-item-align: end;
         -webkit-align-self: flex-end;
             align-self: flex-end;
@@ -325,7 +325,7 @@ button:focus { outline: none; }
 	border-color: rgba(0,0,0,0);
 	border-radius: 0;
     font-size: 1.2rem;
-    padding: .75rem;
+    /*padding: .75rem;*/
 }
 .form-group { margin-bottom: 1.8rem; }
 

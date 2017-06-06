@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="技术博客,后端,java,python">
+    <meta name="descriptionmain" content="技术博客,后端,java,python">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font.css">
     <link rel="stylesheet" href="/static/css/font-awesome.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/css/magnific-popup.css">
     <link rel="stylesheet" href="/static/css/main-style.css">
@@ -32,8 +33,8 @@
         transition: 0.5s ease-in-out;
     }
 
-    .card-default > .card-body {
-        background-color: #f8f8fd;
+    .card-default {
+        background-color: #F4F4F4;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
     }
 
@@ -55,7 +56,6 @@
 <body id="top" class="home gray-bg">
 <div class="container-fluid">
     <div class="row">
-
         <div class="tm-navbar-container">
 
             <nav class="navbar navbar-full navbar-fixed-top">
@@ -66,7 +66,6 @@
                 </button>
 
                 <div class="collapse navbar-toggleable-sm" id="tmNavbar">
-
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="#top">首页</a>
@@ -78,15 +77,17 @@
                             <a class="nav-link" href="#">歌单</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="dropdown04"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验室</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="#">Rainy Mood</a>
-                                <a class="dropdown-item" href="#">远程任务执行器</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                实验室
+                            </a>
+                            <div class="dropdown-menu bg-inverse " style=""
+                                 aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item bg-inverse" href="#">Rainy Mood</a>
+                                <a class="dropdown-item bg-inverse" href="#">远程任务执行器</a>
                             </div>
                         </li>
                     </ul>
-
                 </div>
 
             </nav>
@@ -105,7 +106,8 @@
                     <a href="#tm-section-2" class="tm-intro-link">Begin</a>
                     <p class="tm-intro-text">
                     <form class="form-inline my-2 my-lg-0" action="/blog/search.html" onsubmit="return checkData()">
-                        <input class="form-control mr-sm-2" id="keyword" name="keyword"  type="text" placeholder="Search">
+                        <input class="form-control mr-sm-2" id="keyword" name="keyword" type="text"
+                               placeholder="Search">
                     </form>
                     </p>
 
@@ -117,7 +119,7 @@
 </div>
 <div class="col-md-9" id="contents">
     <div class="row gray-bg">
-        <div id="tm-section-2" class="tm-section">
+        <div class="tm-section" id="tm-section-2">
             <div class="tm-container tm-container-wide">
                 <c:forEach var="blog" items="${blogList}" varStatus="status">
                     <div class="tm-news-item">
@@ -130,9 +132,11 @@
                             </c:forEach>
                         </c:if>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <h2 class="tm-news-title dark-gray-text">${blog.title}</h2>
+                            <h2 class="tm-news-title dark-gray-text"><a
+                                    href="/blog/${blog.encodeId}.html">${blog.title}</a>
+                            </h2>
                             <span class="info">
-                                        <span class="icon-calendar"></span>${blog.releaseDateStr}&nbsp;
+                                        <span class="fa fa-calendar"></span>${blog.releaseDateStr}&nbsp;
                                         <span class="fa fa-tags"></span>&nbsp;
                                         <c:forEach items="${blog.keywordList}" var="keyword">
                                             <a href="/blog/search.html?keyword=${keyword}">${keyword}</a>
@@ -149,6 +153,13 @@
                 </c:forEach>
             </div>
         </div>
+    </div>
+    <div>
+        <nav align="center">
+            <ul class="pagination">
+                ${pageCode }
+            </ul>
+        </nav>
     </div>
 </div>
 <div class="col-md-3" id="side" style="padding-top: 30px;">
@@ -227,7 +238,7 @@
         </footer>
     </div>
 </div>
-
+<a class="cd-top"></a>
 <script src="/static/js/jquery-1.11.3.min.js"></script>
 <script src="/static/js/tether.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -264,7 +275,9 @@
         });
 
         $('#tmNavbar a').click(function () {
-            $('#tmNavbar').collapse('hide');
+            if (this.id != 'navbarDropdownMenuLink') {
+                $('#tmNavbar').collapse('hide');
+            }
         });
 
         var target = $("#tm-section-2").offset().top - topOffset;
@@ -302,11 +315,11 @@
             }
         });
 
-        $('.tm-img-grid').magnificPopup({
-            delegate: 'a', // child items selector, by clicking on it popup will open
-            type: 'image',
-            gallery: {enabled: true}
-        });
+//        $('.tm-img-grid').magnificPopup({
+//            delegate: 'a', // child items selector, by clicking on it popup will open
+//            type: 'image',
+//            gallery: {enabled: true}
+//        });
     });
 
 </script>

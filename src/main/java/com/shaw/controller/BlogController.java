@@ -81,7 +81,7 @@ public class BlogController {
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/view.jsp");
         mav.addObject("pageTitle", blog.getTitle());
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/template");
         return mav;
     }
 
@@ -113,7 +113,7 @@ public class BlogController {
         mav.addObject("rootSite", PropertiesUtil.getConfiguration().getString(Constants.ROOT_SITE_KEY, Constants.DEFAULT_SITE));
         mav.addObject("resultTotal", blogList.size());
         mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + keyword);
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/template");
         return mav;
     }
 

@@ -78,11 +78,11 @@ public class IndexController {
         if (StringUtil.isNotEmpty(releaseDateStr)) {
             param.append("releaseDateStr=" + releaseDateStr + "&");
         }
-        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath() + "/index.html", blogService.getTotal(map), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
+        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath(), blogService.getTotal(map), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/index");
         return mav;
     }
 

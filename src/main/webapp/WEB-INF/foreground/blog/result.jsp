@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/static/css/list.css">
-<div class="panel panel panel-default">
-    <div class="panel-heading">
+<div class="card card panel-default">
+    <div class="card-heading">
         搜索&nbsp;${keyword} &nbsp;的结果 &nbsp;(总共搜索到&nbsp;${resultTotal}&nbsp;条记录)
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="bs-docs-section">
 
             <c:choose>

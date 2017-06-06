@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <meta name="keywords" content="${blog.keyWord}"/>
-<link rel="stylesheet" href="/static/css/embed.default.css">
 <script type="text/javascript" src="/static/ueditor/ueditor.parse.js"></script>
 <script type="text/javascript">
     uParse('.blog_content',
@@ -44,27 +43,25 @@
         -webkit-margin-end: auto;
     }
 </style>
-<div class="panel panel panel-default">
-    <div class="panel-heading">
-        博客信息
+<div style="padding-top: 30px;">
+    <div class="card-heading">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <h3 align="center"><strong>${blog.title }</strong></h3>
-
         <div>
         </div>
         <div class="blog_info">
             <ul>
-                <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+                <span class="icon-calendar"></span>&nbsp;
                 <fmt:formatDate value="${blog.releaseDate}" type="date" pattern="yyyy-MM-dd HH:mm"/>
                 <span class="glyphicon glyphicon-hand-up"></span>
                 (${blog.clickHit})
-                <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                <span class="fa fa-tags"></span>&nbsp;
                 <c:forEach items="${blog.keywordList}" var="keyword">
                     <a href="/blog/search.html?keyword=${keyword}"
                        target="_blank">${keyword}</a>&nbsp;&nbsp;
                 </c:forEach>
-                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                <span class="fa fa-list-alt"></span>&nbsp;
                 <a href="/index.html?typeId=${blog.blogType.id}"
                    target="_blank">${blog.blogType.typeName}</a>
             </ul>

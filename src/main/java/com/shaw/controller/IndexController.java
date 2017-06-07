@@ -94,7 +94,7 @@ public class IndexController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/system/aboutSite.jsp");
         mav.addObject("pageTitle", Constants.PAGE_TITLE);
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/template");
         mav.addObject("aboutActive", true);
         return mav;
     }

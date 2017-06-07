@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="descriptionmain" content="技术博客,后端,java,python">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -68,23 +67,27 @@
                 <div class="collapse navbar-toggleable-sm" id="tmNavbar">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#top">首页</a>
+                            <a class="nav-link" href="/">首页</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#tm-section-2">博客</a>
+                            <a class="nav-link" href="#tm-section">博客</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">歌单</a>
+                            <a class="nav-link" href="/about.html">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blogger/about.html">歌单</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 实验室
                             </a>
-                            <div class="dropdown-menu bg-inverse " style=""
-                                 aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item bg-inverse" href="#">Rainy Mood</a>
-                                <a class="dropdown-item bg-inverse" href="#">远程任务执行器</a>
+                            <div class="dropdown-menu bg-inverse" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item bg-inverse" target="_blank" href="/rainyRoom.html">Rainy
+                                    Mood</a>
+                                <a class="dropdown-item bg-inverse" target="_blank"
+                                   href="/remoteTask/main.html">远程任务执行器</a>
                             </div>
                         </li>
                     </ul>
@@ -98,12 +101,11 @@
 
     <div class="row">
         <div class="tm-intro">
-
             <section id="tm-section-1">
                 <div class="tm-container text-xs-center tm-section-1-inner">
                     <img src="/static/img/tm-logo.png" alt="Logo" class="tm-logo">
                     <h1 class="tm-site-name">Shaw</h1>
-                    <a href="#tm-section-2" class="tm-intro-link">Begin</a>
+                    <a href="#tm-section" class="tm-intro-link">Begin</a>
                     <p class="tm-intro-text">
                     <form class="form-inline my-2 my-lg-0" action="/blog/search.html" onsubmit="return checkData()">
                         <input class="form-control mr-sm-2" id="keyword" name="keyword" type="text"
@@ -113,13 +115,13 @@
 
                 </div>
             </section>
-
         </div>
+        <div style="padding-top: 60px" id="tm-section-2"></div>
     </div>
 </div>
 <div class="col-md-9" id="contents">
     <div class="row gray-bg">
-        <div class="tm-section" id="tm-section-2">
+        <div class="tm-section" id="tm-section">
             <div class="tm-container tm-container-wide">
                 <c:forEach var="blog" items="${blogList}" varStatus="status">
                     <div class="tm-news-item">
@@ -156,7 +158,7 @@
     </div>
     <div>
         <nav align="center">
-            <ul class="pagination">
+            <ul class="pagination jumpHook" id="pagination">
                 ${pageCode }
             </ul>
         </nav>
@@ -225,137 +227,14 @@
         </div>
     </div>
 </div>
-
-<div class="col-md-12">
-    <div class="row gray-bg">
-        <footer class="tm-footer">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <p class="text-xs-center tm-footer-text">Power By <a href="https://github.com/imn5100"
-                                                                     target="_blank">Imn5100</a></p>
-                <p class="text-xs-center tm-footer-text">浙ICP备16038105号</p>
-                <p class="text-xs-center tm-footer-text">浙公网安备33010602007235号</p>
-            </div>
-        </footer>
-    </div>
-</div>
-<a class="cd-top"></a>
-<script src="/static/js/jquery-1.11.3.min.js"></script>
-<script src="/static/js/tether.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.singlePageNav.min.js"></script>
+<jsp:include page="foreground/common/foot.jsp"></jsp:include>
 <script src="/static/js/jquery.magnific-popup.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var mobileTopOffset = 54;
-        var desktopTopOffset = 80;
-        var topOffset = desktopTopOffset;
-
-        if ($(window).width() <= 767) {
-            topOffset = mobileTopOffset;
-        }
-        $('#tmNavbar').singlePageNav({
-            'currentClass': "active",
-            offset: topOffset,
-            'filter': ':not(.external)'
-        });
-
-        $(window).resize(function () {
-            if ($(window).width() <= 767) {
-                topOffset = mobileTopOffset;
-            }
-            else {
-                topOffset = desktopTopOffset;
-            }
-
-            $('#tmNavbar').singlePageNav({
-                'currentClass': "active",
-                offset: topOffset,
-                'filter': ':not(.external)'
-            });
-        });
-
-        $('#tmNavbar a').click(function () {
-            if (this.id != 'navbarDropdownMenuLink') {
-                $('#tmNavbar').collapse('hide');
-            }
-        });
-
-        var target = $("#tm-section-2").offset().top - topOffset;
-
-        if ($(window).scrollTop() >= target) {
-            $(".tm-navbar-container").addClass("bg-inverse");
-        }
-        else {
-            $(".tm-navbar-container").removeClass("bg-inverse");
-        }
-
-        $(window).scroll(function () {
-
-            if ($(this).scrollTop() >= target) {
-                $(".tm-navbar-container").addClass("bg-inverse");
-            }
-            else {
-                $(".tm-navbar-container").removeClass("bg-inverse");
-            }
-        });
-        $('a[href*="#"]:not([href="#"])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-                && location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-
-                if (target.length) {
-
-                    $('html, body').animate({
-                        scrollTop: target.offset().top - topOffset
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-
-//        $('.tm-img-grid').magnificPopup({
-//            delegate: 'a', // child items selector, by clicking on it popup will open
-//            type: 'image',
-//            gallery: {enabled: true}
-//        });
-    });
-
-</script>
 <script type="text/javascript">
-    function throttle(method, delay, duration) {
-        var timer = null, begin = new Date();
-        return function () {
-            var context = this, args = arguments, current = new Date();
-            clearTimeout(timer);
-            if (current - begin >= duration) {
-                method.apply(context, args);
-                begin = current;
-            } else {
-                timer = setTimeout(function () {
-                    method.apply(context, args);
-                }, delay);
-            }
-        }
-    }
-    function showTop() {
-        if ($(window).scrollTop() < 100) {
-            $(".cd-top").hide();
-        } else {
-            $(".cd-top").show();
-        }
-    }
-    $(window).scroll(throttle(showTop, 500, 1000));
     $(function () {
         $("#close_side").click(function () {
             $("#contents").attr("class", "col-md-12")
             $("#side").hide();
             $("#up").show();
-        });
-        $(".cd-top").eq(0).click(function () {
-            $("html,body").animate({scrollTop: 0}, 500);
-            return false;
         });
     })
     function checkData() {

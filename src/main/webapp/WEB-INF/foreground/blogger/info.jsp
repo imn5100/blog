@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <div class="panel panel panel-default">
-    <div class="panel-heading">
+    <div class="card-heading">
         Music
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div>
         <%--<div style="padding: 30px">--%>
             ${blogger.proFile }

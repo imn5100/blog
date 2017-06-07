@@ -106,7 +106,7 @@ public class BloggerController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mainPage", "/WEB-INF/foreground/blogger/info.jsp");
         mav.addObject("pageTitle", "Music");
-        mav.setViewName("WEB-INF/mainPage");
+        mav.setViewName("WEB-INF/template");
         mav.addObject("aboutBloggerActive", true);
         return mav;
     }

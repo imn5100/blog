@@ -6,7 +6,7 @@ public class PageBean implements Serializable {
 
     private static final long serialVersionUID = 4146055498237132023L;
     private int page = 1; // 第几页
-    private int pageSize = 10; // 每页记录数
+    private int pageSize = 15; // 每页记录数
 
     public PageBean() {
         

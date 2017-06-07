@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="/static/css/font-awesome.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/template-style.css">
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
 </head>
 <body id="top" class="page-2">
 
 <div class="tm-navbar-container tm-navbar-container-dark">
-
     <nav class="navbar navbar-full navbar-fixed-top bg-inverse">
         <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
             &#9776;
@@ -23,41 +23,37 @@
         <div class="collapse navbar-toggleable-sm" id="tmNavbar">
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link external" href="/">首页</a>
+                    <a class="nav-link" href="/">首页</a>
+                </li>
+                <li class="nav-item jumpHook">
+                    <a class="nav-link" href="/#tm-section-2">博客</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">博客</a>
+                    <a class="nav-link" href="/about.html">关于</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">歌单</a>
+                    <a class="nav-link" href="/blogger/about.html">歌单</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdown04"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验室</a>
-                    <div class="dropdown-menu bg-inverse" aria-labelledby="dropdown04">
-                        <a class="dropdown-item bg-inverse" href="#">Rainy Mood</a>
-                        <a class="dropdown-item bg-inverse" href="#">远程任务执行器</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        实验室
+                    </a>
+                    <div class="dropdown-menu bg-inverse " style=""
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item bg-inverse" target="_blank" href="/rainyRoom.html">Rainy Mood</a>
+                        <a class="dropdown-item bg-inverse" target="_blank" href="/remoteTask/main.html">远程任务执行器</a>
                     </div>
                 </li>
             </ul>
 
         </div>
     </nav>
-
 </div>
-
 <div class="container-fluid">
     <jsp:include page="${mainPage}"></jsp:include>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <p class="text-xs-center tm-footer-text">Copyright &copy; 2016 Company Name</p>
-        </div>
-    </div>
 </div>
-<script src="/static/js/jquery-1.11.3.min.js"></script>
-<script src="/static/js/tether.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery.singlePageNav.min.js"></script>
+<jsp:include page="foreground/common/foot.jsp"></jsp:include>
 <script>
     $(document).ready(function () {
 
@@ -85,12 +81,6 @@
         else {
             $('.tm-full-width-large-table').removeClass('table-responsive');
         }
-
-
-        $('#tmNavbar a').click(function () {
-            $('#tmNavbar').collapse('hide');
-        });
-
 
         $(window).resize(function () {
 

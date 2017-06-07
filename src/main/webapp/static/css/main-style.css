@@ -243,6 +243,7 @@ button:focus { outline: none; }
 .tm-section {
 	padding-top: 5%;
 	padding-bottom: 5%;
+	padding-left: 5%;
 	overflow: auto;
 }
 

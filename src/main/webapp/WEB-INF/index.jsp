@@ -135,7 +135,7 @@
                         </c:if>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <h2 class="tm-news-title dark-gray-text"><a
-                                    href="/blog/${blog.encodeId}.html">${blog.title}</a>
+                                    href="/blog/${blog.encodeId}.html">★${blog.title}</a>
                             </h2>
                             <span class="info">
                                         <span class="fa fa-calendar"></span>${blog.releaseDateStr}&nbsp;
@@ -230,6 +230,76 @@
 <jsp:include page="foreground/common/foot.jsp"></jsp:include>
 <script src="/static/js/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        var mobileTopOffset = 54;
+        var desktopTopOffset = 80;
+        var topOffset = desktopTopOffset;
+
+        if ($(window).width() <= 767) {
+            topOffset = mobileTopOffset;
+        }
+        $('#tmNavbar').singlePageNav({
+            'currentClass': "active",
+            offset: topOffset,
+            'filter': ':not(.external)'
+        });
+
+        $(window).resize(function () {
+            if ($(window).width() <= 767) {
+                topOffset = mobileTopOffset;
+            }
+            else {
+                topOffset = desktopTopOffset;
+            }
+
+            $('#tmNavbar').singlePageNav({
+                'currentClass': "active",
+                offset: topOffset,
+                'filter': ':not(.external)'
+            });
+        });
+
+        var target = $("#tm-section-2").offset().top - topOffset;
+
+        if ($(window).scrollTop() >= target) {
+            $(".tm-navbar-container").addClass("bg-inverse");
+        }
+        else {
+            $(".tm-navbar-container").removeClass("bg-inverse");
+        }
+
+        $(window).scroll(function () {
+
+            if ($(this).scrollTop() >= target) {
+                $(".tm-navbar-container").addClass("bg-inverse");
+            }
+            else {
+                $(".tm-navbar-container").removeClass("bg-inverse");
+            }
+        });
+        $('a[href*="#"]:not([href="#"])').click(function () {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                && location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+
+                if (target.length) {
+
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - topOffset
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+
+        $('.tm-img-grid').magnificPopup({
+            delegate: 'a', // child items selector, by clicking on it popup will open
+            type: 'image',
+            gallery: {enabled: true}
+        });
+    });
     $(function () {
         $("#close_side").click(function () {
             $("#contents").attr("class", "col-md-12")

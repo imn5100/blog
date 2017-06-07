@@ -49,7 +49,7 @@
         height: auto
     }
 </style>
-<div style="padding-top: 30px;">
+<div  style="padding-top: 30px;">
     <div class="card-heading">
     </div>
     <div class="card-body">

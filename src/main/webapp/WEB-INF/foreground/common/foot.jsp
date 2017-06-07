@@ -18,7 +18,6 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.singlePageNav.min.js"></script>
 <script>
-
     function throttle(method, delay, duration) {
         var timer = null, begin = new Date();
         return function () {
@@ -34,35 +33,15 @@
             }
         }
     }
-    $(document).ready(function () {
-        var mobileTopOffset = 54;
-        var desktopTopOffset = 80;
-        var topOffset = desktopTopOffset;
-
-        if ($(window).width() <= 767) {
-            topOffset = mobileTopOffset;
+    function showTop() {
+        if ($(window).scrollTop() < 100) {
+            $(".cd-top").hide();
+        } else {
+            $(".cd-top").show();
         }
-        $('#tmNavbar').singlePageNav({
-            'currentClass': "active",
-            offset: topOffset,
-            'filter': ':not(.external)'
-        });
-
-        $(window).resize(function () {
-            if ($(window).width() <= 767) {
-                topOffset = mobileTopOffset;
-            }
-            else {
-                topOffset = desktopTopOffset;
-            }
-
-            $('#tmNavbar').singlePageNav({
-                'currentClass': "active",
-                offset: topOffset,
-                'filter': ':not(.external)'
-            });
-        });
-
+    }
+    $(window).scroll(throttle(showTop, 500, 1000));
+    $(function () {
         $('#tmNavbar a').click(function () {
             if (this.id == 'navbarDropdownMenuLink') {
                 return
@@ -77,57 +56,6 @@
             if (String(this.href) != "#")
                 location.href = String(this.href);
         });
-
-        var target = $("#tm-section-2").offset().top - topOffset;
-
-        if ($(window).scrollTop() >= target) {
-            $(".tm-navbar-container").addClass("bg-inverse");
-        }
-        else {
-            $(".tm-navbar-container").removeClass("bg-inverse");
-        }
-
-        $(window).scroll(function () {
-
-            if ($(this).scrollTop() >= target) {
-                $(".tm-navbar-container").addClass("bg-inverse");
-            }
-            else {
-                $(".tm-navbar-container").removeClass("bg-inverse");
-            }
-        });
-        $('a[href*="#"]:not([href="#"])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-                && location.hostname == this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-
-                if (target.length) {
-
-                    $('html, body').animate({
-                        scrollTop: target.offset().top - topOffset
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-
-        $('.tm-img-grid').magnificPopup({
-            delegate: 'a', // child items selector, by clicking on it popup will open
-            type: 'image',
-            gallery: {enabled: true}
-        });
-    });
-    function showTop() {
-        if ($(window).scrollTop() < 100) {
-            $(".cd-top").hide();
-        } else {
-            $(".cd-top").show();
-        }
-    }
-    $(window).scroll(throttle(showTop, 500, 1000));
-    $(function () {
         $(".cd-top").eq(0).click(function () {
             $("html,body").animate({scrollTop: 0}, 500);
             return false;

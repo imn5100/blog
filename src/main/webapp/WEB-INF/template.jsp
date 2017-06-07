@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/static/css/template-style.css">
     <script src="/static/js/jquery-1.11.3.min.js"></script>
 </head>
-<body id="top" class="page-2">
+<body id="top" class="page-2 gray-bg">
 
 <div class="tm-navbar-container tm-navbar-container-dark">
     <nav class="navbar navbar-full navbar-fixed-top bg-inverse">
@@ -56,7 +56,6 @@
 <jsp:include page="foreground/common/foot.jsp"></jsp:include>
 <script>
     $(document).ready(function () {
-
         var mobileTopOffset = 54;
         var tabletTopOffset = 74;
         var desktopTopOffset = 79;

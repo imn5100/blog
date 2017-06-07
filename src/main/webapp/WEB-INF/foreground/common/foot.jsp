@@ -17,6 +17,22 @@
 <script src="/static/js/tether.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.singlePageNav.min.js"></script>
+<style>
+    .cd-top {
+        display: none;
+        height: 40px;
+        width: 40px;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+        background: url(/static/images/cd-top-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
+        opacity: 1;
+        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+        -moz-transition: opacity .3s 0s, visibility 0s .3s;
+        transition: opacity .3s 0s, visibility 0s .3s;
+    }
+</style>
 <script>
     function throttle(method, delay, duration) {
         var timer = null, begin = new Date();
@@ -52,7 +68,6 @@
         });
 
         $('.jumpHook a').click(function () {
-            console.log(this.href)
             if (String(this.href) != "#")
                 location.href = String(this.href);
         });

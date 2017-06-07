@@ -31,26 +31,10 @@
         border-radius: 50%;
         transition: 0.5s ease-in-out;
     }
-
-    .card-default {
-        background-color: #F4F4F4;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;
-    }
-
-    .cd-top {
-        display: none;
-        height: 40px;
-        width: 40px;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-        background: url(/static/images/cd-top-arrow.svg) center 50% no-repeat rgba(52, 73, 94, .8);
-        opacity: 1;
-        -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-        -moz-transition: opacity .3s 0s, visibility 0s .3s;
-        transition: opacity .3s 0s, visibility 0s .3s;
-    }
+    /*.card-default {*/
+    /*background-color: #F4F4F4;*/
+    /*box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;*/
+    /*}*/
 </style>
 <body id="top" class="home gray-bg">
 <div class="container-fluid">

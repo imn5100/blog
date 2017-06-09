@@ -42,8 +42,14 @@
         -webkit-margin-start: auto;
         -webkit-margin-end: auto;
     }
+
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto
+    }
 </style>
-<div style="padding-top: 30px;">
+<div  style="padding-top: 30px;">
     <div class="card-heading">
     </div>
     <div class="card-body">

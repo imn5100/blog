@@ -25,9 +25,9 @@ public class PageUtil {
             if (StringUtil.isNotEmpty(param)) {
                 param = "&" + param;
             }
-            pageCode.append("<li class='page-item'><a class='page-link' href='" + targetUrl + "?page=1" + param + "'>首页</a></li>");
+            pageCode.append("<li class='page-item'><a class='page-link' href='" + targetUrl + "?page=1" + param + "'#tm-section-2>首页</a></li>");
             if (currentPage > 1) {
-                pageCode.append("<li class='page-item'><a  class='page-link' href='" + targetUrl + "?page=" + (currentPage - 1) + param + "'>上一页</a></li>");
+                pageCode.append("<li class='page-item'><a  class='page-link' href='" + targetUrl + "?page=" + (currentPage - 1) + param + "#tm-section-2'>上一页</a></li>");
             } else {
                 pageCode.append("<li class='page-item disabled'><a class='page-link' href='#'>上一页</a></li>");
             }
@@ -36,17 +36,17 @@ public class PageUtil {
                     continue;
                 }
                 if (i == currentPage) {
-                    pageCode.append("<li class='page-item active'><a class='page-link' href='" + targetUrl + "?page=" + i + param + "'>" + i + "</a></li>");
+                    pageCode.append("<li class='page-item active'><a class='page-link' href='" + targetUrl + "?page=" + i + param + "#tm-section-2'>" + i + "</a></li>");
                 } else {
-                    pageCode.append("<li class='page-item' ><a  class='page-link' href='" + targetUrl + "?page=" + i + param + "'>" + i + "</a></li>");
+                    pageCode.append("<li class='page-item' ><a  class='page-link' href='" + targetUrl + "?page=" + i + param + "#tm-section-2'>" + i + "</a></li>");
                 }
             }
             if (currentPage < totalPage) {
-                pageCode.append("<li class='page-item'><a  class='page-link' href='" + targetUrl + "?page=" + (currentPage + 1) + param + "'>下一页</a></li>");
+                pageCode.append("<li class='page-item'><a  class='page-link' href='" + targetUrl + "?page=" + (currentPage + 1) + param + "#tm-section-2'>下一页</a></li>");
             } else {
                 pageCode.append("<li class='page-item disabled'><a  class='page-link' href='#'>下一页</a></li>");
             }
-            pageCode.append("<li class='page-item'><a class='page-link' href='" + targetUrl + "?page=" + totalPage + param + "'>尾页</a></li>");
+            pageCode.append("<li class='page-item'><a class='page-link' href='" + targetUrl + "?page=" + totalPage + param + "#tm-section-2'>尾页</a></li>");
             return pageCode.toString();
         }
     }

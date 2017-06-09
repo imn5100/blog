@@ -9,26 +9,52 @@
     <meta name="description" content="技术博客,后端,java">
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>远程任务发送器</title>
-    <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/bootstrap3/css/bootstrap-theme.min.css">
-    <script src="/static/bootstrap3/js/jquery.js"></script>
-    <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        body {
-            padding-top: 100px;
-            padding-bottom: 20px;
-            background-image: url(https://ooo.0o0.ooo/2016/06/20/5768c606cf9cb.jpg);
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/font-awesome.css">                <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/template-style.css">
 </head>
 <body>
-<div class="container None">
-    <jsp:include page="/WEB-INF/foreground/common/head.jsp"/>
+<div class="tm-navbar-container tm-navbar-container-dark">
+    <nav class="navbar navbar-full navbar-fixed-top bg-inverse">
+        <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
+            &#9776;
+        </button>
+        <div class="collapse navbar-toggleable-sm" id="tmNavbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">首页</a>
+                </li>
+                <li class="nav-item jumpHook">
+                    <a class="nav-link" href="/#tm-section-2">博客</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">关于</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blogger/about.html">歌单</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        实验室
+                    </a>
+                    <div class="dropdown-menu bg-inverse " style=""
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item bg-inverse" href="#">Rainy Mood</a>
+                        <a class="dropdown-item bg-inverse" href="#">远程任务执行器</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</div>
+<div class="container None" style="padding-top:100px;">
     <div>
         <div class="col-md-12">
-            <div class="panel panel panel-default">
+            <div class="card card card-default">
                 <c:if test="${loginSuccess == null or loginSuccess == false}">
-                    <div class="panel-heading">
+                    <div class="card-heading">
                         身份验证
                     </div>
                     <form style="padding: 10px 10px 10px 10px;" id="auth">
@@ -44,52 +70,40 @@
                     </form>
                 </c:if>
                 <c:if test="${loginSuccess == true}">
-                <div class="panel-heading">
+                <div class="card-heading">
                     远程任务发送
                 </div>
-                <div style="padding:10px 10px 10px 10px;">
+                <div class="card-body" style="padding:10px 10px 10px 10px;">
                     <div class="bs-docs-section">
                         <form class="form-horizontal" id="sendTask">
                             <div class="form-group">
-                                <label for="title" class="col-sm-2 control-label">主题</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="title" placeholder="">
-                                </div>
+                                <label for="title">主题</label>
+                                <input type="text" class="form-control" id="title" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="taskType" class="col-sm-2 control-label">任务类型</label>
-                                <div class="col-sm-10">
-                                    <select id="taskType" class="form-control">
-                                        <c:forEach var="item" items="${task_user.remoteTaskPermissionList}">
-                                            <option value="${item.value}">${item.name}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
+                                <label for="taskType">任务类型</label>
+                                <select id="taskType" class="form-control">
+                                    <c:forEach var="item" items="${task_user.remoteTaskPermissionList}">
+                                        <option value="${item.value}">${item.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">客户端状态</label>
-                                <div class="col-sm-10">
-                                    <c:if test="${socket_connect == true}">
-                                        已连接
-                                    </c:if>
-                                    <c:if test="${socket_connect != true}">
-                                        未连接
-                                    </c:if>
-                                </div>
+                                <label>客户端状态:</label>
+                                <c:if test="${socket_connect == true}">
+                                    已连接
+                                </c:if>
+                                <c:if test="${socket_connect != true}">
+                                    未连接
+                                </c:if>
                             </div>
                             <div class="form-group">
-                                <label for="contents" class="col-sm-2 control-label">内容</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="10" id="contents"> </textarea>
-                                </div>
+                                <label for="contents">内容</label>
+                                <textarea class="form-control" rows="10" id="contents"> </textarea>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-8">
-                                    <button type="submit" class="btn btn-default">发送ヽ(╯▽╰)ﾉ</button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <a id="u_info" style="float:right">显示用户信息</a>
-                                </div>
+                                <button type="submit" class="btn btn-default">发送ヽ(╯▽╰)ﾉ</button>
+                                <a id="u_info" style="float:right">显示用户信息</a>
                             </div>
                         </form>
                     </div>
@@ -99,7 +113,7 @@
                     <div id="user_info" style="padding:10px 10px 10px;display: None">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">用户信息：</label>
+                                <label>用户信息：</label>
                             </div>
                             <div class="form-group">
                                 <label for="AK" class="col-sm-2 control-label">AK</label>
@@ -153,15 +167,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div align="center" style="padding-top: 100px">
-			<span style="">Powered by <a href="https://github.com/imn5100" target="_blank">
-                <img alt="Brand" src="/static/images/git.png"> Imn5100</a></span><br>
-            </div>
-        </div>
-    </div>
 </div>
+<jsp:include page="/WEB-INF/foreground/common/foot.jsp"></jsp:include>
 </body>
 <script>
     $("#auth").submit(function () {

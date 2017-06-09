@@ -321,12 +321,12 @@ button:focus { outline: none; }
 	float: left;
 }
 
-.form-control { 
-	border-color: rgba(0,0,0,0);
-	border-radius: 0;
-    font-size: 1.2rem;
-    padding: .75rem;
-}
+/*.form-control { */
+	/*border-color: rgba(0,0,0,0);*/
+	/*border-radius: 0;*/
+    /*font-size: 1.2rem;*/
+    /*padding: .75rem;*/
+/*}*/
 .form-group { margin-bottom: 1.8rem; }
 
 .tm-form-group-left { padding-left: 0; }

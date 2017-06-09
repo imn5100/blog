@@ -31,10 +31,29 @@
         border-radius: 50%;
         transition: 0.5s ease-in-out;
     }
-    /*.card-default {*/
-    /*background-color: #F4F4F4;*/
-    /*box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 30px rgba(10, 10, 0, 0.1) inset;*/
-    /*}*/
+
+    <c:if test="${blogger.backgroundImage !=null && blogger.backgroundImage !=''}">
+    .tm-intro {
+        background: url(${blogger.backgroundImage}) no-repeat;
+        background-attachment: fixed;
+        background-position: left top;
+        background-size: 100% 750px;
+        color: white;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        height: 750px;
+    }
+    </c:if>
 </style>
 <body id="top" class="home gray-bg">
 <div class="container-fluid">

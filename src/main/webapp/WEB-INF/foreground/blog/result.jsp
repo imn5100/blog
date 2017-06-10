@@ -10,7 +10,7 @@
             <c:choose>
                 <c:when test="${blogList.size()==0}">
                     <div class="bs-callout bs-callout-info" id="callout-helper-bg-specificity">
-                        <div align="center" style="padding-top: 20px">未查询到结果，请换个关键字试试看！</div>
+                        <div align="center" style="padding-top: 20px">未查询到相关结果</div>
                     </div>
                 </c:when>
                 <c:otherwise>

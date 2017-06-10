@@ -26,7 +26,7 @@ public class CacheKey {
      * 搜索缓存过期时间 秒，避免没频繁请求搜索导致服务器崩溃。目前设置为30秒内所有请求都是走缓存，30秒后走lucence
      * BLOG内容更新不频繁下，设置1小时的缓存都可以。
      */
-    public static final Long SEARCH_EXPIRETIME = 30L;
+    public static final Long SEARCH_EXPIRETIME = 60*5L;
     /**
      * 缓存web日志文件分析html key
      **/

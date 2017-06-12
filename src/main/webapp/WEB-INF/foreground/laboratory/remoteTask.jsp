@@ -40,8 +40,8 @@
                     </a>
                     <div class="dropdown-menu bg-inverse " style=""
                          aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item bg-inverse" href="#">Rainy Mood</a>
-                        <a class="dropdown-item bg-inverse" href="#">远程任务执行器</a>
+                        <a class="dropdown-item bg-inverse"  href="/rainyRoom.html">Rainy Mood</a>
+                        <a class="dropdown-item bg-inverse" href="/remoteTask/main.html">远程任务执行器</a>
                     </div>
                 </li>
             </ul>

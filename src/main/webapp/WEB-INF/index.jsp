@@ -37,7 +37,7 @@
         background: url(${blogger.backgroundImage}) no-repeat;
         background-attachment: fixed;
         background-position: left top;
-        background-size: 100% 750px;
+        background-size: 100% 1000px;
         color: white;
         display: -webkit-flex;
         display: -ms-flexbox;

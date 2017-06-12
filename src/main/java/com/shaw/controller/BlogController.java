@@ -100,12 +100,15 @@ public class BlogController {
         }
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/result.jsp");
         List<Blog> blogList = blogIndex.searchBlog(keyword);
-        Integer toIndex = blogList.size() >= page * Constants.PAGE_SIZE ? (page) * Constants.PAGE_SIZE
+        int toIndex = blogList.size() >= page * Constants.PAGE_SIZE ? (page) * Constants.PAGE_SIZE
                 : blogList.size();
+        int fromIndex = (page - 1) * Constants.PAGE_SIZE;
         List<Blog> blogList2 = new ArrayList<Blog>();
         // ArrayList subList 返回的类型为 SubList
         // 。jsp页面访问SubList集合时可能报错。这里直接使用Arraylist 返回集合
-        blogList2.addAll(blogList.subList(((page) - 1) * Constants.PAGE_SIZE, toIndex));
+        if (fromIndex < blogList.size()) {
+            blogList2.addAll(blogList.subList((page - 1) * Constants.PAGE_SIZE, toIndex));
+        }
         mav.addObject("blogList", blogList2);
         mav.addObject("pageCode", PageUtil.genUpAndDownPageCode((page), blogList.size(), keyword, Constants.PAGE_SIZE,
                 request.getServletContext().getContextPath()));

@@ -6,13 +6,21 @@ import com.shaw.util.EmailUtils;
 import com.shaw.util.PropertiesUtil;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Test {
     public static void main(String[] args) throws Exception {
 //        String encrpt = DesUtils.getDefaultInstance().encrypt("112");
 //        System.out.println(encrpt);
 //        System.out.println(DesUtils.getDefaultInstance().decrypt(encrpt));
 
-        sendEmail();
+        List  ls = new ArrayList();
+        ls.add(1);
+        ls.add(2);
+        ls.add(3);
+        ls.add(4);
+        System.out.println(ls.subList(ls.size(),4));
     }
 
     public static void simpleDecode() throws Exception {

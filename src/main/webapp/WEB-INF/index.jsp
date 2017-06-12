@@ -107,7 +107,7 @@
             <section id="tm-section-1">
                 <div class="tm-container text-xs-center tm-section-1-inner">
                     <img src="/static/img/tm-logo.png" alt="Logo" class="tm-logo">
-                    <h1 class="tm-site-name">Shaw</h1>
+                    <h1 class="tm-site-name">El Psy Congroo</h1>
                     <a href="#tm-section" class="tm-intro-link">Begin</a>
                     <p class="tm-intro-text">
                     <form class="form-inline my-2 my-lg-0" action="/blog/search.html" onsubmit="return checkData()">

@@ -37,7 +37,7 @@
         background: url(${blogger.backgroundImage}) no-repeat;
         background-attachment: fixed;
         background-position: left top;
-        background-size: 100% 1000px;
+        background-size: 100% 750px;
         color: white;
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -53,6 +53,7 @@
         justify-content: center;
         height: 750px;
     }
+
     </c:if>
 </style>
 <body id="top" class="home gray-bg">
@@ -234,9 +235,20 @@
 <script src="/static/js/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var aspectRatio =1.5;
+        <c:if test="${blogger.aspectRatio!=null&&blogger.aspectRatio>0}">
+        aspectRatio = ${blogger.aspectRatio};
+        </c:if>
         var mobileTopOffset = 54;
         var desktopTopOffset = 80;
         var topOffset = desktopTopOffset;
+        if (aspectRatio != null) {
+            var height = $(window).width() / aspectRatio;
+            if (height < 750) {
+                height = 750
+            }
+            $(".tm-intro").attr("style", "background-size: 100% " + height + "px;");
+        }
 
         if ($(window).width() <= 767) {
             topOffset = mobileTopOffset;
@@ -260,6 +272,13 @@
                 offset: topOffset,
                 'filter': ':not(.external)'
             });
+            if (aspectRatio != null) {
+                var height = $(window).width() / aspectRatio;
+                if (height < 750) {
+                    height = 750
+                }
+                $(".tm-intro").attr("style", "background-size: 100% " + height + "px;");
+            }
         });
 
         var target = $("#tm-section-2").offset().top - topOffset;

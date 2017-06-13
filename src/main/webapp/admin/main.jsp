@@ -168,8 +168,8 @@
                data-options="plain:true,iconCls:'icon-bklb'" style="width: 150px;">外链文件本地管理</a>
             <a href="javascript:refreshSystem()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-reload'" style="width: 150px;">刷新系统缓存</a>
-            <a href="http://shawblog.duoshuo.com/admin/" target="_blank" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-review'" style="width: 150px">评论审核</a>
+            <a href="javascript:openTab('修改个人信息','modifyInfo.jsp','icon-grxxxg')" class="easyui-linkbutton"
+               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改站点&个人信息</a>
             <a href="javascript:openWebLogDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-review'" style="width: 150px;">web日志分析报表</a>
         </div>
@@ -191,7 +191,7 @@
         </div>
         <div title="个人信息管理" data-options="iconCls:'icon-grxx'" style="padding:10px">
             <a href="javascript:openTab('修改个人信息','modifyInfo.jsp','icon-grxxxg')" class="easyui-linkbutton"
-               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改个人信息</a>
+               data-options="plain:true,iconCls:'icon-grxxxg'" style="width: 150px;">修改站点&个人信息</a>
             <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-modifyPassword'" style="width: 150px;">修改密码</a>
         </div>

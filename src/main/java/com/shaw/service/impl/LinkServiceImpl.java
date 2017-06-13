@@ -3,6 +3,7 @@ package com.shaw.service.impl;
 import com.shaw.bo.Link;
 import com.shaw.mapper.LinkMapper;
 import com.shaw.service.LinkService;
+import com.shaw.util.PageBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,12 +24,12 @@ public class LinkServiceImpl implements LinkService{
 		return linkMapper.update(link);
 	}
 
-	public List<Link> list(Map<String, Object> map) {
-		return linkMapper.list(map);
+	public List<Link> list(PageBean pageBean) {
+		return linkMapper.list(pageBean);
 	}
 
-	public Long getTotal(Map<String, Object> map) {
-		return linkMapper.getTotal(map);
+	public Long getTotal() {
+		return linkMapper.getTotal();
 	}
 
 	public Integer delete(Integer id) {

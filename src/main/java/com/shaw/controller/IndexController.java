@@ -8,6 +8,7 @@ import com.shaw.util.PageBean;
 import com.shaw.util.PageUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
+import com.shaw.vo.BlogQuery;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -45,17 +46,15 @@ public class IndexController {
         if (StringUtil.isEmpty(page)) {
             page = "1";
         }
-        PageBean pageBean = new PageBean(Integer.parseInt(page), Constants.PAGE_SIZE);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("start", pageBean.getStart());
-        map.put("size", pageBean.getPageSize());
+        BlogQuery query = new BlogQuery(Integer.parseInt(page), Constants.PAGE_SIZE);
         if (typeId != null)
-            map.put("typeId", typeId);
+            query.setTypeId(typeId);
         if (StringUtil.isNotEmpty(releaseDateStr)) {
             releaseDateStr = StringUtil.filterSpChar(releaseDateStr);
-            map.put("releaseDateStr", releaseDateStr);
+            query.setReleaseDateStr(releaseDateStr);
         }
-        List<Blog> blogList = blogService.list(map);
+        query.setNoContent(true);
+        List<Blog> blogList = blogService.list(query);
         for (Blog blog : blogList) {
             List<String> imagesList = blog.getImagesList();
             String blogInfo = blog.getContent();
@@ -78,7 +77,7 @@ public class IndexController {
         if (StringUtil.isNotEmpty(releaseDateStr)) {
             param.append("releaseDateStr=" + releaseDateStr + "&");
         }
-        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath(), blogService.getTotal(map), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
+        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath(), blogService.getTotal(query), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);

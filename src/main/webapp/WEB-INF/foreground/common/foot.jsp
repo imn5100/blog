@@ -4,7 +4,7 @@
     <div class="row gray-bg">
         <footer class="tm-footer">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <p class="text-xs-center tm-footer-text">Power By <a href="https://github.com/imn5100"
+                <p class="text-xs-center tm-footer-text">Power By  <span class="fa fa-github"></span>&nbsp;<a href="https://github.com/imn5100"
                                                                      target="_blank">Imn5100</a></p>
                 <p class="text-xs-center tm-footer-text">浙ICP备16038105号</p>
                 <p class="text-xs-center tm-footer-text">浙公网安备33010602007235号</p>

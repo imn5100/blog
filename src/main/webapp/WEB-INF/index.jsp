@@ -170,7 +170,7 @@
 <div class="col-md-3" id="side" style="padding-top: 30px;">
     <div class="card card-default">
         <div class="card-heading">
-            <span class="fa fa-tower"></span>
+            <span class="fa fa-leaf"></span>
             ${blogger.nickName}
         </div>
         <div class="card-block" align="center">

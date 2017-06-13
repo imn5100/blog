@@ -235,7 +235,7 @@
 <script src="/static/js/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var aspectRatio =1.5;
+        var aspectRatio = 1.5;
         <c:if test="${blogger.aspectRatio!=null&&blogger.aspectRatio>0}">
         aspectRatio = ${blogger.aspectRatio};
         </c:if>
@@ -244,7 +244,7 @@
         var topOffset = desktopTopOffset;
         if (aspectRatio != null) {
             var height = $(window).width() / aspectRatio;
-            if (height < 750) {
+            if (!(height > 750)) {
                 height = 750
             }
             $(".tm-intro").attr("style", "background-size: 100% " + height + "px;");
@@ -274,7 +274,7 @@
             });
             if (aspectRatio != null) {
                 var height = $(window).width() / aspectRatio;
-                if (height < 750) {
+                if (!(height > 750)) {
                     height = 750
                 }
                 $(".tm-intro").attr("style", "background-size: 100% " + height + "px;");

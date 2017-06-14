@@ -16,6 +16,10 @@
 
     <script type="text/javascript" src="/static/ajaxfileupload.js"></script>
     <script type="text/javascript">
+        function isFloat(num) {
+            var r = "^\\d+(\\.\\d+)?$"
+            return r.match(num);
+        }
         function updateUserInfo() {
             var id = $("#id").val();
             var userName = $("#id").val();
@@ -23,7 +27,18 @@
             var sign = $("#sign").val();
             var imageUrl = $("#imageUrl").val();
             var backgroundUrl = $("#backgroundUrl").val();
+            var aspectRatio = $("#aspectRatio").val();
             var proFile = UE.getEditor('proFile').getContent();
+            if (aspectRatio != null || aspectRatio != "") {
+                //非浮点数
+                if ((!isFloat(aspectRatio))) {
+                    //非整数
+                    if (isNaN(aspectRatio)) {
+                        $.messager.alert("系统提示", "背景高度设置错误");
+                        return
+                    }
+                }
+            }
             var params = {
                 "id": id,
                 "userName": userName,
@@ -31,7 +46,8 @@
                 "sign": sign,
                 "proFile": proFile,
                 "imageUrl": imageUrl,
-                "backgroundUrl": backgroundUrl
+                "backgroundUrl": backgroundUrl,
+                "aspectRatio": aspectRatio
             }
             $.ajaxFileUpload({
                 type: 'POST',
@@ -88,7 +104,8 @@
             </tr>
             <tr>
                 <td>背景URL</td>
-                <td><input type="text" id="backgroundUrl" name="backgroundUrl" style="width: 400px;"/></td>
+                <td><input type="text" id="backgroundUrl" name="backgroundUrl" style="width: 400px;"/>背景宽高比<input
+                        type="text" id="aspectRatio" name="aspectRatio" style="width: 50px;"/></td>
             </tr>
             <tr>
                 <td valign="top">简介：</td>
@@ -117,20 +134,21 @@
     ue.addListener("ready", function () {
         //通过ajax请求数据
         UE.ajax.request("/admin/blogger/find.do",
-                {
-                    method: "post",
-                    async: false,
-                    data: {},
-                    onsuccess: function (result) {
-                        result = eval("(" + result.responseText + ")");
-                        $("#nickName").val(result.nickName);
-                        $("#sign").val(result.sign);
-                        $("#nickName").val(result.nickName);
-                        $("#imageUrl").val(result.imageName);
-                        $("#backgroundUrl").val(result.backgroundImage);
-                        UE.getEditor('proFile').setContent(result.proFile);
-                    }
+            {
+                method: "post",
+                async: false,
+                data: {},
+                onsuccess: function (result) {
+                    result = eval("(" + result.responseText + ")");
+                    $("#nickName").val(result.nickName);
+                    $("#sign").val(result.sign);
+                    $("#nickName").val(result.nickName);
+                    $("#imageUrl").val(result.imageName);
+                    $("#backgroundUrl").val(result.backgroundImage);
+                    $("#aspectRatio").val(result.aspectRatio);
+                    UE.getEditor('proFile').setContent(result.proFile);
                 }
+            }
         );
     });
 

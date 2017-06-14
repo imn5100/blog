@@ -13,6 +13,7 @@ public class Blogger implements Serializable {
     private String proFile;
     private String imageName;
     private String backgroundImage;
+    private double aspectRatio = 1.5;
 
     public Integer getId() {
         return id;
@@ -77,5 +78,16 @@ public class Blogger implements Serializable {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public double getAspectRatio() {
+        if (aspectRatio == 0) {
+            return 1.5;
+        }
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(double aspectRatio) {
+        this.aspectRatio = aspectRatio;
     }
 }

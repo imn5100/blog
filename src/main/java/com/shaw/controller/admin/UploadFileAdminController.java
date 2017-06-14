@@ -26,7 +26,7 @@ public class UploadFileAdminController {
      * 外链文件管理 七牛 SMMS
      */
     @RequestMapping("/listWebFile")
-    public void listWebFile(WebFileQuery query, HttpServletResponse response) throws Exception {
+    public void listWebFile(WebFileQuery query, int rows, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
         if (query != null) {
             if (StringUtil.isEmpty(query.getFilename())) {
@@ -34,6 +34,9 @@ public class UploadFileAdminController {
             }
             if (StringUtil.isEmpty(query.getMimetype())) {
                 query.setMimetype(null);
+            }
+            if (rows != 0) {
+                query.setPageSize(rows);
             }
             List<UploadFile> list = uploadFileService.queryList(query);
             Integer count = uploadFileService.countList(query);

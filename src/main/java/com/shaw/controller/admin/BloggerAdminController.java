@@ -3,8 +3,10 @@ package com.shaw.controller.admin;
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.Blogger;
 import com.shaw.bo.UploadFile;
+import com.shaw.constants.CacheKey;
 import com.shaw.service.BloggerService;
 import com.shaw.service.UploadFileService;
+import com.shaw.service.impl.RedisClient;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
@@ -27,13 +29,15 @@ public class BloggerAdminController {
     private BloggerService bloggerService;
     @Autowired
     private UploadFileService uploadFileService;
+    @Autowired
+    private RedisClient redisClient;
     private Logger logger = LoggerFactory.getLogger(BloggerAdminController.class);
 
     /**
      * 修改博主信息
      */
     @RequestMapping("/save")
-    public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, @RequestParam("backgroundUrl") String backgroundUrl, Blogger blogger, HttpServletResponse response) throws Exception {
+    public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, @RequestParam("backgroundUrl") String backgroundUrl, @RequestParam("aspectRatio") double aspectRatio, Blogger blogger, HttpServletResponse response) throws Exception {
         if (imageFile != null && !imageFile.isEmpty()) {
             //将头像上传至 七牛，并获取返回的url
 //            UploadFile uploadFile =  uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
@@ -44,8 +48,12 @@ public class BloggerAdminController {
             if (StringUtil.isNotEmpty(imageUrl)) {
                 blogger.setImageName(imageUrl.trim());
             }
+            if (aspectRatio > 0) {
+                redisClient.set(CacheKey.BACKGROUND_ASPECT_RATIO, aspectRatio);
+                blogger.setAspectRatio(aspectRatio);
+            }
         }
-        if (backgroundUrl!=null) {
+        if (backgroundUrl != null) {
             if (imageUrl.startsWith("https://"))
                 blogger.setBackgroundImage(backgroundUrl);
             else

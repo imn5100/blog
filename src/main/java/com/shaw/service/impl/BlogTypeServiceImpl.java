@@ -3,6 +3,7 @@ package com.shaw.service.impl;
 import com.shaw.bo.BlogType;
 import com.shaw.mapper.BlogTypeMapper;
 import com.shaw.service.BlogTypeService;
+import com.shaw.util.PageBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -10,33 +11,33 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BlogTypeServiceImpl implements BlogTypeService{
+public class BlogTypeServiceImpl implements BlogTypeService {
 
-	@Resource
-	private BlogTypeMapper blogTypeMapper;
-	
-	public List<BlogType> countList() {
-		return blogTypeMapper.countList();
-	}
+    @Resource
+    private BlogTypeMapper blogTypeMapper;
 
-	public List<BlogType> list(Map<String, Object> map) {
-		return blogTypeMapper.list(map);
-	}
+    public List<BlogType> countList() {
+        return blogTypeMapper.countList();
+    }
 
-	public Long getTotal(Map<String, Object> map) {
-		return blogTypeMapper.getTotal(map);
-	}
+    public List<BlogType> list(PageBean pageBean) {
+        return blogTypeMapper.list(pageBean);
+    }
 
-	public Integer add(BlogType blogType) {
-		return blogTypeMapper.add(blogType);
-	}
+    public Long getTotal() {
+        return blogTypeMapper.getTotal();
+    }
 
-	public Integer update(BlogType blogType) {
-		return blogTypeMapper.update(blogType);
-	}
+    public Integer add(BlogType blogType) {
+        return blogTypeMapper.add(blogType);
+    }
 
-	public Integer delete(Integer id) {
-		return blogTypeMapper.delete(id);
-	}
+    public Integer update(BlogType blogType) {
+        return blogTypeMapper.update(blogType);
+    }
+
+    public Integer delete(Integer id) {
+        return blogTypeMapper.delete(id);
+    }
 
 }

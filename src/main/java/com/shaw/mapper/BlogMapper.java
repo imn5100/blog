@@ -1,6 +1,7 @@
 package com.shaw.mapper;
 
 import com.shaw.bo.Blog;
+import com.shaw.vo.BlogQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,9 @@ public interface BlogMapper {
 
     List<Blog> countList();
 
-    List<Blog> list(Map<String, Object> map);
+    List<Blog> list(BlogQuery query);
 
-    Long getTotal(Map<String, Object> map);
+    Long getTotal(BlogQuery query);
 
     Blog findById(Integer id);
 
@@ -27,7 +28,7 @@ public interface BlogMapper {
 
     Integer getBlogByTypeId(Integer typeId);
 
-    List<Blog> listSimple(Map<String, Object> map);
+    List<Blog> listSimple(BlogQuery query);
 
     Integer updateBatchForClickHit(List<Blog> list);
 

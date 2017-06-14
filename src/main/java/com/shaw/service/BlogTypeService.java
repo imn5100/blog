@@ -1,6 +1,7 @@
 package com.shaw.service;
 
 import com.shaw.bo.BlogType;
+import com.shaw.util.PageBean;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,9 @@ public interface BlogTypeService {
 
     List<BlogType> countList();
 
-    List<BlogType> list(Map<String, Object> map);
+    List<BlogType> list(PageBean pageBean);
 
-    Long getTotal(Map<String, Object> map);
+    Long getTotal();
 
     Integer add(BlogType blogType);
 

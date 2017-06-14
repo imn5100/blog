@@ -4,6 +4,7 @@ import com.shaw.bo.Blog;
 import com.shaw.mapper.BlogMapper;
 import com.shaw.service.BlogService;
 import com.shaw.util.BoUtils;
+import com.shaw.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> list(Map<String, Object> map) {
-        return blogMapper.list(map);
+    public List<Blog> list(BlogQuery query) {
+        return blogMapper.list(query);
     }
 
     @Override
-    public Long getTotal(Map<String, Object> map) {
-        return blogMapper.getTotal(map);
+    public Long getTotal(BlogQuery query) {
+        return blogMapper.getTotal(query);
     }
 
     /***
@@ -79,8 +80,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> listSimple(Map<String, Object> map) {
-        return blogMapper.listSimple(map);
+    public List<Blog> listSimple(BlogQuery query) {
+        return blogMapper.listSimple(query);
     }
 
     @Override

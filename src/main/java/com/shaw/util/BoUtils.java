@@ -18,8 +18,11 @@ public class BoUtils {
             String clickHit = redisTemplate.opsForValue().get(String.format(CacheKey.BLOG_CLICK_KEY, blog.getId()));
             if (StringUtils.isNotBlank(clickHit)) {
                 try {
-                    blog.setClickHit(Integer.valueOf(clickHit));
-                    return true;
+                    int intClickHit = Integer.valueOf(clickHit);
+                    if (blog.getClickHit() < intClickHit) {
+                        blog.setClickHit(intClickHit);
+                        return true;
+                    }
                 } catch (NumberFormatException e) {
                     return false;
                 }

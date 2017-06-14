@@ -25,16 +25,16 @@
         from blog_type where id=#{id}
     </select>
 
-    <select id="list" parameterType="Map" resultMap="BlogTypeResult">
+    <select id="list" parameterType="com.shaw.util.PageBean" resultMap="BlogTypeResult">
         select
         <include refid="Base_Column_List"/>
         from blog_type
-        <if test="start!=null and size!=null">
-            limit #{start},#{size}
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
         </if>
     </select>
 
-    <select id="getTotal" parameterType="Map" resultType="Long">
+    <select id="getTotal"  resultType="Long">
 		select count(1) from blog_type
 	</select>
 

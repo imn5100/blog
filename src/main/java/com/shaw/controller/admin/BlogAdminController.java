@@ -8,6 +8,7 @@ import com.shaw.service.BlogService;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.PageBean;
 import com.shaw.util.StringUtil;
+import com.shaw.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,13 +68,10 @@ public class BlogAdminController {
      */
     @RequestMapping("/list")
     public String list(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String rows, Blog s_blog, HttpServletResponse response) throws Exception {
-        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", StringUtil.formatLike(s_blog.getTitle()));
-        map.put("start", pageBean.getStart());
-        map.put("size", pageBean.getPageSize());
-        List<Blog> blogList = blogService.listSimple(map);
-        Long total = blogService.getTotal(map);
+        BlogQuery query = new BlogQuery(Integer.parseInt(page), Integer.parseInt(rows));
+        query.setTitle(StringUtil.formatLike(s_blog.getTitle()));
+        List<Blog> blogList = blogService.listSimple(query);
+        Long total = blogService.getTotal(query);
         JSONObject result = new JSONObject();
         result.put("rows", blogList);
         result.put("total", total);

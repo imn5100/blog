@@ -7,6 +7,7 @@ import com.shaw.bo.Link;
 import com.shaw.constants.CacheKey;
 import com.shaw.service.*;
 import com.shaw.util.BoUtils;
+import com.shaw.vo.BlogQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,6 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 刷新系统缓存。
-     * 2016/10/28新增，每次启动初始化数据时，同步redis 中clockHit数据到数据库中
      */
     public void initBlogData(ServletContext application) {
         try {
@@ -52,7 +52,9 @@ public class SystemServiceImpl implements SystemService {
             application.setAttribute(CacheKey.BLOG_COUNT_LIST, blogCountList);
             List<Link> linkList = linkService.list(null); // 获取所有友情链接
             application.setAttribute(CacheKey.LINK_LIST, linkList);
-            List<Blog> blogs = blogService.list(null);
+            BlogQuery query = new BlogQuery();
+            query.setNoContent(true);
+            List<Blog> blogs = blogService.list(query);
             int count = 0;
             List<Blog> updateBlog = new ArrayList<Blog>();
             for (Blog blog : blogs) {

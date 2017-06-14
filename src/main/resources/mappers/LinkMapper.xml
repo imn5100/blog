@@ -35,16 +35,16 @@
         where id=#{id}
     </update>
 
-    <select id="list" parameterType="Map" resultMap="LinkResult">
+    <select id="list" parameterType="com.shaw.util.PageBean" resultMap="LinkResult">
         select
         <include refid="Base_Column_List"/>
         from link order by order_no
-        <if test="start!=null and size!=null">
-            limit #{start},#{size}
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
         </if>
     </select>
 
-    <select id="getTotal" parameterType="Map" resultType="Long">
+    <select id="getTotal" resultType="Long">
 		select count(1) from link
 	</select>
 

@@ -29,10 +29,8 @@ public class LinkAdminController {
     public String list(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "rows", required = false) String rows, HttpServletResponse response) throws Exception {
         PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("start", pageBean.getStart());
-        map.put("size", pageBean.getPageSize());
-        List<Link> linkList = linkService.list(map);
-        Long total = linkService.getTotal(map);
+        List<Link> linkList = linkService.list(pageBean);
+        Long total = linkService.getTotal();
         JSONObject result = new JSONObject();
         result.put("rows", linkList);
         result.put("total", total);

@@ -136,10 +136,10 @@
 </script>
 <div class="bgDiv">
     <div class="wallpaper"
-         style="background: url('https://cdn.shawblog.me/49649473_p0_1479358279249') no-repeat center;background-size: cover;">
+         style="background: url('https://ooo.0o0.ooo/2017/06/15/59428c686735d.jpg') no-repeat center;background-size: cover;">
     </div>
     <div class="wallpaper"
-         style="background: url('https://cdn.shawblog.me/51368875_p0_1479358290644') no-repeat center;background-size: cover;">
+         style="background: url('https://ooo.0o0.ooo/2017/06/15/59428c4cca1cf.jpg') no-repeat center;background-size: cover;">
     </div>
 </div>
 <div class="centerDiv">

@@ -4,10 +4,7 @@ import com.shaw.bo.Blog;
 import com.shaw.bo.Blogger;
 import com.shaw.constants.Constants;
 import com.shaw.service.BlogService;
-import com.shaw.util.PageBean;
-import com.shaw.util.PageUtil;
-import com.shaw.util.StringUtil;
-import com.shaw.util.TimeUtils;
+import com.shaw.util.*;
 import com.shaw.vo.BlogQuery;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,11 +38,9 @@ public class IndexController {
      * 主页，获取blog List信息显示
      */
     @RequestMapping("/index")
-    public ModelAndView index(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "typeId", required = false) Integer typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
+    public ModelAndView index(@RequestParam(value = "page", required = false) String pageStr, @RequestParam(value = "typeId", required = false) Integer typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
-        if (page==0) {
-            page = 1;
-        }
+        int page = NumberUtils.parseIntQuietly(pageStr, 1);
         BlogQuery query = new BlogQuery(page, Constants.PAGE_SIZE);
         if (typeId != null)
             query.setTypeId(typeId);

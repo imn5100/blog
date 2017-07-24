@@ -41,12 +41,12 @@ public class IndexController {
      * 主页，获取blog List信息显示
      */
     @RequestMapping("/index")
-    public ModelAndView index(@RequestParam(value = "page", required = false) String page, @RequestParam(value = "typeId", required = false) Integer typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
+    public ModelAndView index(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "typeId", required = false) Integer typeId, @RequestParam(value = "releaseDateStr", required = false) String releaseDateStr, HttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView();
-        if (StringUtil.isEmpty(page)) {
-            page = "1";
+        if (page==0) {
+            page = 1;
         }
-        BlogQuery query = new BlogQuery(Integer.parseInt(page), Constants.PAGE_SIZE);
+        BlogQuery query = new BlogQuery(page, Constants.PAGE_SIZE);
         if (typeId != null)
             query.setTypeId(typeId);
         if (StringUtil.isNotEmpty(releaseDateStr)) {
@@ -77,7 +77,7 @@ public class IndexController {
         if (StringUtil.isNotEmpty(releaseDateStr)) {
             param.append("releaseDateStr=" + releaseDateStr + "&");
         }
-        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath(), blogService.getTotal(query), Integer.parseInt(page), Constants.PAGE_SIZE, param.toString()));
+        mav.addObject("pageCode", PageUtil.genPagination(request.getContextPath(), blogService.getTotal(query), page, Constants.PAGE_SIZE, param.toString()));
         mav.addObject("mainPage", "/WEB-INF/foreground/blog/list.jsp");
         mav.addObject("indexActive", true);
         mav.addObject("pageTitle", Constants.PAGE_TITLE);

@@ -50,4 +50,13 @@ public class HttpResponseUtil {
         out.flush();
         out.close();
     }
+
+    public static void redirect(HttpServletResponse response, String target) {
+        try {
+
+            response.sendRedirect(StringUtil.emptyToDefault(target, "/"));
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,16 +1,12 @@
 package com.shaw.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shaw.annotation.IpPassport;
 import com.shaw.annotation.OAuthPassport;
-import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
-import com.shaw.constants.ResponseCode;
-import com.shaw.service.impl.RedisClient;
-import com.shaw.util.HttpRequestUtil;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
+import com.shaw.util.ThreadPoolManager;
 import com.shaw.vo.GithubUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by shaw  on 2016/12/20 0020.
@@ -62,12 +53,25 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
                             String token = getToken(code, state);
                             if (StringUtil.isNotEmpty(token)) {
                                 githubUser = getUser(token);
-                                request.getSession().setAttribute(Constants.OAUTH_USER, githubUser);
+                                if (githubUser != null && githubUser.valid()) {
+                                    request.getSession().setAttribute(Constants.OAUTH_USER, githubUser);
+                                    ThreadPoolManager.INSTANCE.execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //todo saveOrUpdate User
+                                        }
+                                    });
+                                }else {
+                                    HttpResponseUtil.redirect(response,"/404");
+                                    return false;
+                                }
                             } else {
+                                HttpResponseUtil.redirect(response,"/404");
                                 return false;
                             }
                         } catch (Exception e) {
                             logger.error("OAuth Login Fail:", e);
+                            HttpResponseUtil.redirect(response,"/404");
                             return false;
                         }
                     }
@@ -93,7 +97,10 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
             JSONObject jsonObject = JSONObject.parseObject(responseEntity.getBody());
             return jsonObject.getString("access_token");
         } else {
-            logger.warn(responseEntity.toString());
+            if (responseEntity != null)
+                logger.warn(responseEntity.toString());
+            else
+                logger.warn("Get Access_Token Response is NULL");
             return null;
         }
     }

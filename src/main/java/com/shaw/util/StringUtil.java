@@ -138,4 +138,12 @@ public class StringUtil {
             return new String(buff);
         }
     }
+
+    public static String emptyToDefault(String target, String s) {
+        if (isEmpty(target)) {
+            return s;
+        } else {
+            return target;
+        }
+    }
 }

@@ -10,6 +10,9 @@
             'highlightJsUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCore.js',
             'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
         })
+    $(document).ready(function () {
+        $("#oauthLogin").attr("href", "/user/fromGithub.html?redirect=" + window.location);
+    });
 </script>
 <style>
     .blog_info {
@@ -49,7 +52,7 @@
         height: auto
     }
 </style>
-<div  style="padding-top: 30px;">
+<div style="padding-top: 30px;">
     <div class="card-heading">
     </div>
     <div class="card-body">
@@ -96,13 +99,30 @@
         </div>
     </div>
 </div>
-<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-<script>
-    var cloudTieConfig = {
-        url: document.location.href,
-        sourceId: "",
-        productKey: "5639cd71ae684a908044fc1325d4dcd3",
-        target: "cloud-tie-wrapper"
-    };
-</script>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+<div>
+    <c:choose>
+        <c:when test="${OAUTH_USER!=null}">
+            <hr>
+            <div class="col-md-2">
+                <img class="img-responsive"
+                     src="${OAUTH_USER.avatar_url}"/>
+                <p align="center">
+                    <a href="https://github.com/${OAUTH_USER.login}/" target="_blank">
+                       ${OAUTH_USER.login}(${OAUTH_USER.name})</a>
+                </p>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <textarea class="form-control" rows="5"> </textarea>
+                </div>
+                <div align="right">
+                    <button> 评论</button>
+                </div>
+            </div>
+            <hr>
+        </c:when>
+        <c:otherwise>
+            <a href="/user/fromGithub.html?" id="oauthLogin">Login From Github</a>
+        </c:otherwise>
+    </c:choose>
+</div>

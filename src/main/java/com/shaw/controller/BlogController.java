@@ -1,5 +1,6 @@
 package com.shaw.controller;
 
+import com.shaw.annotation.OAuthPassport;
 import com.shaw.bo.Blog;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
@@ -40,8 +41,9 @@ public class BlogController {
      * 跳转 博客详情页
      */
     @RequestMapping("/{id}")
+    @OAuthPassport
     public ModelAndView details(@PathVariable("id") String encodeId, HttpServletRequest request) throws Exception {
-        int id = 0;
+        int id;
         ModelAndView mav = new ModelAndView();
         if (NumberUtils.is(encodeId)) {
             id = NumberUtils.parseIntQuietly(encodeId);

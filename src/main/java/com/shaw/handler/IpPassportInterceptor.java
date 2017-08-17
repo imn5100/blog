@@ -26,7 +26,7 @@ public class IpPassportInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
             IpPassport ipPassport = ((HandlerMethod) handler).getMethodAnnotation(IpPassport.class);
-            if (ipPassport == null || ipPassport.validate() == false) {
+            if (ipPassport == null || !ipPassport.validate()) {
                 return true;
             } else {
                 String ip = HttpRequestUtil.getIpAddr(request);

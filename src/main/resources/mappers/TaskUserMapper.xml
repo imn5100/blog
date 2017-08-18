@@ -33,7 +33,7 @@
         ORDER BY active_time DESC
         limit #{start},#{pageSize}
     </select>
-    <select id="queryCount" resultType="Integer" parameterType="com.shaw.vo.TaskUserQuery">
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.shaw.vo.TaskUserQuery">
         select
         count(1)
         from task_user

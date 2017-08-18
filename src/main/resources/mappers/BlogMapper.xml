@@ -77,7 +77,7 @@
         </if>
     </select>
 
-    <select id="getTotal" parameterType="com.shaw.vo.BlogQuery" resultType="Long">
+    <select id="getTotal" parameterType="com.shaw.vo.BlogQuery" resultType="java.lang.Long">
         select count(1) from blog
         <where>
             <if test="title!=null and title!='' ">
@@ -92,7 +92,7 @@
         </where>
     </select>
 
-    <select id="findById" parameterType="Integer" resultMap="BlogResult">
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BlogResult">
         select
         <include refid="Base_Column_List"/>
         from blog where id=#{id}
@@ -123,11 +123,11 @@
         where id=#{id}
     </update>
 
-    <select id="getLastBlog" parameterType="Integer" resultMap="BlogResult">
+    <select id="getLastBlog" parameterType="java.lang.Integer" resultMap="BlogResult">
 		SELECT 	id,title  FROM blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
 	</select>
 
-    <select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
+    <select id="getNextBlog" parameterType="java.lang.Integer" resultMap="BlogResult">
 		SELECT 	id,title  FROM blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
 	</select>
 
@@ -136,11 +136,11 @@
 		insert into blog values(null,#{title},#{summary},now(),0,#{content},#{blogType.id},#{keyWord})
 	</insert>
 
-    <delete id="delete" parameterType="Integer">
+    <delete id="delete" parameterType="java.lang.Integer">
 		delete from blog where id=#{id}
 	</delete>
 
-    <select id="getBlogByTypeId" parameterType="Integer" resultType="Integer">
+    <select id="getBlogByTypeId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(1) from blog where type_id=#{typeId}
 	</select>
 

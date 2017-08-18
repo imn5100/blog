@@ -174,7 +174,7 @@
       is_valid = #{isValid,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <delete id="deleteQiniuByKey" parameterType="List">
+    <delete id="deleteQiniuByKey" parameterType="java.util.List">
         delete from upload_file WHERE
         type = 1
         AND storename in
@@ -200,7 +200,7 @@
         ORDER BY upload_time DESC
         limit #{start},#{pageSize}
     </select>
-    <select id="countList" parameterType="com.shaw.vo.WebFileQuery" resultType="Integer">
+    <select id="countList" parameterType="com.shaw.vo.WebFileQuery" resultType="java.lang.Integer">
         SELECT
         count(1)
         from upload_file
@@ -216,7 +216,7 @@
             </if>
         </where>
     </select>
-    <delete id="batchDelete" parameterType="List">
+    <delete id="batchDelete" parameterType="java.util.List">
         delete from upload_file WHERE
         id in
         <foreach collection="list" open="(" close=")" item="item" separator=",">

@@ -19,7 +19,7 @@
 		SELECT t2.id,t2.type_name,COUNT(t1.id) AS blog_count FROM blog t1 RIGHT JOIN blog_type t2 ON t1.type_id=t2.id GROUP BY t2.id order by t2.order_no;
 	</select>
 
-    <select id="findById" parameterType="Integer" resultMap="BlogTypeResult">
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BlogTypeResult">
         select
         <include refid="Base_Column_List"/>
         from blog_type where id=#{id}
@@ -34,7 +34,7 @@
         </if>
     </select>
 
-    <select id="getTotal"  resultType="Long">
+    <select id="getTotal"  resultType="java.lang.Long">
 		select count(1) from blog_type
 	</select>
 
@@ -55,7 +55,7 @@
         where id=#{id}
     </update>
 
-    <delete id="delete" parameterType="Integer">
+    <delete id="delete" parameterType="java.lang.Integer">
 		delete from blog_type where id=#{id}
 	</delete>
 </mapper> 

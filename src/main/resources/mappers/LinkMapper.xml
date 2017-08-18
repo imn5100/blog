@@ -44,12 +44,12 @@
         </if>
     </select>
 
-    <select id="getTotal" resultType="Long">
+    <select id="getTotal" resultType="java.lang.Long">
 		select count(1) from link
 	</select>
 
 
-    <delete id="delete" parameterType="Integer">
+    <delete id="delete" parameterType="java.lang.Integer">
 		delete from link where id=#{id}
 	</delete>
 </mapper> 

@@ -29,7 +29,7 @@
         ORDER BY create_time DESC
         limit #{start},#{pageSize}
     </select>
-    <select id="queryCount" resultType="Integer" parameterType="com.shaw.vo.RemoteMsgQuery">
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.shaw.vo.RemoteMsgQuery">
         SELECT
         count(1)
         from remote_msg
@@ -42,7 +42,7 @@
             </if>
         </where>
     </select>
-    <select id="consumerMsg" resultMap="BaseResultMap" parameterType="String">
+    <select id="consumerMsg" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
         from remote_msg
@@ -50,7 +50,7 @@
         ORDER BY create_time
         limit 1
     </select>
-    <delete id="batchDelete" parameterType="List">
+    <delete id="batchDelete" parameterType="java.util.List">
         delete from remote_msg WHERE
         id in
         <foreach collection="list" open="(" close=")" item="item" separator=",">

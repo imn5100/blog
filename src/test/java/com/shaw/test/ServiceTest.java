@@ -1,8 +1,12 @@
 package com.shaw.test;
 
 import com.shaw.bo.Blog;
+import com.shaw.bo.Visitor;
+import com.shaw.mapper.DiscussMapper;
+import com.shaw.mapper.VisitorMapper;
 import com.shaw.service.BlogService;
 import org.jsoup.Jsoup;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -14,6 +18,12 @@ public class ServiceTest extends SpringTestCase {
 
     @Autowired
     BlogService blogService;
+
+    @Autowired
+    private VisitorMapper visitorMapper;
+
+    @Autowired
+    private DiscussMapper discussMapper;
 
     /**
      * 调整数据，将summary 由简介改为 无html的
@@ -30,5 +40,15 @@ public class ServiceTest extends SpringTestCase {
             }
             blogService.update(blog);
         }
+    }
+
+
+    @Test
+    public void testMapper() {
+        Visitor visitor = visitorMapper.selectByAccountAndFrom("imn5100", 1);
+        System.out.println(visitor.getAccount());
+        System.out.println(visitor.getAvatarUrl());
+        System.out.println(visitor.getOauthFrom());
+        System.out.println(visitor.getThirdId());
     }
 }

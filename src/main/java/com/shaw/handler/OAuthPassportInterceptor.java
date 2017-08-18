@@ -55,11 +55,7 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
                                 githubUser = getUser(token);
                                 if (githubUser != null && githubUser.valid()) {
                                     request.getSession().setAttribute(Constants.OAUTH_USER, githubUser);
-                                    ThreadPoolManager.INSTANCE.execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            //todo saveOrUpdate User
-                                        }
+                                    ThreadPoolManager.INSTANCE.execute(() -> {
                                     });
                                 }else {
                                     HttpResponseUtil.redirect(response,"/404");

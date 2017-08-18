@@ -16,6 +16,7 @@ public enum ResponseCode {
     PERMISSION_WRONG(606, "权限不足"),
     SOCKET_NOT_CONNECT(607, "任务执行客户端未连接"),
     USER_REPEAT(608, "用户重复"),
+    NOT_LOGIN(609, "未登录,请先登录"),
     LOGIN_WRONG(999, "账号或密码错误"),
     PARAM_NOT_FORMAT(1001, "参数格式错误");
 

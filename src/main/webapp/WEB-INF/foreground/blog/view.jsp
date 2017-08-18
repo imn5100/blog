@@ -11,7 +11,57 @@
             'highlightCssUrl': '/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
         })
     $(document).ready(function () {
+        var blogId = $("#blogId").val();
+
+
+        $.get("/blog/discussList.do", {'blogId': blogId}, function (result) {
+            if (result.success && result.data) {
+                var html = "";
+                result.data.forEach(function (element, index) {
+                    html += '     <div class="row">   <div class="col-sm-2">' +
+                        '                <img class="img-responsive"' +
+                        '                     src="' + element.avatarUrl + '"/>' +
+                        '                <p align="center">\n' +
+                        '                    <a href="' + element.homePage + '" target="_blank">' +
+                        '                           ' + element.account + '(' + element.name + ')</a>' +
+                        '                </p>' +
+                        '            </div>' +
+                        '            <div class="col-sm-10" >' +
+                        '                <div class="form-group">' +
+                        '                    <textarea class="form-control" rows="5" id="discussContent" readonly=true>' + element.content + '</textarea>' +
+                        '                </div>' +
+                        '                <p  style="text-align: right;color: #666;font-size: medium;">' +
+                        '                  ' + element.discussTime +
+                        '                </p>' +
+                        '            </div> </div>'
+                });
+                $("#discussPanel").html(html);
+            }
+        }, "json")
+
         $("#oauthLogin").attr("href", "/user/fromGithub.html?redirect=" + window.location);
+
+        $("#submitDiscuss").click(function () {
+            var content = $("#discussContent").val();
+            if (blogId == null || blogId == "") {
+                alert("评论失败")
+                return
+            }
+            if (content == null || content.trim() == "") {
+                alert("请填写评论内容")
+                return
+            }
+            $.post("/blog/submitDiscuss.do", {
+                'blogId': blogId,
+                'content': content,
+            }, function (result) {
+                if (result.success) {
+                    alert("评论成功！");
+                } else {
+                    alert("评论失败！" + result.msg);
+                }
+            }, "json");
+        });
     });
 </script>
 <style>
@@ -57,6 +107,7 @@
     </div>
     <div class="card-body">
         <h3 align="center"><strong>${blog.title }</strong></h3>
+        <<input type="hidden" id="blogId" value="${blog.encodeId}">
         <div>
         </div>
         <div class="blog_info">
@@ -99,24 +150,24 @@
         </div>
     </div>
 </div>
+<hr>
 <div>
     <c:choose>
         <c:when test="${OAUTH_USER!=null}">
-            <hr>
             <div class="col-md-2">
                 <img class="img-responsive"
                      src="${OAUTH_USER.avatarUrl}"/>
                 <p align="center">
                     <a href="https://github.com/${OAUTH_USER.account}/" target="_blank">
-                       ${OAUTH_USER.account}(${OAUTH_USER.name})</a>
+                            ${OAUTH_USER.account}(${OAUTH_USER.name})</a>
                 </p>
             </div>
             <div class="col-md-10">
                 <div class="form-group">
-                    <textarea class="form-control" rows="5"> </textarea>
+                    <textarea class="form-control" rows="5" id="discussContent"> </textarea>
                 </div>
                 <div align="right">
-                    <button> 评论</button>
+                    <button id="submitDiscuss"> 评论</button>
                 </div>
             </div>
             <hr>
@@ -125,4 +176,8 @@
             <a href="/user/fromGithub.html?" id="oauthLogin">Login From Github</a>
         </c:otherwise>
     </c:choose>
+</div>
+<br>
+<div id="discussPanel" class="col-md-12">
+
 </div>

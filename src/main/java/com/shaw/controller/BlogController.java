@@ -143,11 +143,11 @@ public class BlogController {
 
 
     @RequestMapping(value = "/submitDiscuss", method = RequestMethod.POST)
-    public void submitDiscuss(@RequestParam(value = "blogId") String encodeId, @RequestParam(value = "blogId") String content, HttpSession session, HttpServletResponse response) throws Exception {
+    public void submitDiscuss(@RequestParam(value = "blogId") String encodeId, @RequestParam(value = "content") String content, HttpSession session, HttpServletResponse response) throws Exception {
         Visitor visitor = (Visitor) session.getAttribute(Constants.OAUTH_USER);
         if (visitor != null) {
             int blogId = CodecUtils.getDecodeId(encodeId);
-            if (blogId != 0 && 0 != visitor.getId() && StringUtil.isEmpty(content)) {
+            if (blogId != 0 && 0 != visitor.getId() && StringUtil.isNotEmpty(content)) {
                 if (discussService.submitDiscuss(blogId, visitor.getId(), content) > 0) {
                     HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
                 } else {
@@ -157,7 +157,7 @@ public class BlogController {
                 HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
             }
         } else {
-            HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
+            HttpResponseUtil.writeCode(response, ResponseCode.NOT_LOGIN);
         }
         return;
     }

@@ -29,6 +29,9 @@ public class HttpResponseUtil {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", code.getCode());
         jsonObject.put("msg", code.getMsg());
+        if (code == ResponseCode.SUCCESS) {
+            jsonObject.put("success", true);
+        }
         out.print(jsonObject.toString());
         out.flush();
         out.close();
@@ -43,6 +46,9 @@ public class HttpResponseUtil {
         JSONObject jsonObject = new JSONObject();
         if (o != null) {
             jsonObject.put("data", o);
+        }
+        if (code == ResponseCode.SUCCESS) {
+            jsonObject.put("success", true);
         }
         jsonObject.put("code", code.getCode());
         jsonObject.put("msg", code.getMsg());

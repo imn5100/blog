@@ -60,6 +60,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
             <tx:method name="check*" propagation="REQUIRED"/>
             <tx:method name="batch*" propagation="REQUIRED"/>
             <tx:method name="upload*" propagation="REQUIRED"/>
+            <tx:method name="submit*" propagation="REQUIRED"/>
             <!-- initBlogData 需要更新数据特殊化处理  -->
             <tx:method name="initBlogData" propagation="REQUIRED"/>
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>

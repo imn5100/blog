@@ -1,5 +1,6 @@
 package com.shaw.vo;
 
+import com.shaw.bo.Visitor;
 import com.shaw.util.StringUtil;
 
 import java.io.Serializable;
@@ -107,4 +108,15 @@ public class GithubUser implements Serializable {
         return id != null && StringUtil.isNotEmpty(login);
     }
 
+    public Visitor toVisitor() {
+        Visitor visitor = new Visitor();
+        visitor.setAccount(login);
+        visitor.setName(name);
+        visitor.setAvatarUrl(avatar_url);
+        visitor.setEmail(email);
+        visitor.setOauthFrom(Visitor.OAUTH_FROM_GITHUB);
+        visitor.setThirdId(String.valueOf(id));
+        visitor.setMoreInfo(moreInfo);
+        return visitor;
+    }
 }

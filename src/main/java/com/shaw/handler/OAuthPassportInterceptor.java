@@ -2,11 +2,12 @@ package com.shaw.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.annotation.OAuthPassport;
+import com.shaw.bo.Visitor;
 import com.shaw.constants.Constants;
+import com.shaw.service.VisitorService;
 import com.shaw.util.HttpResponseUtil;
 import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
-import com.shaw.util.ThreadPoolManager;
 import com.shaw.vo.GithubUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private VisitorService visitorService;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -44,32 +47,28 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
             if (oAuthPassport == null || !oAuthPassport.validate()) {
                 return true;
             } else {
-                GithubUser githubUser = (GithubUser) request.getSession().getAttribute(Constants.OAUTH_USER);
-                if (githubUser == null || !githubUser.valid()) {
+                Visitor visitor = (Visitor) request.getSession().getAttribute(Constants.OAUTH_USER);
+                if (visitor == null) {
                     String code = request.getParameter("code");
                     String state = request.getParameter("state");
                     if (StringUtil.isNotEmpty(code) && StringUtil.isNotEmpty(state)) {
                         try {
                             String token = getToken(code, state);
                             if (StringUtil.isNotEmpty(token)) {
-                                githubUser = getUser(token);
+                                GithubUser githubUser = getUser(token);
                                 if (githubUser != null && githubUser.valid()) {
-                                    request.getSession().setAttribute(Constants.OAUTH_USER, githubUser);
-                                    ThreadPoolManager.INSTANCE.execute(() -> {
-                                    });
-                                }else {
-                                    HttpResponseUtil.redirect(response,"/404");
-                                    return false;
+                                    visitor = visitorService.updateOrInsertByAccountAndFrom(githubUser.toVisitor());
+                                    if (visitor != null) {
+                                        request.getSession().setAttribute(Constants.OAUTH_USER, visitor);
+                                        return true;
+                                    }
                                 }
-                            } else {
-                                HttpResponseUtil.redirect(response,"/404");
-                                return false;
                             }
                         } catch (Exception e) {
                             logger.error("OAuth Login Fail:", e);
-                            HttpResponseUtil.redirect(response,"/404");
-                            return false;
                         }
+                        HttpResponseUtil.redirect(response, "/404");
+                        return false;
                     }
                 }
             }

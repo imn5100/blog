@@ -43,7 +43,7 @@
     delete from visitor
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shaw.bo.Visitor">
+  <insert id="insert" parameterType="com.shaw.bo.Visitor" useGeneratedKeys="true">
     insert into visitor (id, account, name, 
       third_id, email, oauth_from, 
       avatar_url, create_time, update_time, 

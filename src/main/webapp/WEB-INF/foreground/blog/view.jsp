@@ -105,10 +105,10 @@
             <hr>
             <div class="col-md-2">
                 <img class="img-responsive"
-                     src="${OAUTH_USER.avatar_url}"/>
+                     src="${OAUTH_USER.avatarUrl}"/>
                 <p align="center">
-                    <a href="https://github.com/${OAUTH_USER.login}/" target="_blank">
-                       ${OAUTH_USER.login}(${OAUTH_USER.name})</a>
+                    <a href="https://github.com/${OAUTH_USER.account}/" target="_blank">
+                       ${OAUTH_USER.account}(${OAUTH_USER.name})</a>
                 </p>
             </div>
             <div class="col-md-10">

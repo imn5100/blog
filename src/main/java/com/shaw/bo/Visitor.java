@@ -2,7 +2,9 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
-public class Visitor implements Serializable{
+public class Visitor implements Serializable {
+    public static final int OAUTH_FROM_GITHUB = 1;
+
     private Integer id;
 
     private String account;

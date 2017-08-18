@@ -1,9 +1,8 @@
-package com.shaw.mapper;
+package com.shaw.service;
 
 import com.shaw.bo.Visitor;
-import org.apache.ibatis.annotations.Param;
 
-public interface VisitorMapper {
+public interface VisitorService {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Visitor record);
@@ -18,5 +17,7 @@ public interface VisitorMapper {
 
     int updateByPrimaryKey(Visitor record);
 
-    Visitor selectByAccountAndFrom(@Param("account") String account,@Param("oauthFrom") Integer oauthFrom);
+    Visitor selectByAccountAndFrom(String account, Integer oauthFrom);
+
+    Visitor updateOrInsertByAccountAndFrom(Visitor visitor);
 }

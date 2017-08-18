@@ -1,9 +1,9 @@
 package com.shaw.controller;
 
+import com.shaw.bo.Visitor;
 import com.shaw.constants.Constants;
 import com.shaw.util.DesUtils;
 import com.shaw.util.PropertiesUtil;
-import com.shaw.vo.GithubUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +21,8 @@ public class UserController {
     @RequestMapping("/fromGithub")
     public ModelAndView loginByGithub(@RequestParam(name = "redirect") String redirect, HttpSession session) throws Exception {
         ModelAndView mav = new ModelAndView();
-        GithubUser gitHubUser = (GithubUser) session.getAttribute(Constants.OAUTH_USER);
-        if (gitHubUser != null && gitHubUser.valid()) {
+        Visitor gitHubUser = (Visitor) session.getAttribute(Constants.OAUTH_USER);
+        if (gitHubUser != null) {
             mav.setViewName("redirect:/");
         } else {
             String redirectUri = GITHUB_AUTHORIZE_URL + "?" +

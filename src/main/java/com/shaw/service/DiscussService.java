@@ -1,10 +1,10 @@
-package com.shaw.mapper;
+package com.shaw.service;
 
 import com.shaw.bo.Discuss;
 
 import java.util.List;
 
-public interface DiscussMapper {
+public interface DiscussService {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Discuss record);

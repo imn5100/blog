@@ -104,4 +104,12 @@ public class Visitor implements Serializable {
     public void setMoreInfo(String moreInfo) {
         this.moreInfo = moreInfo;
     }
+
+    public String getHomePage() {
+        if (oauthFrom == Visitor.OAUTH_FROM_GITHUB) {
+            return "https://github.com/" + this.getAccount();
+        } else {
+            return "";
+        }
+    }
 }

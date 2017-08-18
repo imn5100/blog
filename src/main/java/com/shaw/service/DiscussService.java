@@ -1,6 +1,7 @@
 package com.shaw.service;
 
 import com.shaw.bo.Discuss;
+import com.shaw.vo.CommentVo;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface DiscussService {
     int updateByPrimaryKey(Discuss record);
 
     List<Discuss> getListByBlogId(Integer blogId);
+
+    List<CommentVo> getCommentListByBlogId(Integer blogId);
+
+    int submitDiscuss(int blogId, int userId, String content);
 }

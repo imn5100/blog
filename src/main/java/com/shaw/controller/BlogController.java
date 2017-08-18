@@ -2,10 +2,13 @@ package com.shaw.controller;
 
 import com.shaw.annotation.OAuthPassport;
 import com.shaw.bo.Blog;
+import com.shaw.bo.Visitor;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
+import com.shaw.constants.ResponseCode;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
+import com.shaw.service.DiscussService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.*;
 import org.apache.commons.lang.StringUtils;
@@ -13,10 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +42,9 @@ public class BlogController {
 
     @Autowired
     private RedisClient redisClient;
+
+    @Autowired
+    private DiscussService discussService;
 
     /**
      * 跳转 博客详情页
@@ -120,6 +129,37 @@ public class BlogController {
         mav.addObject("pageTitle", Constants.PAGE_TITLE + "-" + keyword);
         mav.setViewName("WEB-INF/template");
         return mav;
+    }
+
+    @RequestMapping(value = "/discussList", method = RequestMethod.GET)
+    public void getDiscuss(@RequestParam(value = "blogId") String encodeId, HttpServletResponse response) throws Exception {
+        int blogId = CodecUtils.getDecodeId(encodeId);
+        if (blogId != 0) {
+            HttpResponseUtil.writeUseData(response, discussService.getCommentListByBlogId(blogId), ResponseCode.SUCCESS);
+        } else {
+            HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
+        }
+    }
+
+
+    @RequestMapping(value = "/submitDiscuss", method = RequestMethod.POST)
+    public void submitDiscuss(@RequestParam(value = "blogId") String encodeId, @RequestParam(value = "blogId") String content, HttpSession session, HttpServletResponse response) throws Exception {
+        Visitor visitor = (Visitor) session.getAttribute(Constants.OAUTH_USER);
+        if (visitor != null) {
+            int blogId = CodecUtils.getDecodeId(encodeId);
+            if (blogId != 0 && 0 != visitor.getId() && StringUtil.isEmpty(content)) {
+                if (discussService.submitDiscuss(blogId, visitor.getId(), content) > 0) {
+                    HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
+                } else {
+                    HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
+                }
+            } else {
+                HttpResponseUtil.writeCode(response, ResponseCode.PARAM_NOT_FORMAT);
+            }
+        } else {
+            HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
+        }
+        return;
     }
 
 }

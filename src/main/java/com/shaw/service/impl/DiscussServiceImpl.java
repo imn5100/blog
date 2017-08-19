@@ -86,9 +86,9 @@ public class DiscussServiceImpl implements DiscussService {
 
 
     @Override
-    public int submitDiscuss(int blogId, int userId, String content) {
+    public Discuss submitDiscuss(int blogId, int userId, String content) {
         if (blogId == 0 || userId == 0 || StringUtil.isEmpty(content)) {
-            return 0;
+            return null;
         }
         Discuss discuss = new Discuss();
         discuss.setBlogId(blogId);
@@ -97,6 +97,9 @@ public class DiscussServiceImpl implements DiscussService {
         discuss.setStatus(1);
         discuss.setCreateTime(System.currentTimeMillis());
         discuss.setUpdateTime(System.currentTimeMillis());
-        return this.insert(discuss);
+        if (this.insert(discuss) > 0)
+            return discuss;
+        else
+            return null;
     }
 }

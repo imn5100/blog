@@ -24,5 +24,5 @@ public interface DiscussService {
 
     List<CommentVo> getCommentListByBlogId(Integer blogId);
 
-    int submitDiscuss(int blogId, int userId, String content);
+    Discuss submitDiscuss(int blogId, int userId, String content);
 }

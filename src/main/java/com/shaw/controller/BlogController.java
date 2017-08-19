@@ -2,6 +2,7 @@ package com.shaw.controller;
 
 import com.shaw.annotation.OAuthPassport;
 import com.shaw.bo.Blog;
+import com.shaw.bo.Discuss;
 import com.shaw.bo.Visitor;
 import com.shaw.constants.CacheKey;
 import com.shaw.constants.Constants;
@@ -11,6 +12,7 @@ import com.shaw.service.BlogService;
 import com.shaw.service.DiscussService;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.*;
+import com.shaw.vo.CommentVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -148,8 +150,10 @@ public class BlogController {
         if (visitor != null) {
             int blogId = CodecUtils.getDecodeId(encodeId);
             if (blogId != 0 && 0 != visitor.getId() && StringUtil.isNotEmpty(content)) {
-                if (discussService.submitDiscuss(blogId, visitor.getId(), content) > 0) {
-                    HttpResponseUtil.writeCode(response, ResponseCode.SUCCESS);
+                Discuss discuss = discussService.submitDiscuss(blogId, visitor.getId(), content);
+                if (discuss != null) {
+                    CommentVo commentVo = CommentVo.build(discuss, visitor);
+                    HttpResponseUtil.writeUseData(response, commentVo, ResponseCode.SUCCESS);
                 } else {
                     HttpResponseUtil.writeCode(response, ResponseCode.FAIL);
                 }

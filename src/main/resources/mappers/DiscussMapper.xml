@@ -33,6 +33,7 @@
     <include refid="Blob_Column_List" />
     from discuss
     where blog_id = #{blogId,jdbcType=INTEGER}
+    order by  create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from discuss

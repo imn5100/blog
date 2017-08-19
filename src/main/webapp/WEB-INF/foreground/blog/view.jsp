@@ -43,11 +43,11 @@
 
         $("#submitDiscuss").click(function () {
             var content = $("#discussContent").val();
-            if (blogId == null || blogId == "") {
+            if (blogId === null || blogId == "") {
                 alert("评论失败")
                 return
             }
-            if (content == null || content.trim() == "") {
+            if (content === null || "" == content.trim()) {
                 alert("请填写评论内容")
                 return
             }
@@ -56,12 +56,37 @@
                 'content': content,
             }, function (result) {
                 if (result.success) {
-                    alert("评论成功！");
+                    addDiscuss(result.data);
+                    $("#discussContent").val("");
+                    alert("评论成功")
                 } else {
                     alert("评论失败！" + result.msg);
                 }
             }, "json");
         });
+
+        function addDiscuss(element) {
+            var newNode = document.createElement("div");
+            newNode.setAttribute("class", "row");
+            newNode.innerHTML = ' <div class="col-sm-2">' +
+                '                <img class="img-responsive"' +
+                '                     src="' + element.avatarUrl + '"/>' +
+                '                <p align="center">\n' +
+                '                    <a href="' + element.homePage + '" target="_blank">' +
+                '                           ' + element.account + '(' + element.name + ')</a>' +
+                '                </p>' +
+                '            </div>' +
+                '            <div class="col-sm-10" >' +
+                '                <div class="form-group">' +
+                '                    <textarea class="form-control" rows="5" id="discussContent" readonly=true>' + element.content + '</textarea>' +
+                '                </div>' +
+                '                <p  style="text-align: right;color: #666;font-size: medium;">' +
+                '                  ' + element.discussTime +
+                '                </p>' +
+                '            </div> ';
+            $("#discussPanel").prepend($(newNode))
+        }
+
     });
 </script>
 <style>
@@ -151,9 +176,9 @@
     </div>
 </div>
 <hr>
-<div>
-    <c:choose>
-        <c:when test="${OAUTH_USER!=null}">
+<c:choose>
+    <c:when test="${OAUTH_USER!=null}">
+        <div class="row">
             <div class="col-md-2">
                 <img class="img-responsive"
                      src="${OAUTH_USER.avatarUrl}"/>
@@ -170,14 +195,18 @@
                     <button id="submitDiscuss"> 评论</button>
                 </div>
             </div>
+        </div>
+        <hr>
+    </c:when>
+    <c:otherwise>
+        <div class="row" align="center">
+            <a href="/user/fromGithub.html?" id="oauthLogin">通过Github登录评论</a>
             <hr>
-        </c:when>
-        <c:otherwise>
-            <a href="/user/fromGithub.html?" id="oauthLogin">Login From Github</a>
-        </c:otherwise>
-    </c:choose>
-</div>
-<br>
+            <br>
+            <br>
+        </div>
+    </c:otherwise>
+</c:choose>
 <div id="discussPanel" class="col-md-12">
 
 </div>

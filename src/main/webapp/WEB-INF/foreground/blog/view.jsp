@@ -132,7 +132,7 @@
     </div>
     <div class="card-body">
         <h3 align="center"><strong>${blog.title }</strong></h3>
-        <<input type="hidden" id="blogId" value="${blog.encodeId}">
+        <input type="hidden" id="blogId" value="${blog.encodeId}">
         <div>
         </div>
         <div class="blog_info">

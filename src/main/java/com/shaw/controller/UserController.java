@@ -3,7 +3,7 @@ package com.shaw.controller;
 import com.shaw.bo.Visitor;
 import com.shaw.constants.Constants;
 import com.shaw.util.DesUtils;
-import com.shaw.util.PropertiesUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +14,10 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    public static final String GITHUB_CLIENT_ID = PropertiesUtil.getConfiguration().getString("gitHub.client_id");
-    public static final String DEFAULT_SCOPE = "";
-    public static final String GITHUB_AUTHORIZE_URL = "http://github.com/login/oauth/authorize";
+    @Value("${gitHub.client_id}")
+    private String GITHUB_CLIENT_ID;
+    private static final String DEFAULT_SCOPE = "";
+    private static final String GITHUB_AUTHORIZE_URL = "http://github.com/login/oauth/authorize";
 
     @RequestMapping("/fromGithub")
     public ModelAndView loginByGithub(@RequestParam(name = "redirect") String redirect, HttpSession session) throws Exception {

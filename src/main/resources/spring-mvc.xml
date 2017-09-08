@@ -16,7 +16,8 @@
         <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"></property>
     </bean>
-
+    <context:property-placeholder
+            ignore-unresolvable="true" location="classpath:config.properties"/>
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
@@ -34,7 +35,7 @@
             <bean class="com.shaw.handler.IpPassportInterceptor"></bean>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/**/blog/**"/>
+            <mvc:mapping path="/**/blog/*.html"/>
             <bean class="com.shaw.handler.OAuthPassportInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

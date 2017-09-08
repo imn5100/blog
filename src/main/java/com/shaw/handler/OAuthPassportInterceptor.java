@@ -6,12 +6,12 @@ import com.shaw.bo.Visitor;
 import com.shaw.constants.Constants;
 import com.shaw.service.VisitorService;
 import com.shaw.util.HttpResponseUtil;
-import com.shaw.util.PropertiesUtil;
 import com.shaw.util.StringUtil;
 import com.shaw.vo.GithubUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -33,11 +33,12 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
     private VisitorService visitorService;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public static final String GITHUB_CLIENT_ID = PropertiesUtil.getConfiguration().getString("gitHub.client_id");
-    public static final String GITHUB_CLIENT_SECRET = PropertiesUtil.getConfiguration().getString("gitHub.client_secret");
-    public static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
-    public static final String GITHUB_USER_URL = "https://api.github.com/user";
+    @Value("${gitHub.client_id}")
+    private String GITHUB_CLIENT_ID;
+    @Value("${gitHub.client_secret}")
+    private String GITHUB_CLIENT_SECRET;
+    private static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+    private static final String GITHUB_USER_URL = "https://api.github.com/user";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

@@ -19,7 +19,7 @@ public class BoUtils {
             if (StringUtils.isNotBlank(clickHit)) {
                 try {
                     int intClickHit = Integer.valueOf(clickHit);
-                    if (blog.getClickHit() < intClickHit) {
+                    if (blog.getClickHit() == null || blog.getClickHit() < intClickHit) {
                         blog.setClickHit(intClickHit);
                         return true;
                     }

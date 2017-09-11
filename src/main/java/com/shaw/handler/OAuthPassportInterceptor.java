@@ -23,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by shaw  on 2016/12/20 0020.
- * ip验证拦截器
+ * github oauth回调拦截器。拦截github回调，获取有效用户，设置用户登录状态
  */
 public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
     @Autowired
@@ -58,6 +57,7 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
                             if (StringUtil.isNotEmpty(token)) {
                                 GithubUser githubUser = getUser(token);
                                 if (githubUser != null && githubUser.valid()) {
+                                    //更新或插入访客信息
                                     visitor = visitorService.updateOrInsertByAccountAndFrom(githubUser.toVisitor());
                                     if (visitor != null) {
                                         request.getSession().setAttribute(Constants.OAUTH_USER, visitor);
@@ -76,7 +76,7 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
         }
         return true;
     }
-
+    //通过回调的code和state获取访问github的token
     private String getToken(String code, String state) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -100,7 +100,7 @@ public class OAuthPassportInterceptor extends HandlerInterceptorAdapter {
             return null;
         }
     }
-
+    //通过token获取github用户信息
     private GithubUser getUser(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);

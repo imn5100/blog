@@ -11,7 +11,7 @@
     <link href="/favicon.ico" rel="SHORTCUT ICON">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/font.css">
+    <%--<link rel="stylesheet" href="/static/css/font.css">--%>
     <link rel="stylesheet" href="/static/css/font-awesome.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/css/magnific-popup.css">
     <link rel="stylesheet" href="/static/css/main-style.css">

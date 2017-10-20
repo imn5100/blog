@@ -23,15 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 /**
- * Created by shaw on 2017/1/13 0013.
+ * @author shaw
+ * @date 2017/1/13 0013
  * 远程任务发送
  */
 @Controller
@@ -41,24 +39,38 @@ public class RemoteTaskController {
     private TaskUserService taskUserService;
     @Resource
     private RemoteMsgService remoteMsgService;
-    //保证socket 服务端的redis序列化工具和 本站相同
+    /**
+     * 保证socket 服务端的redis序列化工具和 本站相同
+     */
     @Resource(name = "stringRedisTemplate")
     private RedisTemplate<String, String> stringRedisTemplate;
 
     /**
      * 和socket server 相关的常量。
      */
-    //web登录成功
+    /**
+     * web登录成功
+     */
     public static final String LOGIN_SUCCESS_FLAG = "loginSuccess";
-    //客户端连接 key
+    /**
+     * 客户端连接 key
+     */
     public static final String USER_CLIENT_CONNECT = "user_client_connect";
-    //socket task redis channel
+    /**
+     * socket task redis channel
+     */
     public static final String SOCKET_TASK_REDIS_CHANNEL = "task_message";
-    //socket连接状态key
+    /**
+     * socket连接状态key
+     */
     public static final String SOCKET_CONNECT = "socket_connect";
-    //web 登录状态key
+    /**
+     * web 登录状态key
+     */
     public static final String USER_AUTH_KEY = "UserAuthKey:%s";
-    //接收socket推送任务消息的二层topic
+    /**
+     * 接收socket推送任务消息的二层topic
+     */
     public static final String TOPIC_TASK = "socketTask";
 
     /**
@@ -129,14 +141,14 @@ public class RemoteTaskController {
                     return;
                 }
                 RemoteMsg remoteMsg = new RemoteMsg();
-                if (type == RemoteTaskPermission.DOWNLOAD.getValue()) {
+                if (Objects.equals(type, RemoteTaskPermission.DOWNLOAD.getValue())) {
                     if (!((taskUser.getPermissions() & 0x1) == 0x1)) {
                         HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
                         return;
                     } else {
                         remoteMsg.setTopic(RemoteTaskPermission.DOWNLOAD.getName());
                     }
-                } else if (type == RemoteTaskPermission.PYTHON.getValue()) {
+                } else if (Objects.equals(type, RemoteTaskPermission.PYTHON.getValue())) {
                     if (!((taskUser.getPermissions() & 0x2) == 0x2)) {
                         HttpResponseUtil.writeCode(response, ResponseCode.PERMISSION_WRONG);
                         return;

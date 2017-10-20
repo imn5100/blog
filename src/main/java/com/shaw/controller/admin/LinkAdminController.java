@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/admin/link")
 public class LinkAdminController {
@@ -43,7 +47,8 @@ public class LinkAdminController {
      */
     @RequestMapping("/save")
     public String save(Link link, HttpServletResponse response) throws Exception {
-        int resultTotal = 0; // 操作的记录条数
+        // 操作的记录条数
+        int resultTotal;
         if (link.getId() == null) {
             resultTotal = linkService.add(link);
         } else {

@@ -25,6 +25,7 @@ public class Constants {
     public static final Short MSG_OVER = 3;
     public static final Short MSG_FAIL = 4;
     public static final Integer SESSION_TIME = 1800;
+    public static final int MAX_WORDS=65535;
 
     public static final String OAUTH_USER = "OAUTH_USER";
 }

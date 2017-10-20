@@ -16,6 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/admin/blogType")
 public class BlogTypeAdminController {
@@ -47,7 +51,8 @@ public class BlogTypeAdminController {
      */
     @RequestMapping("/save")
     public String save(BlogType blogType, HttpServletResponse response) throws Exception {
-        int resultTotal = 0; // 操作的记录条数
+        // 操作的记录条数
+        int resultTotal;
         if (blogType.getId() == null) {
             resultTotal = blogTypeService.add(blogType);
         } else {

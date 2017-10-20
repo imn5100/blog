@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/admin/system")
 public class SystemAdminController {
@@ -54,7 +57,7 @@ public class SystemAdminController {
     @RequestMapping("/refreshSystem")
     public String refreshSystem(HttpServletResponse response, HttpServletRequest request) throws Exception {
         ServletContext application = RequestContextUtils.findWebApplicationContext(request).getServletContext();
-        Long timestamp = new Long(System.currentTimeMillis());
+        Long timestamp = System.currentTimeMillis();
         redisClient.set(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
         redisClient.expire(CacheKey.SYSTEM_REFRESH_TIME, CacheKey.SYSTEM_REFRESH_TIME_EXPIRE);
         systemService.initBlogData(application);
@@ -201,8 +204,7 @@ public class SystemAdminController {
     private String readWebLogFile(String filename) throws IOException {
         File file = new File(Constants.DEFAULT_WEB_LOGS_PATH + filename);
         if (file.exists()) {
-            String data = FileUtils.readFileToString(file, "UTF-8");
-            return data;
+            return FileUtils.readFileToString(file, "UTF-8");
         } else {
             return null;
         }

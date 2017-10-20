@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by shaw on 2016/11/17 0017.
+ *
+ * @author shaw
+ * @date 2016/11/17 0017
  */
 @Controller
 @RequestMapping("/admin/uploadFile")
@@ -57,9 +59,8 @@ public class UploadFileAdminController {
         if (idList.size() == 0) {
             result.put("success", true);
             HttpResponseUtil.writeJsonStr(response, result);
-            return;
         } else {
-            Integer count = uploadFileService.updateValid(idList, (valid == null || valid != 2) ? false : true);
+            Integer count = uploadFileService.updateValid(idList, valid != null && valid == 2);
             result.put("count", count);
             result.put("success", true);
             HttpResponseUtil.writeJsonStr(response, result);

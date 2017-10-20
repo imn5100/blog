@@ -31,6 +31,7 @@ import java.util.List;
 
 /**
  * 博客内容相关控制器
+ * @author imn5100
  */
 @Controller
 @RequestMapping("/blog")
@@ -78,15 +79,14 @@ public class BlogController {
         }
         String keyWords = blog.getKeyWord();
         if (StringUtil.isNotEmpty(keyWords)) {
-            String arr[] = keyWords.split(" ");
+            String[] arr = keyWords.split(" ");
             mav.addObject("keyWords", StringUtil.filterWhite(Arrays.asList(arr)));
         } else {
             mav.addObject("keyWords", null);
         }
         mav.addObject("blog", blog);
-        blog.setClickHit(blog.getClickHit() + 1); // 博客点击次数加1
-        //避免频繁更新数据库 使用缓存存储blog 点击量
-//        blogService.update(blog);
+        // 博客点击次数加1
+        blog.setClickHit(blog.getClickHit() + 1);
         String key = String.format(CacheKey.BLOG_CLICK_KEY, blog.getId());
         redisClient.incr(key);
         mav.addObject("lastBlog", blogService.getLastBlog(id));

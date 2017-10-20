@@ -3,6 +3,7 @@ package com.shaw.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaw.bo.Blog;
+import com.shaw.constants.Constants;
 import com.shaw.lucene.BlogIndex;
 import com.shaw.service.BlogService;
 import com.shaw.util.HttpResponseUtil;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/admin/blog")
 public class BlogAdminController {
@@ -38,21 +42,24 @@ public class BlogAdminController {
     @RequestMapping("/save")
     public String save(Blog blog, HttpServletResponse response) throws Exception {
         JSONObject result = new JSONObject();
-        if (blog.getContent().length() > 65535) {
+        if (blog.getContent().length() > Constants.MAX_WORDS) {
             result.put("success", false);
             result.put("msg", "文章内容超过Text限制,你可能需要改变表字段了,或是缩减文章");
             HttpResponseUtil.writeJsonStr(response, result);
             return null;
         }
-        int resultTotal = 0; // 操作的记录条数
+        // 操作的记录条数
+        int resultTotal;
         if (blog.getId() == null) {
             blog.setReleaseDate(new Date());
             resultTotal = blogService.add(blog);
-            blogIndex.addIndex(blog); // 添加博客索引
+            // 添加博客索引
+            blogIndex.addIndex(blog);
         } else {
             blog.setReleaseDate(blogService.findById(blog.getId()).getReleaseDate());
             resultTotal = blogService.update(blog);
-            blogIndex.updateIndex(blog); // 更新博客索引
+            // 更新博客索引
+            blogIndex.updateIndex(blog);
         }
         if (resultTotal > 0) {
             result.put("success", true);
@@ -87,7 +94,8 @@ public class BlogAdminController {
         String[] idsStr = ids.split(",");
         for (int i = 0; i < idsStr.length; i++) {
             blogService.delete(Integer.parseInt(idsStr[i]));
-            blogIndex.deleteIndex(idsStr[i]); // 删除对应博客的索引
+            // 删除对应博客的索引
+            blogIndex.deleteIndex(idsStr[i]);
         }
         JSONObject result = new JSONObject();
         result.put("success", true);

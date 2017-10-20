@@ -28,7 +28,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 站长相关
- **/
+ *
+ * @author imn5100*/
 @Controller
 @RequestMapping("/blogger")
 public class BloggerController {
@@ -37,7 +38,8 @@ public class BloggerController {
     private RedisClient redisClient;
     @Autowired
     private BloggerService bloggerService;
-    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /**
      * 登录
@@ -62,7 +64,8 @@ public class BloggerController {
             if (blogger != null && blogger.getPassword().equals(password)) {
                 Subject subject = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-                subject.login(token); // 登录验证
+                // 登录验证
+                subject.login(token);
                 logger.info("login success username:" + username);
                 HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
             } else {
@@ -87,7 +90,8 @@ public class BloggerController {
             if (blogger != null && blogger.getPassword().equals(password)) {
                 Subject subject = SecurityUtils.getSubject();
                 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-                subject.login(token); // 登录验证
+                // 登录验证
+                subject.login(token);
                 logger.info("script login success username:" + username);
                 HttpResponseUtil.writeJsonStr(response, ResponseCode.SUCCESS.getCode());
             } else {
@@ -121,6 +125,5 @@ public class BloggerController {
         String key = String.format(CacheKey.CODES_KEY, sessionId);
         redisClient.set(key, codes);
         redisClient.expire(key, CacheKey.CODES_EXPIRE);
-        return;
     }
 }

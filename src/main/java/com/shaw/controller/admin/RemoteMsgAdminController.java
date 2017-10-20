@@ -25,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * Created by shaw on 2016/12/17 0017.
+ *
+ * @author shaw
+ * @date 2016/12/17 0017
  */
 @Controller
 @RequestMapping("/admin/remote")
@@ -279,7 +282,7 @@ public class RemoteMsgAdminController {
         if (id != null) {
             RemoteMsg remoteMsg = remoteMsgService.selectByPrimaryKey(id);
             if (remoteMsg != null) {
-                if (remoteMsg.getStatus() != Constants.MSG_OVER) {
+                if (!Objects.equals(remoteMsg.getStatus(), Constants.MSG_OVER)) {
                     switch (type) {
                         case 1:
                             //重新启用任务

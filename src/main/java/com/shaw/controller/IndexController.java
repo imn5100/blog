@@ -25,6 +25,7 @@ import java.util.Map;
 /**
  * 主页跳转控制器
  * 包含 顶部菜单连接跳转
+ * @author imn5100
  */
 @Controller
 @RequestMapping("/")
@@ -65,7 +66,8 @@ public class IndexController {
             }
         }
         mav.addObject("blogList", blogList);
-        StringBuffer param = new StringBuffer(); // 查询参数
+        // 查询参数
+        StringBuilder param = new StringBuilder();
         if (typeId != null) {
             param.append("typeId=" + typeId + "&");
         }

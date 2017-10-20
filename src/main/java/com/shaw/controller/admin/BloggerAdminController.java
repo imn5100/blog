@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/admin/blogger")
 public class BloggerAdminController {
@@ -40,7 +43,7 @@ public class BloggerAdminController {
     public String save(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("imageUrl") String imageUrl, @RequestParam("backgroundUrl") String backgroundUrl, @RequestParam("aspectRatio") double aspectRatio, Blogger blogger, HttpServletResponse response) throws Exception {
         if (imageFile != null && !imageFile.isEmpty()) {
             //将头像上传至 七牛，并获取返回的url
-//            UploadFile uploadFile =  uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
+            // UploadFile uploadFile =  uploadFileService.uploadToQiniu(imageFile, StringUtil.getFileName(imageFile.getOriginalFilename()));
             //将头像上传至smms 图库，返回URL
             UploadFile uploadFile = uploadFileService.uploadToSMMS(imageFile);
             blogger.setImageName(uploadFile.getUrl());
@@ -54,10 +57,11 @@ public class BloggerAdminController {
             }
         }
         if (backgroundUrl != null) {
-            if (imageUrl.startsWith("https://"))
+            if (imageUrl.startsWith("https://")) {
                 blogger.setBackgroundImage(backgroundUrl);
-            else
+            } else {
                 blogger.setBackgroundImage("");
+            }
         }
         int resultTotal = bloggerService.update(blogger);
         JSONObject result = new JSONObject();

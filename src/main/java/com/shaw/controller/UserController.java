@@ -11,6 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author imn5100
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {

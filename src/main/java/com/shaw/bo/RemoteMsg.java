@@ -2,6 +2,9 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
+/**
+ * @author imn5100
+ */
 public class RemoteMsg implements Serializable {
     private Integer id;
 

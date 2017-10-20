@@ -1,7 +1,9 @@
 package com.shaw.constants;
 
 /**
- * Created by shaw on 2016/10/13 0013.
+ *
+ * @author shaw
+ * @date 2016/10/13 0013
  */
 public enum ResponseCode {
     SUCCESS(200, "操作成功"),

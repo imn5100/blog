@@ -2,6 +2,7 @@ package com.shaw.aop;
 
 import com.shaw.constants.CacheKey;
 import com.shaw.service.impl.RedisClient;
+import com.shaw.util.ThreadPoolManager;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -9,6 +10,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author imn5100
+ */
 @Aspect
 @Component
 public class CacheAop {
@@ -34,13 +38,9 @@ public class CacheAop {
             // 写入缓存
             value = pjp.proceed();
             if (value != null) {
-                final String tkey = key;
-                final Object tvalue = value;
-                new Thread(new Runnable() {
-                    public void run() {
-                        setCache(tkey, tvalue, CacheKey.SEARCH_EXPIRETIME);
-                    }
-                }).start();
+                final String tempKey = key;
+                final Object tempValue = value;
+                ThreadPoolManager.INSTANCE.execute(() -> setCache(tempKey, tempValue, CacheKey.SEARCH_EXPIRETIME));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class CacheAop {
 
     private String getCacheKey(String targetName, String methodName, Object[] arguments) {
         //searchCache 下为搜索缓存
-        StringBuffer sbu = new StringBuffer("SearchCache:");
+        StringBuilder sbu = new StringBuilder("SearchCache:");
         sbu.append(targetName).append("_").append(methodName);
         if ((arguments != null) && (arguments.length != 0)) {
             for (int i = 0; i < arguments.length; i++) {
@@ -67,13 +67,13 @@ public class CacheAop {
         return redisClient.exists(key);
     }
 
-    public Object getCache(final String key) {
-        Object result = null;
+    private Object getCache(final String key) {
+        Object result;
         result = redisClient.get(key);
         return result;
     }
 
-    public boolean setCache(final String key, Object value, Long expireTime) {
+    private boolean setCache(final String key, Object value, Long expireTime) {
         if (StringUtils.isBlank(key) || value == null) {
             return false;
         }

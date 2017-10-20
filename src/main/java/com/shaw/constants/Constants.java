@@ -2,6 +2,9 @@ package com.shaw.constants;
 
 import com.shaw.util.PropertiesUtil;
 
+/**
+ * @author imn5100
+ */
 public class Constants {
     public static final Integer PAGE_SIZE = 12;
     public static final String PAGE_TITLE = "ShawのSecret Base";

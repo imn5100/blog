@@ -2,6 +2,9 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
+/**
+ * @author imn5100
+ */
 public class Blogger implements Serializable {
 
     private static final long serialVersionUID = -3883346387813043440L;

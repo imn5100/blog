@@ -2,6 +2,9 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
+/**
+ * @author imn5100
+ */
 public class UploadFile implements Serializable {
 	private static final long serialVersionUID = -2966775441929340585L;
 

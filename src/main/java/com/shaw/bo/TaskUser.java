@@ -5,6 +5,9 @@ import com.shaw.vo.RemoteTaskPermission;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author imn5100
+ */
 public class TaskUser implements Serializable {
     private String appKey;
 

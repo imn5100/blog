@@ -9,7 +9,9 @@ import org.springframework.data.redis.serializer.SerializationException;
 import java.nio.charset.Charset;
 
 /**
- * Created by shaw on 2016/10/29 0029.
+ *
+ * @author shaw
+ * @date 2016/10/29 0029
  * 自定义
  * fastJson序列化工具。json序列化相比 jdk 序列化稍慢，但是存储空间少。
  */
@@ -24,6 +26,7 @@ public class GenericFastJsonRedisSerializer implements RedisSerializer<Object> {
     }
 
 
+    @Override
     public byte[] serialize(Object t) throws SerializationException {
         if (t == null) {
             return EMPTY_ARRAY;
@@ -31,6 +34,7 @@ public class GenericFastJsonRedisSerializer implements RedisSerializer<Object> {
         return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
     }
 
+    @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
         if (bytes == null || bytes.length <= 0) {
             return null;

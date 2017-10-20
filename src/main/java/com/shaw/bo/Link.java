@@ -2,6 +2,9 @@ package com.shaw.bo;
 
 import java.io.Serializable;
 
+/**
+ * @author imn5100
+ */
 public class Link implements Serializable {
 
     private static final long serialVersionUID = -8043108573384293372L;

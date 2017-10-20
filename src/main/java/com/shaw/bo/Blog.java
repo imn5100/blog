@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author imn5100
+ */
 public class Blog implements Serializable {
 
     private static final long serialVersionUID = 4186161649311309864L;
@@ -35,10 +38,11 @@ public class Blog implements Serializable {
         if (StringUtils.isNotEmpty(keyWord) && keywordList == null) {
             keywordList = new ArrayList<String>();
             String[] keywords = keyWord.split(",");
-            if (keywords.length > 0)
+            if (keywords.length > 0) {
                 for (String keyword : keywords) {
                     keywordList.add(keyword);
                 }
+            }
         }
         return keywordList;
     }

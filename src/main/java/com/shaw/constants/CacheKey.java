@@ -1,5 +1,8 @@
 package com.shaw.constants;
 
+/**
+ * @author imn5100
+ */
 public class CacheKey {
     /**
      * 服务器初始化时的 存入全局上下文，application中

@@ -1,4 +1,4 @@
-##个人博客系统([shawblog.me](https://shawblog.me "shawblog.me"))<br>
+##个人博客系统<br>
 * [服务端构建](#0)
     * mysql->mybatis+spring+springMVC
       * 搜索:Lucene

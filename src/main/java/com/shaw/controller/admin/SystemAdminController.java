@@ -58,8 +58,7 @@ public class SystemAdminController {
     public String refreshSystem(HttpServletResponse response, HttpServletRequest request) throws Exception {
         ServletContext application = RequestContextUtils.findWebApplicationContext(request).getServletContext();
         Long timestamp = System.currentTimeMillis();
-        redisClient.set(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
-        redisClient.expire(CacheKey.SYSTEM_REFRESH_TIME, CacheKey.SYSTEM_REFRESH_TIME_EXPIRE);
+        redisClient.set(CacheKey.SYSTEM_REFRESH_TIME, timestamp,CacheKey.SYSTEM_REFRESH_TIME_EXPIRE);
         systemService.initBlogData(application);
         application.setAttribute(CacheKey.SYSTEM_REFRESH_TIME, timestamp);
         JSONObject result = new JSONObject();
@@ -162,8 +161,7 @@ public class SystemAdminController {
             return null;
         }
         //结果存入redis 并返回
-        redisClient.set(CacheKey.WEB_LOGS_NAME_LIST_KEY, filename);
-        redisClient.expire(CacheKey.WEB_LOGS_NAME_LIST_KEY, CacheKey.WEB_LOGS_NAME_LIST_EXPIRE);
+        redisClient.set(CacheKey.WEB_LOGS_NAME_LIST_KEY, filename,CacheKey.WEB_LOGS_NAME_LIST_EXPIRE);
         result.put("data", filename);
         HttpResponseUtil.writeJsonStr(response, result);
         return null;
@@ -189,8 +187,7 @@ public class SystemAdminController {
         //若查找缓存失败 读取文件并写入缓存
         String data = readWebLogFile(filename);
         if (StringUtils.isNotBlank(data)) {
-            redisClient.set(key, data);
-            redisClient.expire(key, CacheKey.WEB_LOGS_HTML_EXPIRE);
+            redisClient.set(key, data,CacheKey.WEB_LOGS_HTML_EXPIRE);
             HttpResponseUtil.writeJsonStr(response, data);
         } else {
             HttpResponseUtil.writeJsonStr(response, "File not exists!");

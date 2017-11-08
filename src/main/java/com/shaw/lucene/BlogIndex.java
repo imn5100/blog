@@ -116,7 +116,7 @@ public class BlogIndex {
      * @return
      * @throws Exception
      */
-    @SetCache(expire = 300L)
+    @SetCache(expire = 300)
     public List<Blog> searchBlog(String q) throws Exception {
         IndexReader reader = getReader();
         // 创建索引Searcher

@@ -123,7 +123,6 @@ public class BloggerController {
         String codes = CodesImgUtil.getCodesImg(response, request);
         String sessionId = request.getSession().getId();
         String key = String.format(CacheKey.CODES_KEY, sessionId);
-        redisClient.set(key, codes);
-        redisClient.expire(key, CacheKey.CODES_EXPIRE);
+        redisClient.set(key, codes,CacheKey.CODES_EXPIRE);
     }
 }

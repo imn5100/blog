@@ -11,7 +11,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -29,6 +32,11 @@ public class CacheAspect {
 
     @Autowired
     private RedisClient redisClient;
+    @Autowired
+    ParameterNameDiscoverer nameDiscoverer;
+
+
+    Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     @Pointcut("@annotation(com.shaw.annotation.SetCache)")
     public void setCachePointcut() {
@@ -94,7 +102,7 @@ public class CacheAspect {
             if (cacheAnnotation != null) {
                 final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
                 if (StringUtil.isEmpty(cacheKey)) {
-                    System.out.println("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
+                    logger.error("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
                     return null;
                 } else {
                     return cacheKey;
@@ -105,7 +113,7 @@ public class CacheAspect {
             if (cacheAnnotation != null) {
                 final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
                 if (StringUtil.isEmpty(cacheKey)) {
-                    System.out.println("Error:DeleteCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
+                    logger.error("Error:DeleteCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
                     return null;
                 } else {
                     return cacheKey;
@@ -115,7 +123,7 @@ public class CacheAspect {
         return null;
     }
 
-    private static String generateCacheKey(String key, CacheKeyType cacheKeyType, final JoinPoint pjp) {
+    private String generateCacheKey(String key, CacheKeyType cacheKeyType, final JoinPoint pjp) {
         switch (cacheKeyType) {
             case STR:
                 return key;
@@ -128,13 +136,12 @@ public class CacheAspect {
         }
     }
 
-
-    private static String generateDefaultCacheKey(final JoinPoint pjp) {
+    private String generateDefaultCacheKey(final JoinPoint pjp) {
         final Object[] methodArgs = pjp.getArgs();
         StringBuilder sb = new StringBuilder();
         String className = pjp.getTarget().getClass().getSimpleName();
         String methodName = pjp.getSignature().getName();
-        sb.append("ClinicCache_");
+        sb.append("BlogCache");
         sb.append(className);
         sb.append("_");
         sb.append(methodName);
@@ -147,15 +154,17 @@ public class CacheAspect {
     }
 
 
-    private static String generateSpELKey(String configKey, final JoinPoint pjp) {
+    private String generateSpELKey(String configKey, final JoinPoint pjp) {
         Object[] methodArgs = pjp.getArgs();
         if (methodArgs == null || methodArgs.length == 0) {
             throw new RuntimeException("Not support null args for SpEL");
         }
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext ctx = new StandardEvaluationContext();
+        String[] argNames = nameDiscoverer.getParameterNames(((MethodSignature) pjp.getSignature()).getMethod());
         for (int i = 0; i < methodArgs.length; i++) {
             ctx.setVariable("arg" + i, methodArgs[i]);
+            ctx.setVariable(argNames[i], methodArgs[i]);
         }
         ctx.setVariable("target", pjp.getTarget());
         ctx.setVariable("methodSignature", pjp.getSignature());
@@ -163,7 +172,7 @@ public class CacheAspect {
         return (String) expr.getValue(ctx);
     }
 
-    private static String generatePrefixCacheKey(String configKey, Object[] methodArgs) {
+    private String generatePrefixCacheKey(String configKey, Object[] methodArgs) {
         if (methodArgs == null || methodArgs.length == 0) {
             return configKey;
         }

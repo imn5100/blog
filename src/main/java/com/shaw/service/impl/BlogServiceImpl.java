@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -52,7 +51,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    @DeleteCache(keyType = CacheKeyType.SpEl, key = "'blog_'+#arg0.getId()")
+    @DeleteCache(keyType = CacheKeyType.SpEl, key = "'blog_'+#blog.getId()")
     public Integer update(Blog blog) {
         //每次更新blog的时候将 blog点击量更新到 数据库
         BoUtils.setClickHitFromRedis(blog, stringRedisTemplate);
@@ -91,11 +90,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @DeleteCache(keyType = CacheKeyType.SpEl,multiKey = true,key = "#list.!['blog_'+#this.getId()]")
     public Integer updateBatchForClickHit(List<Blog> list) {
         return blogMapper.updateBatchForClickHit(list);
     }
 
     @Override
+    @DeleteCache(keyType = CacheKeyType.SpEl,multiKey = true,key = "#list.!['blog_'+#this.getId()]")
     public Integer updateBatchForSummary(List<Blog> list) {
         return blogMapper.updateBatchForSummary(list);
     }

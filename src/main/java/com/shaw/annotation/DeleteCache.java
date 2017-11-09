@@ -12,4 +12,9 @@ public @interface DeleteCache {
     String key() default "";
 
     CacheKeyType keyType() default CacheKeyType.DEFAULT;
+
+    /**
+     * 是否使用多个key(生成多个key，删除多个设置的缓存) 仅限SpEl类型的key
+     */
+    boolean multiKey() default false;
 }

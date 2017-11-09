@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,13 +46,30 @@ public class MapperTest extends SpringTestCase {
 
     @org.junit.Test
     public void testCache() throws InterruptedException {
+        //get by id set cache
         Blog blog = blogService.findById(72);
+        Blog blog2 = blogService.findById(112);
+        Blog blog3 = blogService.findById(113);
+
         System.out.println(blog.getBlogCount());
-        blog.setBlogCount(blog.getBlogCount() + 1);
-        //暂停10s查看缓存是否写入
-        //ttl blog_72
+        System.out.println(blog2.getBlogCount());
+        System.out.println(blog3.getBlogCount());
+
+        //see cache status
         Thread.sleep(1000 * 10);
-        blogService.update(blog);
+
+        blog.setBlogCount(blog.getBlogCount() + 1);
+        blog2.setBlogCount(blog2.getBlogCount() + 1);
+        blog3.setBlogCount(blog3.getBlogCount() + 1);
+
+        List<Blog> updateList = new ArrayList<>();
+        updateList.add(blog);
+        updateList.add(blog2);
+        updateList.add(blog3);
+        //update blog list delete cache
+        blogService.updateBatchForClickHit(updateList);
+
+
     }
 
 }

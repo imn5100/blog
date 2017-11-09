@@ -58,7 +58,7 @@ public class CacheAspect {
     public Object doAround(final ProceedingJoinPoint pjp) throws Throwable {
         final SetCache cacheAnnotation = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(SetCache.class);
         if (cacheAnnotation != null) {
-            final String cacheKey = generateCacheKey(pjp, SetCache.class);
+            final String cacheKey = generateSetCacheKey(pjp);
             if (StringUtil.isEmpty(cacheKey)) {
                 return pjp.proceed();
             }
@@ -88,35 +88,52 @@ public class CacheAspect {
 
     @AfterReturning("deleteCachePointcut()")
     public void doAround(final JoinPoint pjp) throws Throwable {
-        String cacheKey = generateCacheKey(pjp, DeleteCache.class);
-        if (cacheKey != null) {
-            redisClient.del(cacheKey);
+        String[] cacheKey = generateDeleteCacheKey(pjp);
+        if (cacheKey != null && cacheKey.length > 0) {
+            for (String key : cacheKey) {
+                if (StringUtil.isNotEmpty(key)) {
+                    redisClient.del(key);
+                }
+            }
         }
     }
 
-
-    private String generateCacheKey(final JoinPoint pjp, Class<?> clazz) {
+    private String generateSetCacheKey(final JoinPoint pjp) {
         final Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-        if (clazz == SetCache.class) {
-            final SetCache cacheAnnotation = method.getAnnotation(SetCache.class);
-            if (cacheAnnotation != null) {
-                final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
-                if (StringUtil.isEmpty(cacheKey)) {
-                    logger.error("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
-                    return null;
-                } else {
-                    return cacheKey;
-                }
+        final SetCache cacheAnnotation = method.getAnnotation(SetCache.class);
+        if (cacheAnnotation != null) {
+            final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
+            if (StringUtil.isEmpty(cacheKey)) {
+                logger.error("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
+                return null;
+            } else {
+                return cacheKey;
             }
-        } else if (clazz == DeleteCache.class) {
-            final DeleteCache cacheAnnotation = method.getAnnotation(DeleteCache.class);
-            if (cacheAnnotation != null) {
+        }
+        return null;
+    }
+
+    private String[] generateDeleteCacheKey(final JoinPoint pjp) {
+        final Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+        final DeleteCache cacheAnnotation = method.getAnnotation(DeleteCache.class);
+        if (cacheAnnotation != null) {
+            if (cacheAnnotation.multiKey()) {
+                if (cacheAnnotation.keyType() == CacheKeyType.SpEl) {
+                    String[] multiKeys = generateSpELKey(cacheAnnotation.key(), pjp, String[].class);
+                    if (multiKeys != null && multiKeys.length > 0) {
+                        return multiKeys;
+                    } else {
+                        logger.error("Error:DeleteCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName() + " MultiKey:True");
+                    }
+                } else {
+                    throw new RuntimeException("MultiKey must use for  CacheKeyType.SpEL");
+                }
+            } else {
                 final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
                 if (StringUtil.isEmpty(cacheKey)) {
                     logger.error("Error:DeleteCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
-                    return null;
                 } else {
-                    return cacheKey;
+                    return new String[]{cacheKey};
                 }
             }
         }
@@ -128,7 +145,7 @@ public class CacheAspect {
             case STR:
                 return key;
             case SpEl:
-                return generateSpELKey(key, pjp);
+                return generateSpELKey(key, pjp, String.class);
             case PREFIX:
                 return generatePrefixCacheKey(key, pjp.getArgs());
             default:
@@ -154,7 +171,7 @@ public class CacheAspect {
     }
 
 
-    private String generateSpELKey(String configKey, final JoinPoint pjp) {
+    private <T> T generateSpELKey(String configKey, final JoinPoint pjp, Class<T> tClass) {
         Object[] methodArgs = pjp.getArgs();
         if (methodArgs == null || methodArgs.length == 0) {
             throw new RuntimeException("Not support null args for SpEL");
@@ -169,7 +186,7 @@ public class CacheAspect {
         ctx.setVariable("target", pjp.getTarget());
         ctx.setVariable("methodSignature", pjp.getSignature());
         Expression expr = parser.parseExpression(configKey);
-        return (String) expr.getValue(ctx);
+        return expr.getValue(ctx, tClass);
     }
 
     private String generatePrefixCacheKey(String configKey, Object[] methodArgs) {

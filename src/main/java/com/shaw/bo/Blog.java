@@ -120,7 +120,7 @@ public class Blog implements Serializable {
     }
 
     public Integer getBlogCount() {
-        return blogCount;
+        return blogCount == null ? 0 : blogCount;
     }
 
     public void setBlogCount(Integer blogCount) {

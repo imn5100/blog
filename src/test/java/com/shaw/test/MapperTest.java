@@ -4,6 +4,7 @@ import com.shaw.bo.Blog;
 import com.shaw.mapper.UploadFileMapper;
 import com.shaw.service.BlogService;
 import org.jsoup.Jsoup;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -41,4 +42,16 @@ public class MapperTest extends SpringTestCase {
         List<String> keys = Arrays.asList(new String[]{"misaki", "sakura"});
         uploadFileMapper.deleteQiniuByKey(keys);
     }
+
+    @org.junit.Test
+    public void testCache() throws InterruptedException {
+        Blog blog = blogService.findById(72);
+        System.out.println(blog.getBlogCount());
+        blog.setBlogCount(blog.getBlogCount() + 1);
+        //暂停10s查看缓存是否写入
+        //ttl blog_72
+        Thread.sleep(1000 * 10);
+        blogService.update(blog);
+    }
+
 }

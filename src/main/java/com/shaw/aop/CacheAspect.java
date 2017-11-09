@@ -1,10 +1,12 @@
 package com.shaw.aop;
 
+import com.shaw.annotation.DeleteCache;
 import com.shaw.annotation.SetCache;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.StringUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -28,11 +30,12 @@ public class CacheAspect {
     @Autowired
     private RedisClient redisClient;
 
-    /**
-     * 所有包含了@SetCache注解的地方作为AOP织入点
-     */
     @Pointcut("@annotation(com.shaw.annotation.SetCache)")
     public void setCachePointcut() {
+    }
+
+    @Pointcut("@annotation(com.shaw.annotation.DeleteCache)")
+    public void deleteCachePointcut() {
     }
 
 
@@ -45,13 +48,10 @@ public class CacheAspect {
      */
     @Around("setCachePointcut()")
     public Object doAround(final ProceedingJoinPoint pjp) throws Throwable {
-        final MethodSignature ms = (MethodSignature) pjp.getSignature();
-        final Method method = ms.getMethod();
-        final SetCache cacheAnnotation = method.getAnnotation(SetCache.class);
+        final SetCache cacheAnnotation = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(SetCache.class);
         if (cacheAnnotation != null) {
-            final String cacheKey = generateCacheKey(cacheAnnotation, pjp);
+            final String cacheKey = generateCacheKey(pjp, SetCache.class);
             if (StringUtil.isEmpty(cacheKey)) {
-                System.out.println("Error:generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
                 return pjp.proceed();
             }
             final int expire = cacheAnnotation.expire();
@@ -78,21 +78,58 @@ public class CacheAspect {
         }
     }
 
-    private static String generateCacheKey(SetCache cacheAnnotation, final JoinPoint pjp) {
-        switch (cacheAnnotation.keyType()) {
-            case STR:
-                return cacheAnnotation.key();
-            case SpEl:
-                return generateSpELKey(cacheAnnotation.key(), pjp);
-            case PREFIX:
-                return generatePrefixCacheKey(cacheAnnotation.key(), pjp.getArgs());
-            default:
-                return generateCacheKey(pjp);
+    @AfterReturning("deleteCachePointcut()")
+    public void doAround(final JoinPoint pjp) throws Throwable {
+        String cacheKey = generateCacheKey(pjp, DeleteCache.class);
+        if (cacheKey != null) {
+            redisClient.del(cacheKey);
         }
     }
 
 
-    private static String generateCacheKey(final JoinPoint pjp) {
+    private String generateCacheKey(final JoinPoint pjp, Class<?> clazz) {
+        final Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+        if (clazz == SetCache.class) {
+            final SetCache cacheAnnotation = method.getAnnotation(SetCache.class);
+            if (cacheAnnotation != null) {
+                final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
+                if (StringUtil.isEmpty(cacheKey)) {
+                    System.out.println("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
+                    return null;
+                } else {
+                    return cacheKey;
+                }
+            }
+        } else if (clazz == DeleteCache.class) {
+            final DeleteCache cacheAnnotation = method.getAnnotation(DeleteCache.class);
+            if (cacheAnnotation != null) {
+                final String cacheKey = generateCacheKey(cacheAnnotation.key(), cacheAnnotation.keyType(), pjp);
+                if (StringUtil.isEmpty(cacheKey)) {
+                    System.out.println("Error:DeleteCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
+                    return null;
+                } else {
+                    return cacheKey;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static String generateCacheKey(String key, CacheKeyType cacheKeyType, final JoinPoint pjp) {
+        switch (cacheKeyType) {
+            case STR:
+                return key;
+            case SpEl:
+                return generateSpELKey(key, pjp);
+            case PREFIX:
+                return generatePrefixCacheKey(key, pjp.getArgs());
+            default:
+                return generateDefaultCacheKey(pjp);
+        }
+    }
+
+
+    private static String generateDefaultCacheKey(final JoinPoint pjp) {
         final Object[] methodArgs = pjp.getArgs();
         StringBuilder sb = new StringBuilder();
         String className = pjp.getTarget().getClass().getSimpleName();

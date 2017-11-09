@@ -32,9 +32,9 @@ public class RedisClient {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public void set(String key, Object value, Number expire) {
+    public void set(String key, Object value, long expire) {
         this.set(key, value);
-        this.expire(key, (long) expire);
+        this.expire(key, expire);
     }
 
     public void del(String key) {

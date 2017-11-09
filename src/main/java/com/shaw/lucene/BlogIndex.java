@@ -1,6 +1,7 @@
 package com.shaw.lucene;
 
 import com.shaw.annotation.SetCache;
+import com.shaw.aop.CacheKeyType;
 import com.shaw.bo.Blog;
 import com.shaw.util.StringUtil;
 import com.shaw.util.TimeUtils;
@@ -116,7 +117,7 @@ public class BlogIndex {
      * @return
      * @throws Exception
      */
-    @SetCache(expire = 300)
+    @SetCache(keyType = CacheKeyType.SpEl, key = "'BlogSearch_'+#arg0", expire = 300)
     public List<Blog> searchBlog(String q) throws Exception {
         IndexReader reader = getReader();
         // 创建索引Searcher

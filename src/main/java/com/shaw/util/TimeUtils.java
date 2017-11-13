@@ -535,8 +535,7 @@ public class TimeUtils {
     public static String formatDate(Date date, String formatPattern) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat(formatPattern);
-            String result = formatter.format(date);
-            return result;
+            return formatter.format(date);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -566,5 +565,17 @@ public class TimeUtils {
                 break;
         }
         return seasonName;
+    }
+
+    public static int toInt(Date date) {
+        if (date != null) {
+            String yyyyMMdd = formatDate(date, "yyyyMMdd");
+            return Integer.parseInt(yyyyMMdd != null ? yyyyMMdd : "0");
+        }
+        return 0;
+    }
+
+    public static int toInt() {
+        return toInt(new Date());
     }
 }

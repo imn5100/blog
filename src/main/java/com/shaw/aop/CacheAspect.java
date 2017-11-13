@@ -4,6 +4,7 @@ import com.shaw.annotation.DeleteCache;
 import com.shaw.annotation.SetCache;
 import com.shaw.service.impl.RedisClient;
 import com.shaw.util.StringUtil;
+import com.shaw.util.TimeUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -99,6 +100,7 @@ public class CacheAspect {
     }
 
     private String generateSetCacheKey(final JoinPoint pjp) {
+        System.out.println(System.currentTimeMillis());
         final Method method = ((MethodSignature) pjp.getSignature()).getMethod();
         final SetCache cacheAnnotation = method.getAnnotation(SetCache.class);
         if (cacheAnnotation != null) {
@@ -107,6 +109,7 @@ public class CacheAspect {
                 logger.error("Error:setCache generate cache Key Error:Key:" + cacheAnnotation.key() + " KeyType:" + cacheAnnotation.keyType() + " Method:" + method.getName());
                 return null;
             } else {
+                System.out.println(System.currentTimeMillis());
                 return cacheKey;
             }
         }
@@ -177,7 +180,10 @@ public class CacheAspect {
             throw new RuntimeException("Not support null args for SpEL");
         }
         ExpressionParser parser = new SpelExpressionParser();
-        EvaluationContext ctx = new StandardEvaluationContext();
+        EvaluationContext ctx = buildDefaultCtx();
+        if (ctx == null) {
+            return null;
+        }
         String[] argNames = nameDiscoverer.getParameterNames(((MethodSignature) pjp.getSignature()).getMethod());
         for (int i = 0; i < methodArgs.length; i++) {
             ctx.setVariable("arg" + i, methodArgs[i]);
@@ -187,6 +193,18 @@ public class CacheAspect {
         ctx.setVariable("methodSignature", pjp.getSignature());
         Expression expr = parser.parseExpression(configKey);
         return expr.getValue(ctx, tClass);
+    }
+
+    public static EvaluationContext buildDefaultCtx(){
+        StandardEvaluationContext ctx = new StandardEvaluationContext();
+        try {
+            ctx.registerFunction("getDate", TimeUtils.class.getMethod("getDate", Long.class));
+            ctx.registerFunction("toInt", TimeUtils.class.getMethod("toInt"));
+            return ctx;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private String generatePrefixCacheKey(String configKey, Object[] methodArgs) {

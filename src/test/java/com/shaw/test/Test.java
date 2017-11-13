@@ -1,11 +1,9 @@
 package com.shaw.test;
 
+import com.shaw.aop.CacheAspect;
 import com.shaw.bo.Blog;
 import com.shaw.bo.Link;
-import com.shaw.util.CodecUtils;
-import com.shaw.util.DesUtils;
-import com.shaw.util.EmailUtils;
-import com.shaw.util.PropertiesUtil;
+import com.shaw.util.*;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -19,11 +17,23 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) throws Exception {
-//        String encrpt = DesUtils.getDefaultInstance().encrypt("112");
-//        System.out.println(encrpt);
-//        System.out.println(DesUtils.getDefaultInstance().decrypt(encrpt));
+        testElFunction();
+    }
 
+    private static void testElFunction() {
+        long start = System.currentTimeMillis();
+        ExpressionParser parser = new SpelExpressionParser();
+        System.out.println("build1:" + (System.currentTimeMillis() - start));
+        EvaluationContext ctx =  CacheAspect.buildDefaultCtx();
+        Expression expr = parser.parseExpression("#toInt()+'_'");
+        System.out.println(expr.getValue(ctx, String.class));
+        System.out.println("end:" + (System.currentTimeMillis() - start));
+    }
+
+
+    public static void testEList() {
         // 创建一个ExpressionParser对象，用于解析表达式
+        long start = System.currentTimeMillis();
         ExpressionParser parser = new SpelExpressionParser();
         List<Blog> list = new ArrayList<Blog>();
         Blog b1 = new Blog();
@@ -44,6 +54,7 @@ public class Test {
         Expression expr = parser.parseExpression("#blogList.!['Blog_Search_'+#this.getId()]");
         String[] keyList = expr.getValue(ctx, String[].class);
         System.out.println("投影后的新集合为：" + Arrays.toString(keyList));
+        System.out.println("end:" + (System.currentTimeMillis() - start));
 
 
 //        List<Link> list2 = new ArrayList<Link>();
@@ -55,8 +66,19 @@ public class Test {
 //        投影条件是 只要name属性
 //        expr = parser.parseExpression("#mylist2.![linkName]");
 //        System.out.println("投影后的新集合为" + expr.getValue(ctx));
+    }
 
 
+    private static EvaluationContext buildDefaultCtx() {
+        StandardEvaluationContext ctx = new StandardEvaluationContext();
+        try {
+            ctx.registerFunction("getFormatTimeYMDHM", TimeUtils.class.getMethod("getFormatTimeYMDHM", Long.class));
+            ctx.registerFunction("toInt", TimeUtils.class.getMethod("toInt"));
+            return ctx;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void simpleDecode() throws Exception {
